@@ -8,6 +8,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
+import Header from "./components/common/Header";
+import NavBar from "./components/common/Navbar";
 import type { LinksFunction } from "@remix-run/node";
 
 let isMount = true;
@@ -93,6 +95,16 @@ function Document({
   );
 }
 
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <Document>
+      <Header />
+      {children}
+      <NavBar />
+    </Document>
+  );
+}
+
 export default function App() {
   let location = useLocation();
   let matches = useMatches();
@@ -132,8 +144,8 @@ export default function App() {
   }, [location]);
 
   return (
-    <Document>
+    <Layout>
       <Outlet />
-    </Document>
+    </Layout>
   );
 }
