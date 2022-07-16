@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 폰트 */
+
+@font-face {
+  font-family: "Pretendard";
+  font-display: fallback;
+  font-weight: 400;
+  src: url("/fonts/Pretendard-Regular.otf");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-display: fallback;
+  font-weight: 500;
+  src: url("/fonts/Pretendard-Medium.otf");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-display: fallback;
+  font-weight: 600;
+  src: url("/fonts/Pretendard-SemiBold.otf");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-display: fallback;
+  font-weight: 700;
+  src: url("/fonts/Pretendard-Bold.otf");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-display: fallback;
+  font-weight: 800;
+  src: url("/fonts/Pretendard-ExtraBold.otf");
+}
+
+/* 글로벌 스타일 */
+
+@layer base {
+  html {
+    font-family: "Pretendard";
+  }
+}
+
+/* 스타일 컴포넌트 */
