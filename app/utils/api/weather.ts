@@ -1,3 +1,7 @@
 export default {
-  getTodayWeather() {},
+  getTodayWeather() {
+    // * 3 시간 마다 조회
+    // * 3 시간이 안지났더라면 로컬스토리지에 저장해둔 캐쉬 데이터를 사용한다
+    // * 지났다면 api 요청을 하고 캐쉬 데이터를 갱신한다
+  },
 };

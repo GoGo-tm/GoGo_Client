@@ -4,7 +4,9 @@ const VAC: ButtonProps = (props) => {
   return (
     <button
       onClick={props.event}
-      className={`${props.primary && "bg-primary text-white"} ${
+      className={`active:scale-[0.985] ${
+        props.primary && "bg-primary text-white"
+      } ${
         props.sub && "bg-white text-black"
       } border border-primary rounded-full px-2 py-1 w-full`}
     >
