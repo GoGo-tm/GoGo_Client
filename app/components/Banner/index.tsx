@@ -2,10 +2,12 @@ import { useCallback, useEffect } from "react";
 import type { FunctionComponent } from "react";
 import type { EnvData } from "~/routes/index";
 import weather from "~/utils/api/weather";
+import useCurrentLocation from "~/hooks/useCurrentLocation";
 
 type BannerProps = FunctionComponent<EnvData>;
 
 const Banner: BannerProps = (props) => {
+  const data = useCurrentLocation();
   const ENV = {
     ENV: props.ENV,
   };
