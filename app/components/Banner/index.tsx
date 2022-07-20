@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
 import type { FunctionComponent } from "react";
 import type { EnvData } from "~/routes/index";
-import weather from "~/utils/api/weather";
 import useCurrentLocation from "~/hooks/useCurrentLocation";
+import { getTodayWeather } from "~/utils/api/weather";
 
 type BannerProps = FunctionComponent<EnvData>;
 
@@ -13,7 +13,8 @@ const Banner: BannerProps = (props) => {
   };
 
   const getWeather = useCallback(async () => {
-    const res = await weather.getTodayWeather(ENV).then((res) => res);
+    const res = await getTodayWeather(ENV).then((res) => res);
+    console.log(res);
   }, []);
 
   useEffect(() => {
