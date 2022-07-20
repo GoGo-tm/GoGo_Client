@@ -1,24 +1,30 @@
 import VAC from "./vac";
+import { HomeIcon, HikingIcon, LogIcon, ProfileIcon } from "~/utils/icons";
 
 export interface Link {
+  icon: JSX.Element;
   name: string;
   to: string;
 }
 
 const links: Link[] = [
   {
+    icon: <HomeIcon />,
     name: "홈",
-    to: "/",
+    to: "/home",
   },
   {
+    icon: <HikingIcon />,
     name: "등산로",
-    to: "/rails",
+    to: "/hikings",
   },
   {
+    icon: <LogIcon />,
     name: "등산로그",
     to: "/mylogs",
   },
   {
+    icon: <ProfileIcon />,
     name: "내정보",
     to: "/profile",
   },
