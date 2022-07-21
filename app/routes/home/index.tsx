@@ -1,11 +1,13 @@
 import Banner from "~/components/Banner";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
 
 type LoaderData = {
   ENV: {
     WEATHER_API_URL: string;
     WEATHER_API_KEY: string;
+    REVERSE_GEOCODING_URL: string;
   };
 };
 
@@ -14,6 +16,7 @@ export const loader: LoaderFunction = async () => {
     ENV: {
       WEATHER_API_URL: process.env.WEATHER_API_URL,
       WEATHER_API_KEY: process.env.WEATHER_API_KEY,
+      REVERSE_GEOCODING_URL: process.env.REVERSE_GEOCODING_URL,
     },
   });
 };

@@ -1,10 +1,7 @@
+import axios from "axios";
 import SEOUL_METRO from "~/constants/coord";
 import cash from "../lib/cash";
-
-export type Coords = {
-  latitude: number;
-  longitude: number;
-};
+import type { Administrative, Coords } from "~/types/weather";
 
 export default {
   async getUserLocation() {
@@ -29,7 +26,21 @@ export default {
 
     return data;
   },
-  async getUserCity({ latitude, longitude }: Coords) {
-    // const res = await fetch()
+  async getUserCity({ latitude, longitude }: Coords, url: string) {
+    const res = await axios.get(
+      `${url}?latitude=${latitude}&longitude=${longitude}&localityLanguage=ko`
+    );
+
+    if (res.status !== 200) throw Error("invalid request");
+
+    const locationData: Administrative[] =
+      res.data.localityInfo["administrative"];
+    const userLocation = locationData
+      .map((los) => los.name)
+      .join(" ")
+      .replace("대한민국", "")
+      .trim();
+
+    return userLocation;
   },
 };

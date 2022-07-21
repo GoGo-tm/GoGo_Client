@@ -4,6 +4,7 @@ import mapToGrid from "../lib/mapToGrid";
 import dayjs from "dayjs";
 import axios from "axios";
 import type { EnvData } from "~/types/env";
+import type { WeatherData } from "~/types/weather";
 
 type Item = {
   baseDate: string;
@@ -20,7 +21,7 @@ const add_0 = ["02", "05", "08", "11", "14", "17", "20", "23"];
 const add_1 = ["01", "04", "07", "10", "13", "16", "19", "22"];
 const add_2 = ["00", "03", "06", "09", "12", "15", "18", "21"];
 
-const getTodayWeather = async (Arg: EnvData) => {
+const getTodayWeather = async (Arg: EnvData): Promise<WeatherData> => {
   const cashData = JSON.parse(cash.getCashData("weather"));
   const curTime = new Date();
   const targetDate = dayjs(curTime).format("YYYY-MM-DD-HH");
@@ -29,7 +30,7 @@ const getTodayWeather = async (Arg: EnvData) => {
   let sky: string = "";
   let pty: string = "";
 
-  if (!Arg.ENV) return;
+  if (!Arg.ENV) throw Error("invalid env");
 
   if (cashData && parseInt(cashData.base_time) > parseInt(hour)) {
     return cashData;
@@ -39,16 +40,25 @@ const getTodayWeather = async (Arg: EnvData) => {
   else if (add_1.indexOf(hour) !== -1) targetHour = add_0[add_1.indexOf(hour)];
   else targetHour = add_0[add_2.indexOf(hour)];
 
-  const coords: { x: number; y: number } = await location
+  const coords = await location
     .getUserLocation()
-    .then((res) => mapToGrid(res.latitude, res.longitude));
+    .then((res) => ({ latitude: res.latitude, longitude: res.longitude }));
+  const grid: { x: number; y: number } = await mapToGrid(
+    coords.latitude,
+    coords.longitude
+  );
+
+  const userLocation = await location.getUserCity(
+    coords,
+    Arg.ENV.REVERSE_GEOCODING_URL
+  );
 
   const res = await axios.get(
     `${Arg.ENV.WEATHER_API_URL}?ServiceKey=${
       Arg.ENV.WEATHER_API_KEY
     }&numOfRows=10&pageNo=1&base_date=${year + month + day}&base_time=${
       targetHour + "00"
-    }&nx=${coords.x}&ny=${coords.y}&dataType=JSON`
+    }&nx=${grid.x}&ny=${grid.y}&dataType=JSON`
   );
 
   if (res.status !== 200) throw Error("invalid api");
@@ -70,16 +80,17 @@ const getTodayWeather = async (Arg: EnvData) => {
     .format("YYYY-MM-DD-HH")
     .split("-");
 
-  const data = {
+  const data: WeatherData = {
     base_date: tyear + tmonth + tday,
     base_time: thour,
     sky,
     pty,
+    userLocation,
   };
 
   cash.setCashData("weather", JSON.stringify(data));
 
-  return res;
+  return data;
 };
 
 export { getTodayWeather };

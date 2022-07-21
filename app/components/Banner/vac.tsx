@@ -1,6 +1,8 @@
 import { LocationIcon } from "~/utils/icons";
+import type { Props } from ".";
+import type { FunctionComponent } from "react";
 
-const VAC = () => {
+const VAC: FunctionComponent<Props> = (props) => {
   return (
     <section className="pt-7 bg-banner-1">
       <div className="relative">
@@ -23,16 +25,26 @@ const VAC = () => {
             <i className="w-3 text-primary">
               <LocationIcon />
             </i>
-            <span className="pl-2 text-primary text-sm">서울시 중구 명동</span>
+            <span className="pl-2 text-primary text-sm">
+              {props.userLocation
+                ? props.userLocation
+                : "서울특별시 중구 소공동"}
+            </span>
           </div>
         </div>
         {/* 날씨 이미지 */}
         <picture className="absolute w-36 top-5 right-5">
-          <img src="/images/07_Sunny.png" alt="Sunny.png" loading="lazy" />
+          <img
+            src={`/images/${props.weather ? props.weather : "Sunny.png"}`}
+            alt="Sunny.png"
+            loading="lazy"
+          />
         </picture>
         <picture className="absolute w-full bg-banner-1">
           <img
-            src="/images/06_Sunny_Landing.png"
+            src={`/images/${
+              props.landing ? props.landing : "Sunny_Landing.png"
+            }`}
             alt="Sunny_Landing.png"
             loading="lazy"
           />
