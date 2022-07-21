@@ -12,8 +12,8 @@ const Banner: BannerProps = (props) => {
   };
 
   const getWeather = useCallback(async () => {
-    // const res = await getTodayWeather(ENV).then((res) => res);
-    // console.log(res);
+    const res = await getTodayWeather(ENV).then((res) => res);
+    console.log(res);
   }, []);
 
   useEffect(() => {

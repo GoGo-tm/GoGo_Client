@@ -1,5 +1,5 @@
 import SEOUL_METRO from "~/constants/coord";
-import cash from "./cash";
+import cash from "../lib/cash";
 
 export type Coords = {
   latitude: number;
@@ -28,5 +28,8 @@ export default {
     cash.setCashData("coords", JSON.stringify(data));
 
     return data;
+  },
+  async getUserCity({ latitude, longitude }: Coords) {
+    // const res = await fetch()
   },
 };

@@ -1,9 +1,9 @@
+import location from "./location";
 import cash from "../lib/cash";
-import location from "../lib/location";
 import mapToGrid from "../lib/mapToGrid";
 import dayjs from "dayjs";
 import axios from "axios";
-import type { EnvData } from "~/routes";
+import type { EnvData } from "~/types/env";
 
 type Item = {
   baseDate: string;
@@ -43,17 +43,19 @@ const getTodayWeather = async (Arg: EnvData) => {
     .getUserLocation()
     .then((res) => mapToGrid(res.latitude, res.longitude));
 
-  const res = await axios
-    .get(
-      `${Arg.ENV.WEATHER_API_URL}?ServiceKey=${
-        Arg.ENV.WEATHER_API_KEY
-      }&numOfRows=10&pageNo=1&base_date=${year + month + day}&base_time=${
-        targetHour + "00"
-      }&nx=${coords.x}&ny=${coords.y}&dataType=JSON`
-    )
-    .then((res) => res.data.response.body.items["item"] as Item[]);
+  const res = await axios.get(
+    `${Arg.ENV.WEATHER_API_URL}?ServiceKey=${
+      Arg.ENV.WEATHER_API_KEY
+    }&numOfRows=10&pageNo=1&base_date=${year + month + day}&base_time=${
+      targetHour + "00"
+    }&nx=${coords.x}&ny=${coords.y}&dataType=JSON`
+  );
 
-  for (const iter of res) {
+  if (res.status !== 200) throw Error("invalid api");
+
+  const items = res.data.response.body.items["item"] as Item[];
+
+  for (const iter of items) {
     if (iter.category === "SKY") {
       sky = iter.fcstValue;
     }
@@ -77,7 +79,7 @@ const getTodayWeather = async (Arg: EnvData) => {
 
   cash.setCashData("weather", JSON.stringify(data));
 
-  return data;
+  return res;
 };
 
 export { getTodayWeather };
