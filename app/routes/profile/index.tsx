@@ -36,12 +36,12 @@ export const CatchBoundary = () => {
   const navigate = useNavigate();
 
   const props = {
-    event: () => navigate("/login"),
+    event: () => navigate("/auth/login"),
   };
 
   return (
-    <div className="h-[42.5rem] flex flex-col px-3">
-      <div className="flex-1 flex flex-col justify-center items-center">
+    <div className="flex flex-col h-full px-3">
+      <div className="layout-flex-col-center flex-1">
         <picture className="w-48">
           <img
             className="w-full"
@@ -53,7 +53,9 @@ export const CatchBoundary = () => {
           로그인하고 나만의 등산로그를 기록해보세요!
         </p>
       </div>
-      <Button {...props}>로그인/회원가입</Button>
+      <div className="pb-9">
+        <Button {...props}>로그인/회원가입</Button>
+      </div>
     </div>
   );
 };

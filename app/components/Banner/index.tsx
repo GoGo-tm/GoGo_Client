@@ -35,7 +35,7 @@ const Banner: BannerProps = ({ ENV: env }) => {
     let weather: string = "Sunny.png";
 
     if (pty !== "0") {
-      landing = "Rainy_Lading.png";
+      landing = "Rainy_Landing.png";
       switch (pty) {
         case "1":
           weather = "Rainy.png";

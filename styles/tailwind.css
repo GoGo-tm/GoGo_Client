@@ -38,8 +38,11 @@
 /* 글로벌 스타일 */
 
 @layer base {
-  html {
+  html,
+  body {
     font-family: "Pretendard";
+    height: 100%;
+    margin: 0;
   }
   svg {
     width: 100%;
@@ -48,3 +51,15 @@
 }
 
 /* 스타일 컴포넌트 */
+
+@layer components {
+  .layout-flex-center {
+    @apply flex justify-center items-center;
+  }
+  .layout-flex-col {
+    @apply flex flex-col;
+  }
+  .layout-flex-col-center {
+    @apply flex flex-col justify-center items-center;
+  }
+}

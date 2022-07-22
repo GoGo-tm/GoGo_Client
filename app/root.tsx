@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useMatches } from "@remix-run/react";
+import { useLoaderData, useLocation, useMatches } from "@remix-run/react";
 import {
   Links,
   LiveReload,
@@ -10,7 +10,12 @@ import {
 import styles from "./tailwind.css";
 import Header from "./components/common/Header";
 import NavBar from "./components/common/Navbar";
-import type { LinksFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+
+type LoaderData = {
+  render: boolean;
+};
 
 let isMount = true;
 
@@ -21,6 +26,18 @@ export const links: LinksFunction = () => {
       href: styles,
     },
   ];
+};
+
+export const loader: LoaderFunction = ({ request }) => {
+  const { url } = request;
+
+  if (url.includes("auth")) {
+    return new Response("로그인 페이지", { status: 400 });
+  }
+
+  return json({
+    render: true,
+  });
 };
 
 function Document({
@@ -102,9 +119,11 @@ function Document({
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Document>
-      <Header />
-      <main>{children}</main>
-      <NavBar />
+      <div id="GoGo" className="flex flex-col h-full w-full">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <NavBar />
+      </div>
     </Document>
   );
 }
@@ -153,3 +172,17 @@ export default function App() {
     </Layout>
   );
 }
+
+export const CatchBoundary = () => {
+  console.log("check");
+
+  return (
+    <Document>
+      <div id="GoGo" className="flex flex-col h-full w-full">
+        <main className="flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </Document>
+  );
+};
