@@ -612,6 +612,50 @@ svg {
   height: 5rem;
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-max {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-24 {
+  height: 6rem;
+}
+
+.h-\[40rem\] {
+  height: 40rem;
+}
+
+.h-\[60rem\] {
+  height: 60rem;
+}
+
+.h-\[50rem\] {
+  height: 50rem;
+}
+
+.h-\[45rem\] {
+  height: 45rem;
+}
+
+.h-\[42\.5rem\] {
+  height: 42.5rem;
+}
+
 .w-full {
   width: 100%;
 }
@@ -632,6 +676,26 @@ svg {
   width: 1.5rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.w-48 {
+  width: 12rem;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
 .list-none {
   list-style-type: none;
 }
@@ -644,12 +708,24 @@ svg {
   align-content: center;
 }
 
+.content-around {
+  align-content: space-around;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
 .items-center {
   align-items: center;
 }
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .justify-evenly {
@@ -727,6 +803,16 @@ svg {
   padding-bottom: 0.25rem;
 }
 
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .pt-7 {
   padding-top: 1.75rem;
 }
@@ -745,6 +831,10 @@ svg {
 
 .pb-1 {
   padding-bottom: 0.25rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
 }
 
 .text-center {
@@ -803,24 +893,6 @@ svg {
 .shadow-black {
   --tw-shadow-color: #000;
   --tw-shadow: var(--tw-shadow-colored);
-}
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.transition {
-  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 폰트 */

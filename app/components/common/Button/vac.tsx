@@ -8,7 +8,7 @@ const VAC: ButtonProps = (props) => {
         props.primary && "bg-primary text-white"
       } ${
         props.sub && "bg-white text-black"
-      } border border-primary rounded-full px-2 py-1 w-full`}
+      } border border-primary rounded-full px-2 py-2 w-full`}
     >
       {props.children}
     </button>

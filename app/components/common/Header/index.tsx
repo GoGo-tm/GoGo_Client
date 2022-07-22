@@ -4,7 +4,7 @@ import VAC from "./vac";
 const Header = () => {
   const { pathname } = useLocation();
 
-  return pathname !== "/home" && <VAC />;
+  return pathname !== "/home" ? <VAC /> : null;
 };
 
 export default Header;

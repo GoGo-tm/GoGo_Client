@@ -103,7 +103,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Document>
       <Header />
-      {children}
+      <main>{children}</main>
       <NavBar />
     </Document>
   );
