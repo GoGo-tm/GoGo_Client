@@ -1,5 +1,5 @@
+import { useState, useCallback, useEffect } from "react";
 import VAC from "./vac";
-import { useCallback, useEffect, useState } from "react";
 import { getTodayWeather } from "~/utils/api/weather";
 import type { FunctionComponent } from "react";
 import type { EnvData } from "~/types/env";

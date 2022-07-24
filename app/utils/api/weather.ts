@@ -1,10 +1,11 @@
 import location from "./location";
-import cash from "../lib/cash";
-import mapToGrid from "../lib/mapToGrid";
 import dayjs from "dayjs";
 import axios from "axios";
-import type { EnvData } from "~/types/env";
+import { mapToGrid } from "./misc";
+import { setCache } from "./cache";
+import { getLocalStorageData, setLocalStorageData } from "./localstorage";
 import type { WeatherData } from "~/types/weather";
+import type { EnvData } from "~/types/env";
 
 type Item = {
   baseDate: string;
@@ -22,7 +23,12 @@ const add_1 = ["01", "04", "07", "10", "13", "16", "19", "22"];
 const add_2 = ["00", "03", "06", "09", "12", "15", "18", "21"];
 
 const getTodayWeather = async (Arg: EnvData): Promise<WeatherData> => {
-  const cashData = JSON.parse(cash.getCashData("weather"));
+  const localStorageData = getLocalStorageData("weather") as
+    | WeatherData
+    | undefined;
+
+  setCache("test", { title: "hi" });
+
   const curTime = new Date();
   const targetDate = dayjs(curTime).format("YYYY-MM-DD-HH");
   const [year, month, day, hour] = targetDate.split("-");
@@ -32,8 +38,11 @@ const getTodayWeather = async (Arg: EnvData): Promise<WeatherData> => {
 
   if (!Arg.ENV) throw Error("invalid env");
 
-  if (cashData && parseInt(cashData.base_time) > parseInt(hour)) {
-    return cashData;
+  if (
+    localStorageData &&
+    parseInt(localStorageData.base_time) > parseInt(hour)
+  ) {
+    return localStorageData;
   }
 
   if (add_0.indexOf(hour) !== -1) targetHour = hour;
@@ -43,7 +52,7 @@ const getTodayWeather = async (Arg: EnvData): Promise<WeatherData> => {
   const coords = await location
     .getUserLocation()
     .then((res) => ({ latitude: res.latitude, longitude: res.longitude }));
-  const grid: { x: number; y: number } = await mapToGrid(
+  const grid: { x: number; y: number } = mapToGrid(
     coords.latitude,
     coords.longitude
   );
@@ -88,7 +97,7 @@ const getTodayWeather = async (Arg: EnvData): Promise<WeatherData> => {
     userLocation,
   };
 
-  cash.setCashData("weather", JSON.stringify(data));
+  setLocalStorageData("weather", data);
 
   return data;
 };

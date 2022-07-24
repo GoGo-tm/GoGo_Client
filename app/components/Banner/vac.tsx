@@ -1,4 +1,5 @@
 import { LocationIcon } from "~/utils/icons";
+import { Paragraph } from "../Typography";
 import type { Props } from ".";
 import type { FunctionComponent } from "react";
 
@@ -14,12 +15,13 @@ const VAC: FunctionComponent<Props> = (props) => {
             alt="logo.png"
             loading="lazy"
           />
-          <p className="whitespace-pre-line text-[1.45rem] pt-10">
-            김고고님,
-            <br />
-            오늘은 등산하기
-            <br />딱 좋은 화창한 날이에요!
-          </p>
+          <Paragraph className="whitespace-pre-line text-[1.45rem] pt-10">
+            {`김고고님,`}
+            {`
+            오늘은 등산하기`}
+            {`
+            딱 좋은 화창한 날이에요!`}
+          </Paragraph>
           {/* 날씨 관련 */}
           <div className="pt-2 flex items-center">
             <i className="w-3 text-primary">

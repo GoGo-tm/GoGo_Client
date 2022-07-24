@@ -1,8 +1,9 @@
 import { Meta, useNavigate } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getUserId } from "~/__mock__/user";
+import { Paragraph } from "~/components/Typography";
+import Button from "~/components/Button";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import Button from "~/components/common/Button";
 
 export const meta: MetaFunction = () => {
   return {
@@ -49,9 +50,9 @@ export const CatchBoundary = () => {
             alt="Mountain.png"
           />
         </picture>
-        <p className="text-md pt-3">
+        <Paragraph className="text-md pt-3">
           로그인하고 나만의 등산로그를 기록해보세요!
-        </p>
+        </Paragraph>
       </div>
       <div className="pb-9">
         <Button {...props}>로그인/회원가입</Button>

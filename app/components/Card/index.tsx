@@ -1,7 +1,11 @@
+import type { FunctionComponent } from "react";
 import { Link } from "@remix-run/react";
-import type { CardProps } from ".";
 
-const VAC: CardProps = (props) => {
+interface Props {}
+
+export type CardProps = FunctionComponent<Props>;
+
+const Card: CardProps = () => {
   return (
     <div>
       <Link to={"/asd"}>
@@ -15,4 +19,4 @@ const VAC: CardProps = (props) => {
   );
 };
 
-export default VAC;
+export default Card;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, useLocation, useMatches } from "@remix-run/react";
+import { useLocation, useMatches } from "@remix-run/react";
 import {
   Links,
   LiveReload,
@@ -8,14 +8,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
-import Header from "./components/common/Header";
-import NavBar from "./components/common/Navbar";
+import Header from "./components/Header";
+import NavBar from "./components/Navbar";
 import { json } from "@remix-run/node";
 import type { LinksFunction, LoaderFunction } from "@remix-run/node";
-
-type LoaderData = {
-  render: boolean;
-};
 
 let isMount = true;
 
@@ -28,16 +24,8 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export const loader: LoaderFunction = ({ request }) => {
-  const { url } = request;
-
-  if (url.includes("auth")) {
-    return new Response("로그인 페이지", { status: 400 });
-  }
-
-  return json({
-    render: true,
-  });
+export const loader: LoaderFunction = () => {
+  return json({});
 };
 
 function Document({
@@ -110,7 +98,7 @@ function Document({
         {children}
         <Scripts />
         <ScrollRestoration />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process.env.NODE_ENV === "development" && <LiveReload port={8002} />}
       </body>
     </html>
   );
@@ -172,17 +160,3 @@ export default function App() {
     </Layout>
   );
 }
-
-export const CatchBoundary = () => {
-  console.log("check");
-
-  return (
-    <Document>
-      <div id="GoGo" className="flex flex-col h-full w-full">
-        <main className="flex-1">
-          <Outlet />
-        </main>
-      </div>
-    </Document>
-  );
-};

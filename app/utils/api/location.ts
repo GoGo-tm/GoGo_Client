@@ -1,14 +1,9 @@
 import axios from "axios";
 import SEOUL_METRO from "~/constants/coord";
-import cash from "../lib/cash";
 import type { Administrative, Coords } from "~/types/weather";
 
 export default {
   async getUserLocation() {
-    const cashData: Coords = JSON.parse(cash.getCashData("coords"));
-
-    if (cashData) return cashData;
-
     const cord = SEOUL_METRO;
 
     if (!navigator.geolocation) return cord;
@@ -21,8 +16,6 @@ export default {
       latitude: res.coords.latitude,
       longitude: res.coords.longitude,
     };
-
-    cash.setCashData("coords", JSON.stringify(data));
 
     return data;
   },
