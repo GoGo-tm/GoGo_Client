@@ -15,7 +15,7 @@ type Item = {
 
 const items: Item[] = [
   { to: "/", name: "홈", icon: home },
-  { to: "/hikings", name: "등산로", icon: hiking },
+  { to: "/hiking", name: "등산로", icon: hiking },
   { to: "/mylogs", name: "등산로그", icon: mylog },
   { to: "/profile", name: "내 정보", icon: profile },
 ];
