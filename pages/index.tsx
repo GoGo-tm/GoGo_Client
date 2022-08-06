@@ -1,13 +1,12 @@
-import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
-import axios from "axios";
+import { GetServerSideProps } from "next";
+import Layout from "~/components/layout";
+import type { InferGetServerSidePropsType } from "next/types";
+import type { ReactElement } from "react";
+import type { NextPageWithLayout } from "~/types/base";
 
-const Home: NextPage = ({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ user }) => {
   return (
     <div>
       <h1>Hello World</h1>
@@ -17,8 +16,12 @@ const Home: NextPage = ({
 
 export default Home;
 
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await axios.get("https://test.com/user").then((res) => res.data);
+  const res = "";
 
   return {
     props: {
