@@ -1,9 +1,16 @@
 import type { ReactNode } from "react";
+import Header from "./header";
 import Navbar from "./navbar";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+interface Props {
+  children: ReactNode;
+  title: string;
+}
+
+const Layout = ({ children, title }: Props) => {
   return (
     <>
+      <Header title={title} />
       {children}
       <Navbar />
     </>

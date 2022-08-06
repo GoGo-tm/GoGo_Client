@@ -11,7 +11,7 @@ const Profile: NextPageWithLayout<{}> = () => {
 };
 
 Profile.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <Layout title="Profile">{page}</Layout>;
 };
 
 export default Profile;
