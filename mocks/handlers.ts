@@ -1,11 +1,15 @@
 import { rest } from "msw";
 
 export const handlers = [
-  rest.get("https://test.com/user", (req, res, ctx) => {
-    const user = {
-      id: "31",
-      author: "blan19",
-    };
-    return res(ctx.status(200), ctx.json(user));
+  rest.get("/book", (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        title: "Lord of the Rings",
+        imageUrl: "/book-cover.jpg",
+        description:
+          "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
+      })
+    );
   }),
 ];
