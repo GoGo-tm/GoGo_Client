@@ -7,11 +7,11 @@ import hiking from "~/svgs/hiking.svg";
 import mylog from "~/svgs/mylog.svg";
 import profile from "~/svgs/profile.svg";
 
-type Item = {
+interface Item {
   to: string;
   name: string;
   icon: string;
-};
+}
 
 const items: Item[] = [
   { to: "/", name: "홈", icon: home },

@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-type SEOProps = {
+interface SEOProps {
   title?: string;
   canonical?: string;
   /**
@@ -46,7 +46,7 @@ type SEOProps = {
     image?: string;
     siteName?: string;
   };
-};
+}
 
 const SEO: React.FC<SEOProps> = React.memo(function SEO({
   title,
