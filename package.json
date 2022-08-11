@@ -12,6 +12,7 @@
     "@tanstack/react-query": "^4.0.10",
     "@tanstack/react-query-devtools": "^4.0.10",
     "@types/navermaps": "^3.0.17",
+    "antd": "^4.22.4",
     "axios": "^0.27.2",
     "msw": "^0.29.0",
     "next": "12.2.0",
