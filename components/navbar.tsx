@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import hiking from '~/svgs/hiking.svg';
 import home from '~/svgs/home.svg';
-import mylog from '~/svgs/mylog.svg';
+import myLog from '~/svgs/mylog.svg';
 import profile from '~/svgs/profile.svg';
 import NavLink from './navlink';
 
@@ -16,7 +16,7 @@ type Item = {
 const items: Item[] = [
   { to: '/', name: '홈', icon: home },
   { to: '/hiking', name: '등산로', icon: hiking },
-  { to: '/mylogs', name: '등산로그', icon: mylog },
+  { to: '/myLogs', name: '등산로그', icon: myLog },
   { to: '/profile', name: '내 정보', icon: profile },
 ];
 
@@ -35,7 +35,7 @@ const NavbarItem = React.memo(function NavbarItem({ item }: { item: Item }) {
   return (
     <NavLink href={item.to}>
       <StyledNavbarItem>
-        {/* <StyledImage src={item.icon} alt={item.name} width={25} height={25} /> */}
+        <StyledImage src={item.icon} alt={item.name} width={25} height={25} />
         {item.name}
       </StyledNavbarItem>
     </NavLink>
@@ -63,15 +63,14 @@ const StyledNavbar = styled.nav`
 `;
 
 const StyledNavbarItem = styled.div`
-  width: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 60px;
+  justify-content: space-evenly;
   font-size: ${({ theme: { fontSize } }) => fontSize.eb1};
   font-weight: bolder;
   cursor: pointer;
 `;
 
-const StyledImage = styled(Image)`
-  width: 10px;
-`;
+const StyledImage = styled(Image)``;
