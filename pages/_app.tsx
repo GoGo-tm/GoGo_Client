@@ -1,13 +1,14 @@
-import { ThemeProvider } from "styled-components";
-import theme from "~/constants/theme";
-import type { AppProps } from "next/app";
-import type { ReactElement, ReactNode } from "react";
-import type { NextPage } from "next/types";
-import GlobalStyle from "~/components/globalStyles";
-import SEO from "~/components/seo";
+import type { AppProps } from 'next/app';
+import type { NextPage } from 'next/types';
+import type { ReactElement, ReactNode } from 'react';
+import { ThemeProvider } from 'styled-components';
+import '~/assets/antd.css';
+import GlobalStyle from '~/components/globalStyle';
+import SEO from '~/components/seo';
+import theme from '~/constants/theme';
 
-if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
-  import("../mocks");
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  import('../mocks');
 }
 
 type NextPageWithLayout = NextPage & {
@@ -25,8 +26,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <ThemeProvider theme={theme}>
       <SEO
         og={{
-          type: "article",
-          siteName: "고고",
+          type: 'article',
+          siteName: '고고',
         }}
       />
       <GlobalStyle />

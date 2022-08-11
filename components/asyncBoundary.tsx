@@ -1,12 +1,12 @@
-import { ComponentProps } from "react";
-import ErrorBoundary from "./errorBoundary";
-import OnlyClient from "./onlyClient";
+import { ComponentProps } from 'react';
+import ErrorBoundary from './errorBoundary';
+import OnlyClient from './onlyClient';
 
 interface ErrorBoundaryProps extends ComponentProps<typeof ErrorBoundary> {}
 
-interface Props extends Omit<ErrorBoundaryProps, "fallback"> {
-  pendingFallback: ComponentProps<typeof OnlyClient>["fallback"];
-  rejectedFallback: ErrorBoundaryProps["fallback"];
+interface Props extends Omit<ErrorBoundaryProps, 'fallback'> {
+  pendingFallback: ComponentProps<typeof OnlyClient>['fallback'];
+  rejectedFallback: ErrorBoundaryProps['fallback'];
 }
 
 function AsyncBoundary({

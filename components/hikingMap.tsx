@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
-import { tm123ToCoords } from "~/utils/map";
-import styled from "styled-components";
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { tm123ToCoords } from '~/utils/map';
 
 interface Props {
   tm123: {
@@ -15,7 +15,7 @@ const HikingMap = ({ tm123 }: Props) => {
     const coords = tm123ToCoords(tm123.paths);
     const mid = Math.floor(coords.length / 2);
 
-    mapRef.current = new naver.maps.Map("map", {
+    mapRef.current = new naver.maps.Map('map', {
       zoom: 16,
       zoomControl: true,
       center: coords[mid],
@@ -23,7 +23,7 @@ const HikingMap = ({ tm123 }: Props) => {
 
     new naver.maps.Polyline({
       path: coords,
-      strokeColor: "#FF0000",
+      strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 6,
       map: mapRef.current,
