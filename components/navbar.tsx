@@ -7,11 +7,11 @@ import myLog from '~/svgs/mylog.svg';
 import profile from '~/svgs/profile.svg';
 import NavLink from './navlink';
 
-type Item = {
+interface Item {
   to: string;
   name: string;
   icon: string;
-};
+}
 
 const items: Item[] = [
   { to: '/', name: '홈', icon: home },

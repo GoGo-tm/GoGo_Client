@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import ErrorBoundary from './errorBoundary';
 import OnlyClient from './onlyClient';
 
-type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>;
+interface ErrorBoundaryProps extends ComponentProps<typeof ErrorBoundary> {}
 
 interface Props extends Omit<ErrorBoundaryProps, 'fallback'> {
   pendingFallback: ComponentProps<typeof OnlyClient>['fallback'];

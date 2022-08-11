@@ -4,6 +4,7 @@ import type { ReactElement, ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
 import '~/assets/antd.css';
 import GlobalStyle from '~/components/globalStyle';
+import SEO from '~/components/seo';
 import theme from '~/constants/theme';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -23,6 +24,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ThemeProvider theme={theme}>
+      <SEO
+        og={{
+          type: 'article',
+          siteName: '고고',
+        }}
+      />
       <GlobalStyle />
       {getLayout(<Component {...pageProps} />)}
     </ThemeProvider>
