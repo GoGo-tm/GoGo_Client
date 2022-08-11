@@ -2,7 +2,8 @@ import type { AppProps } from 'next/app';
 import type { NextPage } from 'next/types';
 import type { ReactElement, ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyle from '~/components/globalstyles';
+import '~/assets/antd.css';
+import GlobalStyle from '~/components/globalStyle';
 import theme from '~/constants/theme';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {

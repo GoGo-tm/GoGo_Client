@@ -1,4 +1,3 @@
-import '@/assets/antd.css';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 

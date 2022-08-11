@@ -1,11 +1,11 @@
+import Image from 'next/image';
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import NavLink from './navlink';
-import home from '~/svgs/home.svg';
-import Image from 'next/image';
 import hiking from '~/svgs/hiking.svg';
+import home from '~/svgs/home.svg';
 import mylog from '~/svgs/mylog.svg';
 import profile from '~/svgs/profile.svg';
+import NavLink from './navlink';
 
 type Item = {
   to: string;
