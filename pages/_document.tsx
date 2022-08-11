@@ -1,15 +1,15 @@
 import Document, {
-  Html,
+  DocumentContext,
   Head,
+  Html,
   Main,
   NextScript,
-  DocumentContext,
-} from "next/document";
-import Script from "next/script";
-import { ServerStyleSheet } from "styled-components";
+} from 'next/document';
+import Script from 'next/script';
+import { ServerStyleSheet } from 'styled-components';
 
-const APP_NAME = "고고";
-const APP_DESCRIPTION = " 등산에 필요한 등산로 서비스 고고입니다";
+const APP_NAME = '고고';
+const APP_DESCRIPTION = ' 등산에 필요한 등산로 서비스 고고입니다';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {

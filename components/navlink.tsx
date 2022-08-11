@@ -1,6 +1,6 @@
-import React, { Children } from "react";
-import { useRouter } from "next/router";
-import Link, { LinkProps } from "next/link";
+import Link, { LinkProps } from 'next/link';
+import { useRouter } from 'next/router';
+import React, { Children } from 'react';
 
 type NavLinkProps = React.PropsWithChildren<LinkProps> & {
   activeClassName?: string;
@@ -8,12 +8,12 @@ type NavLinkProps = React.PropsWithChildren<LinkProps> & {
 
 const NavLink = ({
   children,
-  activeClassName = "active",
+  activeClassName = 'active',
   ...props
 }: NavLinkProps) => {
   const { asPath } = useRouter();
   const child = Children.only(children) as React.ReactElement;
-  const childClassName = child.props.className || "";
+  const childClassName = child.props.className || '';
 
   const className =
     asPath === props.href || asPath === props.as

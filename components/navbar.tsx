@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from "react";
-import styled from "styled-components";
-import NavLink from "./navlink";
-import home from "~/svgs/home.svg";
-import Image from "next/image";
-import hiking from "~/svgs/hiking.svg";
-import mylog from "~/svgs/mylog.svg";
-import profile from "~/svgs/profile.svg";
+import React, { useCallback, useMemo } from 'react';
+import styled from 'styled-components';
+import NavLink from './navlink';
+import home from '~/svgs/home.svg';
+import Image from 'next/image';
+import hiking from '~/svgs/hiking.svg';
+import mylog from '~/svgs/mylog.svg';
+import profile from '~/svgs/profile.svg';
 
 type Item = {
   to: string;
@@ -14,10 +14,10 @@ type Item = {
 };
 
 const items: Item[] = [
-  { to: "/", name: "홈", icon: home },
-  { to: "/hiking", name: "등산로", icon: hiking },
-  { to: "/mylogs", name: "등산로그", icon: mylog },
-  { to: "/profile", name: "내 정보", icon: profile },
+  { to: '/', name: '홈', icon: home },
+  { to: '/hiking', name: '등산로', icon: hiking },
+  { to: '/mylogs', name: '등산로그', icon: mylog },
+  { to: '/profile', name: '내 정보', icon: profile },
 ];
 
 const Navbar = () => {

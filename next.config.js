@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
-const withPlugins = require("next-compose-plugins");
-const withPwa = require("next-pwa");
+const withPlugins = require('next-compose-plugins');
+const withPwa = require('next-pwa');
 
 module.exports = withPlugins(
   [
@@ -9,7 +9,7 @@ module.exports = withPlugins(
       withPwa,
       {
         pwa: {
-          dest: "public",
+          dest: 'public',
           register: true,
           skipWaiting: true,
           // disable: process.env.NODE_ENV === "development",
@@ -24,7 +24,7 @@ module.exports = withPlugins(
         config.module.rules.push({
           test: /\.svg$/i,
           issuer: /\.[jt]sx?$/,
-          use: ["@svgr/webpack"],
+          use: ['@svgr/webpack'],
         });
 
         return config;

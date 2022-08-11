@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import theme from "~/constants/theme";
+import styled from 'styled-components';
+import theme from '~/constants/theme';
 
 interface Props {
   title: string;

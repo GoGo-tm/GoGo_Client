@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 // * route match
 export const config = {
-  matcher: "/",
+  matcher: '/',
 };
 
 export async function middleware(req: NextRequest) {
@@ -13,8 +13,8 @@ export async function middleware(req: NextRequest) {
   const latitude = geo?.latitude || 37.5;
   const longitude = geo?.longitude || 122.123123;
 
-  url.searchParams.set("latitude", JSON.stringify(latitude));
-  url.searchParams.set("longitude", JSON.stringify(longitude));
+  url.searchParams.set('latitude', JSON.stringify(latitude));
+  url.searchParams.set('longitude', JSON.stringify(longitude));
 
   return NextResponse.rewrite(url);
 }

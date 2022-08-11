@@ -1,6 +1,6 @@
-import Layout from "~/components/layout";
-import type { ReactElement } from "react";
-import type { NextPageWithLayout } from "~/types/base";
+import type { ReactElement } from 'react';
+import Layout from '~/components/layout';
+import type { NextPageWithLayout } from '~/types/base';
 
 const Profile: NextPageWithLayout<{}> = () => {
   return (

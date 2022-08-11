@@ -1,8 +1,8 @@
-import { GetServerSideProps } from "next";
-import Layout from "~/components/layout";
-import type { InferGetServerSidePropsType } from "next/types";
-import type { ReactElement } from "react";
-import type { NextPageWithLayout } from "~/types/base";
+import { GetServerSideProps } from 'next';
+import type { InferGetServerSidePropsType } from 'next/types';
+import type { ReactElement } from 'react';
+import Layout from '~/components/layout';
+import type { NextPageWithLayout } from '~/types/base';
 
 const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -21,7 +21,7 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = "";
+  const res = '';
 
   return {
     props: {

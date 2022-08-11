@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import Header from "./header";
-import Navbar from "./navbar";
+import type { ReactNode } from 'react';
+import Header from './header';
+import Navbar from './navbar';
 
 interface Props {
   children: ReactNode;
