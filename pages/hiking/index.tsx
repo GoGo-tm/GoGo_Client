@@ -11,7 +11,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
 };
 
 Hiking.getLayout = function (page: ReactElement) {
-  return <Layout title="Hiking">{page}</Layout>;
+  return <Layout title="등산로">{page}</Layout>;
 };
 
 export default Hiking;

@@ -11,7 +11,7 @@ const Mylogs: NextPageWithLayout<{}> = () => {
 };
 
 Mylogs.getLayout = function (page: ReactElement) {
-  return <Layout title="MyLogs">{page}</Layout>;
+  return <Layout title="등산로그">{page}</Layout>;
 };
 
 export default Mylogs;

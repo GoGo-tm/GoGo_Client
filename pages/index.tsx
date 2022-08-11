@@ -17,7 +17,7 @@ const Home: NextPageWithLayout<
 export default Home;
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="Home">{page}</Layout>;
+  return <Layout title="홈">{page}</Layout>;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

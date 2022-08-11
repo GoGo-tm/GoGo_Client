@@ -11,7 +11,7 @@ const Profile: NextPageWithLayout<{}> = () => {
 };
 
 Profile.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="Profile">{page}</Layout>;
+  return <Layout title="내 정보">{page}</Layout>;
 };
 
 export default Profile;
