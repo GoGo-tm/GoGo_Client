@@ -2,9 +2,9 @@ import React, { Children } from "react";
 import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
 
-type NavLinkProps = React.PropsWithChildren<LinkProps> & {
+interface NavLinkProps extends React.PropsWithChildren<LinkProps> {
   activeClassName?: string;
-};
+}
 
 const NavLink = ({
   children,

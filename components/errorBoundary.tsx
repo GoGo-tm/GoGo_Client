@@ -1,13 +1,13 @@
 import { Component, ReactNode } from "react";
 
-type Props = {
+interface Props {
   fallback: ReactNode;
   children: ReactNode;
-};
+}
 
-type State = {
+interface State {
   hasError: boolean;
-};
+}
 
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
