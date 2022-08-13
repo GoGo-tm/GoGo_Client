@@ -66,10 +66,10 @@ const StyledNavbarItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 60px;
+  height: 3.75rem;
   justify-content: space-evenly;
   font-size: ${({ theme: { fontSize } }) => fontSize.eb1};
-  font-weight: bolder;
+  font-weight: 800;
   cursor: pointer;
 `;
 

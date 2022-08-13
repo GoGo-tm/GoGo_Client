@@ -108,6 +108,42 @@ export default class MyDocument extends Document {
             href="/splash/ipadpro2_splash.png"
             media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
           ></link>
+          {/* font */}
+          <link
+            rel="preload"
+            href="/fonts/Pretendard-Medium.otf"
+            as="font"
+            type="font/otf"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/fonts/Pretendard-Regular.otf"
+            as="font"
+            type="font/otf"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/fonts/Pretendard-SemiBold.otf"
+            as="font"
+            type="font/otf"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/fonts/Pretendard-Bold.otf"
+            as="font"
+            type="font/otf"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/fonts/Pretendard-ExtraBold.otf"
+            as="font"
+            type="font/otf"
+            crossOrigin=""
+          />
         </Head>
         <body>
           <Main />
