@@ -1,15 +1,23 @@
 import { GetServerSideProps } from 'next';
+import AsyncBoundary from '~/components/asyncBoundary';
+import Banner from '~/components/banner';
+import Navbar from '~/components/navbar';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
-import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
+import { QueryClient } from '@tanstack/react-query';
 
 const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ user }) => {
+> = ({ weather }) => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <AsyncBoundary
+        rejectedFallback={<div>error..!</div>}
+        pendingFallback={<div>loading...!</div>}
+      >
+        <Banner {...weather} />
+      </AsyncBoundary>
     </div>
   );
 };
@@ -17,15 +25,30 @@ const Home: NextPageWithLayout<
 export default Home;
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="홈">{page}</Layout>;
+  return (
+    <>
+      {page}
+      <Navbar />
+    </>
+  );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = '';
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { latitude, longitude, city } = query;
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['weather']);
+
+  const weather = await fetch(
+    `http://localhost:3000/api/weather?latitude=${latitude}&longitude=${longitude}`
+  ).then((res) => res.json());
 
   return {
     props: {
-      user: res,
+      weather: {
+        ...weather,
+        city,
+      },
     },
   };
 };

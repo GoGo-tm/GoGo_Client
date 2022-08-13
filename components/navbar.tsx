@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import styled from 'styled-components';
 import NavLink from './navlink';
 import { ReactComponent as Home } from '../svgs/home.svg';
@@ -6,7 +6,7 @@ import { ReactComponent as Hiking } from '../svgs/hiking.svg';
 import { ReactComponent as MyLog } from '../svgs/mylog.svg';
 import { ReactComponent as Profile } from '../svgs/profile.svg';
 
-interface Item {
+export interface Item {
   to: string;
   name: string;
   icon: ReactElement;
@@ -20,19 +20,17 @@ const items: Item[] = [
 ];
 
 const Navbar = () => {
-  const renderItems = useCallback(
-    () => items.map((item) => <NavbarItem key={item.name} item={item} />),
-    []
-  );
+  const renderItems = () =>
+    items.map((item) => <NavbarItem key={item.name} item={item} />);
 
-  const memorizedItems = useMemo(() => renderItems(), [renderItems]);
+  const memorizedItems = useMemo(() => renderItems(), [items]);
 
   return <StyledNavbar>{memorizedItems}</StyledNavbar>;
 };
 
 const NavbarItem = React.memo(function NavbarItem({ item }: { item: Item }) {
   return (
-    <NavLink href={item.to}>
+    <NavLink href={item.to} as={item.to}>
       <StyledNavbarItem>
         {item.icon}
         {item.name}
@@ -70,8 +68,8 @@ const StyledNavbarItem = styled.div`
   justify-content: space-evenly;
   font-size: ${({ theme: { fontSize } }) => fontSize.eb1};
   font-weight: bolder;
-  cursor: pointer;
   gap: 0.375rem;
+  cursor: pointer;
   svg {
     width: 1.313rem;
     height: 1.25rem;
