@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
+import Layout from '~/components/layout';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
-import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
 
 const Home: NextPageWithLayout<
