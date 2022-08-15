@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // * route match
 export const config = {
-  matcher: '/',
+  matcher: ['/', '/api/:path*'],
 };
 
 export async function middleware(req: NextRequest) {

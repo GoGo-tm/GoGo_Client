@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
+import useWeather from '~/hooks/queries/useWeather';
 import { ReactComponent as LocationIcon } from '../svgs/location.svg';
 
 interface Props {
@@ -9,29 +10,39 @@ interface Props {
   city: string;
 }
 
-const Banner = ({ content, landingImg, weatherImg, city }: Props) => {
+const Banner = () => {
+  const { data: weatherData } = useWeather({
+    staleTime: 5000,
+    cacheTime: Infinity,
+  }) as { data: Props };
+
   return (
     <Base>
       <Wrapper>
         <Logo src="/images/01_Logotype.png" width={90} height={25} />
-        <WeatherContent>{content}</WeatherContent>
-        <LocationContent>{city}</LocationContent>
+        <WeatherContent>{weatherData.content}</WeatherContent>
+        <LocationContent>
+          <Icon />
+          {weatherData.city}
+        </LocationContent>
       </Wrapper>
-      <PositionBox>
+      <WeatherImagePositionBox absolute>
         <WeatherImage
           width={150}
           height={115}
-          src={weatherImg}
-          alt={weatherImg}
+          src={weatherData.weatherImg}
+          alt={weatherData.weatherImg}
         />
-      </PositionBox>
-      <LadingImage
-        // layout="fill"
-        width={1000}
-        height={200}
-        src={landingImg}
-        alt={landingImg}
-      />
+      </WeatherImagePositionBox>
+      <LandingImagePositionBox>
+        <LandingImage
+          layout="responsive"
+          width={1000}
+          height={200}
+          src={weatherData.landingImg}
+          alt={weatherData.landingImg}
+        />
+      </LandingImagePositionBox>
     </Base>
   );
 };
@@ -48,16 +59,18 @@ const WeatherImage = styled(Image)`
   position: absolute;
 `;
 
-const LadingImage = styled(Image)`
-  /* width: 100%; */
-  height: 5.313rem;
+const LandingImage = styled(Image)``;
+
+const PositionBox = styled.div<{ absolute?: boolean }>`
+  position: ${({ absolute }) => (absolute ? 'absolute' : 'relative')};
 `;
 
-const PositionBox = styled.div`
-  position: absolute;
+const WeatherImagePositionBox = styled(PositionBox)`
   right: 1.25rem;
   top: 2.8rem;
 `;
+
+const LandingImagePositionBox = styled(PositionBox)``;
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,8 +88,16 @@ const WeatherContent = styled.div`
 `;
 
 const LocationContent = styled.div`
+  display: flex;
+  gap: 0.563rem;
   margin-top: 1rem;
   font-size: ${({ theme }) => theme.fontSize.r2};
+  color: ${({ theme }) => theme.colors.primary};
+  fill: ${({ theme: { colors } }) => colors.primary};
+`;
+
+const Icon = styled(LocationIcon)`
+  width: 0.75rem;
 `;
 
 const Logo = styled(Image)`

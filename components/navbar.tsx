@@ -68,6 +68,7 @@ const StyledNavbarItem = styled.div`
   justify-content: space-evenly;
   font-size: ${({ theme: { fontSize } }) => fontSize.eb1};
   font-weight: bolder;
+  height: 3.75rem;
   gap: 0.375rem;
   cursor: pointer;
   svg {

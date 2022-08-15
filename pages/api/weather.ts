@@ -10,9 +10,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { latitude, longitude } = req.query as {
+  const { latitude, longitude, city } = req.query as {
     latitude: string;
     longitude: string;
+    city: string;
   };
 
   const { nx, ny } = mapService.mapToGrid(latitude, longitude);
@@ -24,5 +25,8 @@ export default async function handler(
     ny,
   });
 
-  return res.json(weather);
+  return res.json({
+    ...weather,
+    city,
+  });
 }
