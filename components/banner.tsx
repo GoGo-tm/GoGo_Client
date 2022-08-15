@@ -34,15 +34,15 @@ const Banner = () => {
           alt={weatherData.weatherImg}
         />
       </WeatherImagePositionBox>
-      <LandingImagePositionBox>
-        <LandingImage
+      <PositionBox>
+        <Image
           layout="responsive"
           width={1000}
           height={200}
           src={weatherData.landingImg}
           alt={weatherData.landingImg}
         />
-      </LandingImagePositionBox>
+      </PositionBox>
     </Base>
   );
 };
@@ -59,8 +59,6 @@ const WeatherImage = styled(Image)`
   position: absolute;
 `;
 
-const LandingImage = styled(Image)``;
-
 const PositionBox = styled.div<{ absolute?: boolean }>`
   position: ${({ absolute }) => (absolute ? 'absolute' : 'relative')};
 `;
@@ -69,8 +67,6 @@ const WeatherImagePositionBox = styled(PositionBox)`
   right: 1.25rem;
   top: 2.8rem;
 `;
-
-const LandingImagePositionBox = styled(PositionBox)``;
 
 const Wrapper = styled.div`
   display: flex;

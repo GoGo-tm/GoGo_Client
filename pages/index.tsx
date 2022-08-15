@@ -1,13 +1,9 @@
 import { GetServerSideProps } from 'next';
-<<<<<<< HEAD
-import Layout from '~/components/layout';
-=======
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import AsyncBoundary from '~/components/asyncBoundary';
 import Banner from '~/components/banner';
 import Navbar from '~/components/navbar';
 import QueryKeys from '~/constants/queries';
->>>>>>> 1deb14f08753321e1c675c6c743eba01798a99d9
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/types/base';
