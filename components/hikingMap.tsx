@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { tm123ToCoords } from '~/utils/map';
+import mapService from '~/utils/map';
 
 interface Props {
   tm123: {
@@ -12,7 +12,7 @@ const HikingMap = ({ tm123 }: Props) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
 
   useEffect(() => {
-    const coords = tm123ToCoords(tm123.paths);
+    const coords = mapService.tm123ToCoords(tm123.paths);
     const mid = Math.floor(coords.length / 2);
 
     mapRef.current = new naver.maps.Map('map', {
