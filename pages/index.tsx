@@ -1,9 +1,11 @@
 import { GetServerSideProps } from 'next';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import AsyncBoundary from '~/components/asyncBoundary';
+import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 import Banner from '~/components/banner';
 import Navbar from '~/components/navbar';
+import Search from '~/components/search';
 import QueryKeys from '~/constants/queries';
+import styled from 'styled-components';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/types/base';
@@ -12,14 +14,15 @@ const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
   return (
-    <div>
+    <Outline>
       <AsyncBoundary
         rejectedFallback={<div>error..!</div>}
         pendingFallback={<div>loading...!</div>}
       >
         <Banner />
       </AsyncBoundary>
-    </div>
+      <Search />
+    </Outline>
   );
 };
 
@@ -47,3 +50,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   };
 };
+
+const Outline = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
