@@ -10,6 +10,9 @@ interface Props {
   city: string;
 }
 
+const blurDataUrl =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mO8ef36fwYiAOOoQvoqBAC7NSNHzCGqaQAAAABJRU5ErkJggg==';
+
 const Banner = () => {
   const { data: weatherData } = useWeather({
     staleTime: 5000,
@@ -19,7 +22,14 @@ const Banner = () => {
   return (
     <Base>
       <Wrapper>
-        <Logo src="/images/01_Logotype.png" width={90} height={25} />
+        <Logo
+          src="/images/01_Logotype.png"
+          alt='="logo.png'
+          width={90}
+          height={25}
+          blurDataURL={blurDataUrl}
+          placeholder="blur"
+        />
         <WeatherContent>{weatherData.content}</WeatherContent>
         <LocationContent>
           <Icon />
@@ -32,6 +42,8 @@ const Banner = () => {
           height={115}
           src={weatherData.weatherImg}
           alt={weatherData.weatherImg}
+          blurDataURL={blurDataUrl}
+          placeholder="blur"
         />
       </WeatherImagePositionBox>
       <PositionBox>
@@ -41,6 +53,8 @@ const Banner = () => {
           height={200}
           src={weatherData.landingImg}
           alt={weatherData.landingImg}
+          blurDataURL={blurDataUrl}
+          placeholder="blur"
         />
       </PositionBox>
     </Base>

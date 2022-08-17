@@ -4,8 +4,11 @@ import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 import Banner from '~/components/banner';
 import Navbar from '~/components/navbar';
 import Search from '~/components/search';
+import Divider from '~/components/divider';
 import QueryKeys from '~/constants/queries';
+import Title, { Highlight } from '~/components/home/title';
 import styled from 'styled-components';
+import { BannerLoading } from '~/components/loading';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/types/base';
@@ -14,15 +17,40 @@ const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
   return (
-    <Outline>
+    <Base>
       <AsyncBoundary
         rejectedFallback={<div>error..!</div>}
-        pendingFallback={<div>loading...!</div>}
+        pendingFallback={<BannerLoading />}
       >
         <Banner />
       </AsyncBoundary>
-      <Search />
-    </Outline>
+      <Outline>
+        <Search />
+        <Title image="/images/13_Rocket.png" arrow>
+          요즘
+          <Highlight> HOT</Highlight>한 등산로
+        </Title>
+      </Outline>
+      <Divider />
+      <Outline>
+        <Title image="/images/09_Mountain2.png">
+          등산이
+          <Highlight> 처음</Highlight>이신가요?
+        </Title>
+      </Outline>
+      <Divider />
+      <Outline>
+        <Title image="/images/14_Shoe.png" arrow>
+          등산갈 때 뭐 챙기지?
+        </Title>
+      </Outline>
+      <Divider />
+      <Outline>
+        <Title image="/images/13_Rocket.png" arrow>
+          <Highlight>의지</Highlight>를 불태워줄 등산-log
+        </Title>
+      </Outline>
+    </Base>
   );
 };
 
@@ -41,7 +69,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery([QueryKeys.WEATHER_KEY], () =>
-    fetch('http://localhost:3000/api/weather').then((res) => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/weather`).then((res) =>
+      res.json()
+    )
   );
 
   return {
@@ -51,8 +81,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const Outline = styled.main`
+const Base = styled.main`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+`;
+
+const Outline = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 1rem;
 `;

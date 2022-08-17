@@ -1,9 +1,7 @@
+import { Divider as AntdDivider } from 'antd';
+
 const Divider = () => {
-  return (
-    <div>
-      <h1>ads</h1>
-    </div>
-  );
+  return <AntdDivider />;
 };
 
 export default Divider;

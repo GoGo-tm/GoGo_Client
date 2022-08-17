@@ -15,7 +15,6 @@ const Search = () => {
 export default Search;
 
 const Base = styled.div`
-  margin: 0 1rem;
   position: relative;
   display: flex;
   align-items: center;
