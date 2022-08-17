@@ -25,7 +25,12 @@ const Navbar = () => {
 
   const memorizedItems = useMemo(() => renderItems(), [items]);
 
-  return <StyledNavbar>{memorizedItems}</StyledNavbar>;
+  return (
+    <>
+      <StyledNavbar>{memorizedItems}</StyledNavbar>
+      <Space />
+    </>
+  );
 };
 
 const NavbarItem = React.memo(function NavbarItem({ item }: { item: Item }) {
@@ -75,4 +80,9 @@ const StyledNavbarItem = styled.div`
     width: 1.313rem;
     height: 1.25rem;
   }
+`;
+
+const Space = styled.div`
+  width: 100%;
+  height: 5.75rem;
 `;

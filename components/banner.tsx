@@ -24,6 +24,7 @@ const Banner = () => {
       <Wrapper>
         <Logo
           src="/images/01_Logotype.png"
+          alt='="logo.png'
           width={90}
           height={25}
           blurDataURL={blurDataUrl}
