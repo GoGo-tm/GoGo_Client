@@ -68,10 +68,16 @@ export default class MyDocument extends Document {
             href="/icons/favicon-32x32.png"
             rel="icon"
             type="image/png"
+            sizes="96x96"
+          />
+          <link
+            href="/icons/favicon-32x32.png"
+            rel="icon"
+            type="image/png"
             sizes="32x32"
           />
           {/* microsoft */}
-          <meta name="msapplication-TileColor" content="#FF98BA"></meta>
+          <meta name="msapplication-TileColor" content="#ffffff" />
           {/* splash */}
           <link
             rel="apple-touch-startup-image"

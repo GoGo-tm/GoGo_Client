@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
+import misc from './misc';
 import { PTY_CONTENTS, PTY_NULL_TYPE, SKY_CONTENTS } from '~/constants/weather';
 
 const isBaseTime = ['02', '05', '08', '11', '14', '17', '20', '23'];
-const isBaseTimePlus1Hour = ['03', '06', '09', '12', '15', '18', '21', '24'];
+const isBaseTimePlus1Hour = ['03', '06', '09', '12', '15', '18', '21', '00'];
 const isBaseTimePlus2Hour = ['04', '07', '10', '13', '16', '19', '22', '01'];
 
 interface GetWeather {
@@ -26,7 +27,7 @@ interface Item {
 const getBaseTime = () => {
   const curTime = new Date();
   const baseTime = [dayjs(curTime).format('YYYYMMDD')];
-  const baseHour = dayjs(curTime).hour().toString();
+  const baseHour = dayjs(curTime).format('HH');
 
   if (isBaseTime.indexOf(baseHour) !== -1) baseTime.push(baseHour);
   else if (isBaseTimePlus1Hour.indexOf(baseHour) !== -1)
@@ -50,19 +51,24 @@ const weatherService = {
   getWeather: async ({ url, apiKey, nx, ny }: GetWeather) => {
     const [baseDate, baseHour] = getBaseTime();
 
-    const res = await fetch(
-      `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
-        baseHour + '00'
-      }&nx=${nx}&ny=${ny}&dataType=JSON`
-    );
+    try {
+      const res = await fetch(
+        `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
+          baseHour + '00'
+        }&nx=${nx}&ny=${ny}&dataType=JSON`
+      );
 
-    if (!res.ok) throw Error('error');
+      const data = await res.json();
 
-    const data = await res
-      .json()
-      .then((res) => getPtyOrSkyOfItems(res.response.body.items.item));
+      if (data.response.header.resultCode !== '00')
+        throw misc.getErrorMessage(data.response.header.resultMsg);
 
-    return data;
+      const weather = getPtyOrSkyOfItems(data.response.body.items.item);
+
+      return weather;
+    } catch (error) {
+      misc.getErrorMessage(error);
+    }
   },
 };
 
