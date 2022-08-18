@@ -17,6 +17,7 @@ const Banner = () => {
   const { data: weatherData } = useWeather({
     staleTime: 5000,
     cacheTime: Infinity,
+    suspense: true,
   }) as { data: Props };
 
   return (
@@ -30,18 +31,18 @@ const Banner = () => {
           blurDataURL={blurDataUrl}
           placeholder="blur"
         />
-        <WeatherContent>{weatherData.content}</WeatherContent>
+        <WeatherContent>{weatherData?.content}</WeatherContent>
         <LocationContent>
           <Icon />
-          {weatherData.city}
+          {weatherData?.city}
         </LocationContent>
       </Wrapper>
       <WeatherImagePositionBox absolute>
         <WeatherImage
           width={150}
           height={115}
-          src={weatherData.weatherImg}
-          alt={weatherData.weatherImg}
+          src={weatherData?.weatherImg}
+          alt={weatherData?.weatherImg}
           blurDataURL={blurDataUrl}
           placeholder="blur"
         />
@@ -51,8 +52,8 @@ const Banner = () => {
           layout="responsive"
           width={1000}
           height={200}
-          src={weatherData.landingImg}
-          alt={weatherData.landingImg}
+          src={weatherData?.landingImg}
+          alt={weatherData?.landingImg}
           blurDataURL={blurDataUrl}
           placeholder="blur"
         />
