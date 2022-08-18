@@ -3,9 +3,6 @@ import weatherService from '~/utils/weather';
 import mapService from '~/utils/map';
 import misc from '~/utils/misc';
 
-// * 배너 로직
-// * 날씨 데이터를 받아오고 캐슁
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

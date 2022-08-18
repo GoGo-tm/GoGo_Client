@@ -1,14 +1,12 @@
 import { GetServerSideProps } from 'next';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
 import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 import Banner from '~/components/banner';
 import Navbar from '~/components/navbar';
 import Search from '~/components/search';
 import Divider from '~/components/divider';
-import QueryKeys from '~/constants/queries';
 import Title, { Highlight } from '~/components/home/title';
-import styled from 'styled-components';
 import { BannerLoading } from '~/components/loading';
+import styled from 'styled-components';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/types/base';
@@ -66,18 +64,8 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery([QueryKeys.WEATHER_KEY], () =>
-    fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/weather`).then((res) =>
-      res.json()
-    )
-  );
-
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+    props: {},
   };
 };
 

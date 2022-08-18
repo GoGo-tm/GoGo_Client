@@ -11,7 +11,10 @@ interface Weather {
 export default function useWeather(options?: {}) {
   return useQuery<Weather, Error>(
     [QueryKeys.WEATHER_KEY],
-    () => fetch('http://localhost:3000/api/weather').then((res) => res.json()),
+    () =>
+      fetch(`${process.env.NEXT_PUBLIC_URL}/api/weather`).then((res) =>
+        res.json()
+      ),
     options
   );
 }
