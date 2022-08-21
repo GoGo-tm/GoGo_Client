@@ -45,6 +45,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
+    display: flex;
+    flex-direction: column;
     font-family: 'Pretendard';
   }
 
