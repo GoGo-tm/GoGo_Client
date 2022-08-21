@@ -45,9 +45,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     font-family: Pretendard;
   }
 
@@ -58,6 +55,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  ::selection {
+    background: ${({ theme }) => theme.colors.primary};
   }
 `;
 
