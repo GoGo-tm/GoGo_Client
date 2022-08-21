@@ -45,6 +45,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     font-family: Pretendard;
   }
 

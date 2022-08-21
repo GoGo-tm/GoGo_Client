@@ -3,6 +3,7 @@ import SEO from '~/components/seo';
 import theme from '~/constants/theme';
 import GlobalStyle from '~/components/globalStyle';
 import { ThemeProvider } from 'styled-components';
+import { SessionProvider } from 'next-auth/react';
 import {
   Hydrate,
   QueryClient,
@@ -25,7 +26,10 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayout) {
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -48,14 +52,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <SEO
-            og={{
-              type: 'article',
-              siteName: '고고',
-            }}
-          />
-          <GlobalStyle />
-          {getLayout(<Component {...pageProps} />)}
+          <SessionProvider session={session}>
+            <SEO
+              og={{
+                type: 'article',
+                siteName: '고고',
+              }}
+            />
+            <GlobalStyle />
+            {getLayout(<Component {...pageProps} />)}
+          </SessionProvider>
         </Hydrate>
       </QueryClientProvider>
     </ThemeProvider>
