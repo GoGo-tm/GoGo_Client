@@ -9,13 +9,18 @@ interface Props {
   like: number;
 }
 
-const Card = () => {
+const Card = ({ title, location, level, km, like }: Props) => {
   return (
     <CardWrapper>
       <img src="/images/Rectangle33.png" width="100%" />
       <ContentWrapper>
-        <Title>관악산 A 코스</Title>
-        <Content>서울특별시 관악구 쉬움</Content>
+        <Title>
+          {title}
+          <span> · {like}</span>
+        </Title>
+        <Content>
+          {location} · {level} · {km}km
+        </Content>
       </ContentWrapper>
     </CardWrapper>
   );
@@ -24,14 +29,13 @@ const Card = () => {
 export default Card;
 
 const CardWrapper = styled.div`
-  width: 175px;
-  height: 175px;
   box-shadow: 0px 4px 4px #ecedef;
   border-radius: 10px;
+  padding: 1rem 0;
 `;
 
 const ContentWrapper = styled.div`
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 `;
 
 const Title = styled.div`
@@ -40,6 +44,7 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  padding-top: 5px;
+  padding-top: 8px;
   font-size: ${theme.fontSize.r1};
+  color: #898a8d;
 `;
