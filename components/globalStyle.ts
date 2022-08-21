@@ -45,7 +45,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
-    font-family: Pretendard;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Pretendard';
   }
 
   * {
