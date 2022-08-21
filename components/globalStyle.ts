@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #__next {
-    font-family: Pretendard;
+    font-family: 'Pretendard';
   }
 
   * {
@@ -55,6 +55,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  ::selection {
+    background: ${({ theme }) => theme.colors.primary};
   }
 `;
 
