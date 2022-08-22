@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import { ReactComponent as ArrowIcon } from '../../svgs/right.svg';
+import { ReactComponent as ArrowIcon } from '../../assets/svgs/right.svg';
 import type { PropsWithChildren } from 'react';
 
 interface Props extends PropsWithChildren {

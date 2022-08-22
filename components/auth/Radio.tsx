@@ -1,19 +1,19 @@
 import React from 'react';
-import { AuthRadioBase, AuthRadioButton, AuthRadioLabel } from './styled';
+import { Radio } from 'antd';
 
 interface Props {
   label: string;
   require?: boolean;
 }
 
-const AuthRadio = React.memo(function Radio({ label, require }: Props) {
+const AuthRadio = React.memo(function AuthRadio({ label, require }: Props) {
   return (
-    <AuthRadioBase>
-      <AuthRadioButton />
-      <AuthRadioLabel>
+    <div>
+      <Radio />
+      <label>
         {label} {`(${require ? '필수' : '선택'})`}
-      </AuthRadioLabel>
-    </AuthRadioBase>
+      </label>
+    </div>
   );
 });
 

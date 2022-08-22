@@ -1,4 +1,3 @@
-import { Radio } from 'antd';
 import styled from 'styled-components';
 
 const AuthForm = styled.form`
@@ -47,14 +46,6 @@ const AuthInputText = styled.input`
   }
 `;
 
-const AuthRadioBase = styled.div``;
-
-const AuthRadioLabel = styled.label``;
-
-const AuthRadioGroup = styled(Radio.Group);
-
-const AuthRadioButton = styled(Radio)``;
-
 export {
   AuthForm,
   AuthBase,
@@ -62,8 +53,4 @@ export {
   AuthInputLabel,
   AuthInputText,
   AuthInputOutline,
-  AuthRadioBase,
-  AuthRadioLabel,
-  AuthRadioGroup,
-  AuthRadioButton,
 };
