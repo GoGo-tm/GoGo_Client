@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import Button from './button';
 
@@ -18,7 +19,9 @@ const Protected = ({ content }: Props) => {
         />
         <Paragraph>{content}</Paragraph>
       </Outline>
-      <Button>로그인/회원가입</Button>
+      <Link href="/auth/signIn">
+        <Button>로그인/회원가입</Button>
+      </Link>
     </Base>
   );
 };
