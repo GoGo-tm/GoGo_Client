@@ -9,6 +9,13 @@
         "pure": true
       }
     ],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": true
+      }
+    ],
     "inline-react-svg"
   ]
 }

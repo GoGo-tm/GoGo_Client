@@ -2,6 +2,7 @@
 
 const withPlugins = require('next-compose-plugins');
 const withPwa = require('next-pwa');
+const withAntdLess = require('next-plugin-antd-less');
 
 module.exports = withPlugins(
   [
@@ -14,6 +15,15 @@ module.exports = withPlugins(
           skipWaiting: true,
           disable: process.env.NODE_ENV === 'development',
         },
+      },
+    ],
+    [
+      withAntdLess,
+      {
+        modifyVars: { '@primary-color': '#009D68' },
+        lessVarsFilePath: './assets/css/variables.less',
+        lessVarsFilePathAppendToEndOfContent: false,
+        cssLoaderOptions: {},
       },
     ],
   ],
