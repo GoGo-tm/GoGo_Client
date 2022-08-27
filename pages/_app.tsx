@@ -12,7 +12,7 @@ import {
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next/types';
 import type { ReactElement, ReactNode } from 'react';
-import '~/assets/antd.css';
+import '~/assets/css/antd.css';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   import('../mocks');

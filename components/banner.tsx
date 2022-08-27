@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 import useWeather from '~/hooks/queries/useWeather';
-import { ReactComponent as LocationIcon } from '../svgs/location.svg';
+import { ReactComponent as LocationIcon } from '../assets/svgs/location.svg';
 
 interface Props {
   content: string;

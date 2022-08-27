@@ -6,15 +6,15 @@ const GlobalStyle = createGlobalStyle`
   
   @font-face {
     font-family: 'Pretendard';
-    src: url('/fonts/Pretendard-Medium.otf');
+    src: url('/fonts/Pretendard-Regular.otf');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
-
+  
   @font-face {
     font-family: 'Pretendard';
-    src: url('/fonts/Pretendard-Regular.otf');
+    src: url('/fonts/Pretendard-Medium.otf');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -47,6 +47,7 @@ const GlobalStyle = createGlobalStyle`
   html, body, #__next {
     display: flex;
     flex-direction: column;
+    height: 100%;
     font-family: 'Pretendard';
   }
 

@@ -1,10 +1,10 @@
 import React, { ReactElement, useMemo } from 'react';
 import styled from 'styled-components';
 import NavLink from './navlink';
-import { ReactComponent as Home } from '../svgs/home.svg';
-import { ReactComponent as Hiking } from '../svgs/hiking.svg';
-import { ReactComponent as MyLog } from '../svgs/mylog.svg';
-import { ReactComponent as Profile } from '../svgs/profile.svg';
+import { ReactComponent as Home } from '../assets/svgs/home.svg';
+import { ReactComponent as Hiking } from '../assets/svgs/hiking.svg';
+import { ReactComponent as MyLog } from '../assets/svgs/mylog.svg';
+import { ReactComponent as Profile } from '../assets/svgs/profile.svg';
 
 export interface Item {
   to: string;
