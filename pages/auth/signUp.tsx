@@ -1,29 +1,108 @@
-import { AuthBase, AuthForm, AuthInputOutline } from '~/components/auth/styled';
+import {
+  AuthBase,
+  AuthForm,
+  AuthFormItem,
+  AuthInput,
+  AuthInputOutline,
+} from '~/components/auth/styled';
 import styled from 'styled-components';
 import Header from '~/components/header';
 import Divider from '~/components/divider';
-import AuthInput from '~/components/auth/Input';
 import Button from '~/components/button';
-import AuthRadio from '~/components/auth/Radio';
+import AuthRadio from '~/components/auth/authRadio';
+import AuthLabel from '~/components/auth/authLabel';
 import type { ReactElement } from 'react';
+import validator from '~/utils/validator';
 
 const SignUp = () => {
   return (
-    <AuthForm>
-      <AuthBase>
+    <AuthForm
+      name="signUp"
+      onFinish={(v) => console.log(v)}
+      onFinishFailed={(v) => console.log(v)}
+    >
+      <AuthBase root>
         <AuthInputOutline>
-          <AuthInput label="닉네임" placeholder="10자 이하의 닉네임 입력" />
-          <AuthInput label="이메일 주소" placeholder="이메일 주소 입력" />
-          <AuthInput
-            label="비밀번호"
-            type="password"
-            placeholder="영문, 숫자 포함 8자리 이상의 비밀번호 입력"
-          />
-          <AuthInput
-            label="비밀번호 확인"
-            type="password"
-            placeholder="영문, 숫자 포함 8자리 이상의 비밀번호 입력"
-          />
+          <AuthLabel label="닉네임">
+            <AuthFormItem
+              name="nickname"
+              tooltip="고고에서 무슨 이름으로 불리 길 원하세요?"
+              rules={[
+                {
+                  validator: validator.nickname,
+                  whitespace: false,
+                },
+              ]}
+            >
+              <AuthInput
+                type="text"
+                name="nickname"
+                placeholder="2자 이상, 10자 이하의 닉네임 입력"
+              />
+            </AuthFormItem>
+          </AuthLabel>
+          <AuthLabel label="이메일 주소">
+            <AuthFormItem
+              name="email"
+              rules={[
+                {
+                  validator: validator.email,
+                },
+              ]}
+            >
+              <AuthInput
+                type="email"
+                name="email"
+                placeholder="이메일 주소 입력"
+              />
+            </AuthFormItem>
+          </AuthLabel>
+          <AuthLabel label="비밀번호">
+            <AuthFormItem
+              name="password"
+              rules={[
+                {
+                  validator: validator.password,
+                },
+              ]}
+              hasFeedback
+            >
+              <AuthInput
+                type="password"
+                name="password"
+                placeholder="영문, 숫자 포함 8자리 이상의 비밀번호 입력"
+              />
+            </AuthFormItem>
+          </AuthLabel>
+          <AuthLabel label="비밀번호 확인">
+            <AuthFormItem
+              name="passwordConfirm"
+              dependencies={['password']}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: '비밀번호를 입력해주세요.',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error('비밀번호를 정확하게 입력해주세요.')
+                    );
+                  },
+                }),
+              ]}
+            >
+              <AuthInput
+                type="password"
+                name="passwordConfirm"
+                placeholder="영문, 숫자 포함 8자리 이상의 비밀번호 입력"
+              />
+            </AuthFormItem>
+          </AuthLabel>
         </AuthInputOutline>
       </AuthBase>
       <Space />
@@ -38,7 +117,9 @@ const SignUp = () => {
       </AuthBase>
       <Divider />
       <AuthBase>
-        <Button>회원가입</Button>
+        <AuthFormItem>
+          <Button type="submit">회원가입</Button>
+        </AuthFormItem>
       </AuthBase>
     </AuthForm>
   );

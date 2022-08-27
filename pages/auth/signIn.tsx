@@ -1,27 +1,24 @@
 import Header from '~/components/header';
-import { AuthBase, AuthForm, AuthInputOutline } from '~/components/auth/styled';
+import {
+  AuthBase,
+  AuthForm,
+  AuthFormItem,
+  AuthInput,
+  AuthInputOutline,
+} from '~/components/auth/styled';
 import styled from 'styled-components';
 import Image from 'next/image';
-import AuthInput from '~/components/auth/Input';
-import useInput from '~/hooks/useInput';
 import Divider from '~/components/divider';
 import Button, { Apple, Kakao, Naver } from '~/components/button';
 import Link from 'next/link';
+import AuthLabel from '~/components/auth/authLabel';
+import validator from '~/utils/validator';
 import type { ReactElement } from 'react';
 
-interface FormData {
-  email: string;
-  password: string;
-}
-
 const SignIn = () => {
-  const { values, handleChangeValues } = useInput<FormData>({
-    email: '',
-    password: '',
-  });
   return (
-    <AuthForm>
-      <AuthBase>
+    <>
+      <AuthBase root>
         <ParagraphOutline>
           <Image
             src="/images/01_Logotype.png"
@@ -31,21 +28,50 @@ const SignIn = () => {
           />
           <Paragraph>{'로그인하고\n나만의 등산로그를 기록해보세요!'}</Paragraph>
         </ParagraphOutline>
-        <AuthInputOutline>
-          <AuthInput label="이메일" placeholder="이메일을 입력해주세요" />
-          <AuthInput label="비밀번호" placeholder="비밀번호를 입력해주세요" />
-        </AuthInputOutline>
-        <LinkOutline right>
-          <Link href="/">비밀번호를 잊으셨나요?</Link>
-        </LinkOutline>
-        <Button>로그인</Button>
-        <LinkOutline>
-          회원이 아니신가요?
-          <Highlight>
-            <Link href="/auth/signUp">가입하기</Link>
-          </Highlight>
-        </LinkOutline>
       </AuthBase>
+      <AuthForm onFinish={(v) => console.log(v)}>
+        <AuthBase>
+          <AuthInputOutline>
+            <AuthLabel label="이메일">
+              <AuthFormItem
+                name="email"
+                rules={[{ validator: validator.email }]}
+              >
+                <AuthInput
+                  type="email"
+                  placeholder="이메일을 입력해주세요."
+                  name="email"
+                />
+              </AuthFormItem>
+            </AuthLabel>
+            <AuthLabel label="비밀번호">
+              <AuthFormItem
+                name="password"
+                rules={[{ validator: validator.password }]}
+                hasFeedback
+              >
+                <AuthInput
+                  placeholder="비밀번호를 입력해주세요."
+                  type="password"
+                  name="password"
+                />
+              </AuthFormItem>
+            </AuthLabel>
+          </AuthInputOutline>
+          <LinkOutline right>
+            <Link href="/">비밀번호를 잊으셨나요?</Link>
+          </LinkOutline>
+          <AuthFormItem>
+            <Button type="submit">로그인</Button>
+          </AuthFormItem>
+          <LinkOutline>
+            회원이 아니신가요?
+            <Highlight>
+              <Link href="/auth/signUp">가입하기</Link>
+            </Highlight>
+          </LinkOutline>
+        </AuthBase>
+      </AuthForm>
       <Divider />
       <AuthBase>
         <ButtonOutline>
@@ -54,7 +80,7 @@ const SignIn = () => {
           <Apple />
         </ButtonOutline>
       </AuthBase>
-    </AuthForm>
+    </>
   );
 };
 
