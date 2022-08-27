@@ -1,14 +1,12 @@
+import { Form, Input } from 'antd';
 import styled from 'styled-components';
 
-const AuthForm = styled.form`
-  padding-top: 2.25rem;
-`;
-
-const AuthBase = styled.div`
+const AuthBase = styled.div<{ root?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0 1rem;
+  padding-top: ${({ root }) => root && '2.25rem'};
 `;
 
 const AuthInputBase = styled.div`
@@ -46,9 +44,58 @@ const AuthInputText = styled.input`
   }
 `;
 
+const AuthForm = styled(Form)`
+  line-height: inherit;
+`;
+
+const AuthFormItem = styled(Form.Item)`
+  width: 100%;
+  margin-bottom: 0;
+  .ant-input-affix-wrapper:focus,
+  .ant-input-affix-wrapper-focused {
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: none;
+  }
+  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus,
+  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input-focused {
+    box-shadow: none;
+  }
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
+    box-shadow: none;
+  }
+  .ant-input-affix-wrapper {
+    border-radius: 0;
+  }
+  .ant-input {
+    border-radius: 0;
+  }
+  .ant-form-item-feedback-icon-success {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const AuthInput = styled(Input)`
+  outline: none;
+  border: none;
+  border-bottom: 0.3px solid #b7b7b7;
+  padding: 0;
+  padding-bottom: 0.5rem;
+  &::placeholder {
+    font-size: ${({ theme }) => theme.fontSize.r3};
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.gray.dense};
+  }
+  &:focus {
+    box-shadow: none;
+  }
+`;
+
 export {
-  AuthForm,
   AuthBase,
+  AuthForm,
+  AuthFormItem,
+  AuthInput,
   AuthInputBase,
   AuthInputLabel,
   AuthInputText,
