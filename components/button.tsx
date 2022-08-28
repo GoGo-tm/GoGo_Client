@@ -5,6 +5,7 @@ import { ReactComponent as AppleIcon } from '../assets/svgs/apple.svg';
 import type { PropsWithChildren } from 'react';
 
 interface Props extends PropsWithChildren {
+  type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => void;
 }
 
@@ -35,8 +36,12 @@ export const Apple = () => {
   );
 };
 
-const Button = ({ onClick, children }: Props) => {
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
+const Button = ({ type = 'button', onClick, children }: Props) => {
+  return (
+    <StyledButton type={type} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
