@@ -3,6 +3,13 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import misc from '~/utils/misc';
 import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import userService from '~/utils/user';
+
+interface SignUpProps {
+  nickname: string;
+  email: string;
+  password: string;
+}
 
 export const settings: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'development',
@@ -18,8 +25,11 @@ export const settings: NextAuthOptions = {
     CredentialsProvider({
       name: 'GoGo_Credentials',
       credentials: {},
-      async authorize() {
-        return null;
+      authorize(credentials) {
+        const res = userService.signUp(credentials as SignUpProps);
+        return {
+          res,
+        };
       },
     }),
   ],

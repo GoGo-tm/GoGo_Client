@@ -11,14 +11,31 @@ import Divider from '~/components/divider';
 import Button from '~/components/button';
 import AuthRadio from '~/components/auth/authRadio';
 import AuthLabel from '~/components/auth/authLabel';
-import type { ReactElement } from 'react';
 import validator from '~/utils/validator';
+import useForm from '~/hooks/useForm';
+import { ReactElement, useEffect } from 'react';
+import userService from '~/utils/user';
+import { signIn } from 'next-auth/react';
+
+interface FormData {
+  nickname: string;
+  email: string;
+  password: string;
+  type: string;
+}
 
 const SignUp = () => {
+  const { success, error, handleSubmit } = useForm<FormData>({
+    serviceCallback: userService.signUp,
+  });
+
+  useEffect(() => {
+    console.log(success, error);
+  }, [success, error]);
   return (
     <AuthForm
       name="signUp"
-      onFinish={(v) => console.log(v)}
+      onFinish={(values) => handleSubmit(values as FormData)}
       onFinishFailed={(v) => console.log(v)}
     >
       <AuthBase root>
