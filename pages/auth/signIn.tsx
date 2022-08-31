@@ -61,7 +61,7 @@ const SignIn = () => {
           <LinkOutline right>
             <Link href="/">비밀번호를 잊으셨나요?</Link>
           </LinkOutline>
-          <AuthFormItem>
+          <AuthFormItem full>
             <Button type="submit">로그인</Button>
           </AuthFormItem>
           <LinkOutline>

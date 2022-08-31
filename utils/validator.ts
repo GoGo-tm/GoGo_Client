@@ -22,6 +22,14 @@ const validator = {
       return Promise.reject(new Error('올바른 비밀번호 양식이 아닙니다.'));
     return Promise.resolve();
   },
+  service: (_: RuleObject, value: string) =>
+    value
+      ? Promise.resolve()
+      : Promise.reject(new Error('약관을 체크해주세요.')),
+  privacy: (_: RuleObject, value: string) =>
+    value
+      ? Promise.resolve()
+      : Promise.reject(new Error('약관을 체크해주세요.')),
 };
 
 export default validator;
