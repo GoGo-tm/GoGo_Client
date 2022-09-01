@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { signIn } from 'next-auth/react';
 import misc from './misc';
 
 interface SignUpProps {
@@ -28,15 +27,16 @@ const userService = {
     password,
   }: Pick<SignUpProps, 'email' | 'password'>) => {
     try {
-      const res = await axios
-        .post('/server/api/auth/signin', {
+      const login = await axios
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signin`, {
           email,
           password,
         })
         .then((res) => res.data);
-      return res;
+
+      return login;
     } catch (e) {
-      throw Error(misc.getErrorMessage(e));
+      throw new Error(misc.getErrorMessage(e));
     }
   },
   signUp: async ({
@@ -58,7 +58,7 @@ const userService = {
 
       return create;
     } catch (e) {
-      throw Error(misc.getErrorMessage(e));
+      throw new Error(misc.getErrorMessage(e));
     }
   },
   signOut: () => {},

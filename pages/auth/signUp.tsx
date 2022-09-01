@@ -29,22 +29,17 @@ interface FormData {
 }
 
 const SignUp = () => {
-  const {
-    formData,
-    success: signUpSuccess,
-    error: signUpError,
-    handleSubmit,
-  } = useForm<FormData>({
+  const { formData, success, error, handleSubmit } = useForm<FormData>({
     serviceCallback: userService.signUp,
   });
 
   useEffect(() => {
-    if (signUpSuccess)
+    if (success)
       signIn('credentials', {
         email: formData?.email,
         password: formData?.password,
       });
-  }, [signUpSuccess]);
+  }, [success]);
   return (
     <AuthForm
       name="signUp"

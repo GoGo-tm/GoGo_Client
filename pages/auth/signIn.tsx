@@ -13,9 +13,23 @@ import Button, { Apple, Kakao, Naver } from '~/components/button';
 import Link from 'next/link';
 import AuthLabel from '~/components/auth/authLabel';
 import validator from '~/utils/validator';
+import useForm from '~/hooks/useForm';
+import { signIn } from 'next-auth/react';
 import type { ReactElement } from 'react';
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 const SignIn = () => {
+  const { success, error, handleSubmit } = useForm<FormData>({
+    serviceCallback: async (values) =>
+      signIn('credentials', {
+        email: values.email,
+        password: values.password,
+      }),
+  });
   return (
     <>
       <AuthBase root>
@@ -29,7 +43,7 @@ const SignIn = () => {
           <Paragraph>{'로그인하고\n나만의 등산로그를 기록해보세요!'}</Paragraph>
         </ParagraphOutline>
       </AuthBase>
-      <AuthForm onFinish={(v) => console.log(v)}>
+      <AuthForm onFinish={(v) => handleSubmit(v as FormData)}>
         <AuthBase>
           <AuthInputOutline>
             <AuthLabel label="이메일">
