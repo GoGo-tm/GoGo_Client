@@ -1,9 +1,22 @@
 import { Divider as AntdDivider } from 'antd';
 
-const Divider = () => {
+interface Props {
+  margin?: string;
+  dense?: string;
+  color?: string;
+}
+
+const Divider = ({
+  margin = '1.75',
+  dense = '0.3',
+  color = '#B7B7B7',
+}: Props) => {
   return (
     <AntdDivider
-      style={{ margin: '1.75rem 0', borderTop: '0.3px solid #B7B7B7' }}
+      style={{
+        margin: `${margin}rem 0`,
+        borderTop: `${dense}px solid ${color}`,
+      }}
     />
   );
 };

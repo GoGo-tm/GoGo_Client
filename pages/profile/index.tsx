@@ -1,8 +1,13 @@
 import Layout from '~/components/layout';
 import Protected from '~/components/protected';
 import { useSession } from 'next-auth/react';
+import Divider from '~/components/divider';
+import styled from 'styled-components';
+import ProfileNavlink from '~/components/profile/profileNavlink';
+import MyImage from '~/components/profile/myImage';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/types/base';
+import { MyImageLoading } from '~/components/loading';
 
 const Profile: NextPageWithLayout<{}> = () => {
   const { data: session, status } = useSession();
@@ -12,9 +17,11 @@ const Profile: NextPageWithLayout<{}> = () => {
   }
 
   return (
-    <div>
-      <h1>profile</h1>
-    </div>
+    <Base>
+      <MyImage>{session?.user?.email}</MyImage>
+      <Divider margin="0" dense="8" color="#F3F4F4" />
+      <ProfileNavlink />
+    </Base>
   );
 };
 
@@ -23,3 +30,5 @@ Profile.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Profile;
+
+const Base = styled.main``;
