@@ -1,52 +1,57 @@
-import React, { ReactElement, useMemo } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import NavLink from './navlink';
 import { ReactComponent as Home } from '../assets/svgs/home.svg';
 import { ReactComponent as Hiking } from '../assets/svgs/hiking.svg';
 import { ReactComponent as MyLog } from '../assets/svgs/mylog.svg';
 import { ReactComponent as Profile } from '../assets/svgs/profile.svg';
+import { Breadcrumb } from 'antd';
+import type { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 
 export interface Item {
-  to: string;
-  name: string;
+  path: string;
+  breadcrumbName: string;
   icon: ReactElement;
+  children?: Item[];
 }
 
-const items: Item[] = [
-  { to: '/', name: '홈', icon: <Home /> },
-  { to: '/hiking', name: '등산로', icon: <Hiking /> },
-  { to: '/mylogs', name: '등산로그', icon: <MyLog /> },
-  { to: '/profile', name: '내 정보', icon: <Profile /> },
+const routes: Route[] = [
+  { path: '/', breadcrumbName: '홈' },
+  { path: '/hiking', breadcrumbName: '등산로' },
+  { path: '/mylogs', breadcrumbName: '등산로그' },
+  { path: '/profile', breadcrumbName: '내 정보' },
 ];
 
+const icons = [<Home />, <Hiking />, <MyLog />, <Profile />];
+
 const Navbar = () => {
-  const renderItems = () =>
-    items.map((item) => <NavbarItem key={item.name} item={item} />);
-
-  const memorizedItems = useMemo(() => renderItems(), [items]);
-
   return (
     <>
-      <StyledNavbar>{memorizedItems}</StyledNavbar>
+      <StyledNavbar routes={routes} itemRender={NavbarItem} />
       <Space />
     </>
   );
 };
 
-const NavbarItem = React.memo(function NavbarItem({ item }: { item: Item }) {
+function NavbarItem(
+  route: Route,
+  _: any,
+  __: Route[],
+  paths: string[]
+): ReactNode {
   return (
-    <NavLink href={item.to} as={item.to}>
+    <NavLink href={route.path}>
       <StyledNavbarItem>
-        {item.icon}
-        {item.name}
+        {icons[paths.length]}
+        {route.breadcrumbName}
       </StyledNavbarItem>
     </NavLink>
   );
-});
+}
 
 export default Navbar;
 
-const StyledNavbar = styled.nav`
+const StyledNavbar = styled(Breadcrumb)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -58,11 +63,19 @@ const StyledNavbar = styled.nav`
   padding: 1rem 0;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   border-radius: 1.5rem 1.5rem 0 0;
-  color: ${({ theme: { colors } }) => colors.gray.light};
-  fill: ${({ theme: { colors } }) => colors.gray.light};
+  ol {
+    width: 100%;
+    fill: ${({ theme: { colors } }) => colors.gray.light};
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
   .active {
     color: ${({ theme: { colors } }) => colors.primary};
     fill: ${({ theme: { colors } }) => colors.primary};
+  }
+  .ant-breadcrumb-separator {
+    display: none;
   }
 `;
 
@@ -75,6 +88,8 @@ const StyledNavbarItem = styled.div`
   font-weight: bolder;
   height: 3.75rem;
   gap: 0.375rem;
+  color: ${({ theme: { colors } }) => colors.gray.light};
+  fill: ${({ theme: { colors } }) => colors.gray.light};
   cursor: pointer;
   svg {
     width: 1.313rem;
