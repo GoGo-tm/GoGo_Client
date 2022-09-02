@@ -1,4 +1,17 @@
 import { Skeleton } from 'antd';
+import { PropsWithChildren } from 'react';
+
+interface MyImageLoadingProps extends PropsWithChildren {
+  loading?: boolean;
+}
+
+const MyImageLoading = ({ children, loading }: MyImageLoadingProps) => {
+  return (
+    <Skeleton active loading={loading}>
+      {children}
+    </Skeleton>
+  );
+};
 
 const BannerLoading = () => {
   return (
@@ -6,4 +19,4 @@ const BannerLoading = () => {
   );
 };
 
-export { BannerLoading };
+export { BannerLoading, MyImageLoading };
