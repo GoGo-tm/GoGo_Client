@@ -81,7 +81,7 @@ export const settings: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      if (url === '/auth/signUp') return `${baseUrl}`;
+      if (url === '/auth/signUp') return `${baseUrl}/auth/signUp`;
       return baseUrl;
     },
   },
