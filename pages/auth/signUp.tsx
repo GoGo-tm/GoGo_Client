@@ -1,5 +1,6 @@
 import {
   AuthBase,
+  AuthCheckBox,
   AuthForm,
   AuthFormItem,
   AuthInput,
@@ -9,16 +10,40 @@ import styled from 'styled-components';
 import Header from '~/components/header';
 import Divider from '~/components/divider';
 import Button from '~/components/button';
-import AuthRadio from '~/components/auth/authRadio';
 import AuthLabel from '~/components/auth/authLabel';
-import type { ReactElement } from 'react';
 import validator from '~/utils/validator';
+import useForm from '~/hooks/useForm';
+import { ReactElement, useEffect } from 'react';
+import userService from '~/utils/user';
+import { signIn } from 'next-auth/react';
+
+interface FormData {
+  nickname: string;
+  email: string;
+  password: string;
+  type: string;
+  passwordConfirm: string;
+  LOCATION: boolean;
+  PRIVACY_POLICY: boolean;
+  SERVICE: boolean;
+}
 
 const SignUp = () => {
+  const { formData, success, error, handleSubmit } = useForm<FormData>({
+    serviceCallback: userService.signUp,
+  });
+
+  useEffect(() => {
+    if (success)
+      signIn('credentials', {
+        email: formData?.email,
+        password: formData?.password,
+      });
+  }, [success]);
   return (
     <AuthForm
       name="signUp"
-      onFinish={(v) => console.log(v)}
+      onFinish={(values) => handleSubmit(values as FormData)}
       onFinishFailed={(v) => console.log(v)}
     >
       <AuthBase root>
@@ -110,14 +135,40 @@ const SignUp = () => {
       <AuthBase>
         <RadioOutline>
           가입 약관 동의
-          <AuthRadio label="서비스 이용 약관" require />
-          <AuthRadio label="개인정보 처리 방침" require />
-          <AuthRadio label="위치정보 이용 동의" />
+          <AuthFormItem
+            name="SERVICE"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: validator.service,
+              },
+            ]}
+          >
+            <AuthCheckBox name="SERVICE">서비스 이용 약관 (필수)</AuthCheckBox>
+          </AuthFormItem>
+          <AuthFormItem
+            name="PRIVACY_POLICY"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: validator.privacy,
+              },
+            ]}
+          >
+            <AuthCheckBox name="PRIVACY_POLICY">
+              개인정보 처리 방침 (필수)
+            </AuthCheckBox>
+          </AuthFormItem>
+          <AuthFormItem name="LOCATION" valuePropName="checked">
+            <AuthCheckBox name="LOCATION">
+              위치정보 이용 동의 (선택)
+            </AuthCheckBox>
+          </AuthFormItem>
         </RadioOutline>
       </AuthBase>
       <Divider />
       <AuthBase>
-        <AuthFormItem>
+        <AuthFormItem full>
           <Button type="submit">회원가입</Button>
         </AuthFormItem>
       </AuthBase>
@@ -137,6 +188,7 @@ SignUp.getLayout = function getLayout(page: ReactElement) {
 export default SignUp;
 
 const RadioOutline = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.688rem;

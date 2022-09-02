@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd';
+import { Checkbox, Form, Input } from 'antd';
 import styled from 'styled-components';
 
 const AuthBase = styled.div<{ root?: boolean }>`
@@ -48,8 +48,8 @@ const AuthForm = styled(Form)`
   line-height: inherit;
 `;
 
-const AuthFormItem = styled(Form.Item)`
-  width: 100%;
+const AuthFormItem = styled(Form.Item)<{ full?: boolean }>`
+  width: ${({ full }) => full && '100%'};
   margin-bottom: 0;
   .ant-input-affix-wrapper:focus,
   .ant-input-affix-wrapper-focused {
@@ -84,10 +84,20 @@ const AuthInput = styled(Input)`
   &::placeholder {
     font-size: ${({ theme }) => theme.fontSize.r3};
     font-weight: 400;
-    color: ${({ theme }) => theme.colors.gray.dense};
+    /* color: ${({ theme }) => theme.colors.gray.dense}; */
   }
   &:focus {
     box-shadow: none;
+  }
+`;
+
+const AuthCheckBoxBase = styled.div`
+  display: flex;
+`;
+
+const AuthCheckBox = styled(Checkbox)`
+  .ant-checkbox-inner {
+    border-radius: 7.5px;
   }
 `;
 
@@ -100,4 +110,6 @@ export {
   AuthInputLabel,
   AuthInputText,
   AuthInputOutline,
+  AuthCheckBoxBase,
+  AuthCheckBox,
 };

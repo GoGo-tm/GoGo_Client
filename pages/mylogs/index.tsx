@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import type { ReactElement } from 'react';
 import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
@@ -6,6 +7,7 @@ const Mylogs: NextPageWithLayout<{}> = () => {
   return (
     <div>
       <h1>my logs</h1>
+      <button onClick={() => signOut()}>로그아웃</button>
     </div>
   );
 };
