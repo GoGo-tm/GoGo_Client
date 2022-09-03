@@ -70,9 +70,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Base = styled.main`
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
 `;
 
 const Outline = styled.div`
