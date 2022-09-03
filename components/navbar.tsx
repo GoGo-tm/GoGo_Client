@@ -25,12 +25,7 @@ const routes: Route[] = [
 const icons = [<Home />, <Hiking />, <MyLog />, <Profile />];
 
 const Navbar = () => {
-  return (
-    <>
-      <StyledNavbar routes={routes} itemRender={NavbarItem} />
-      <Space />
-    </>
-  );
+  return <StyledNavbar routes={routes} itemRender={NavbarItem} />;
 };
 
 function NavbarItem(
@@ -95,9 +90,4 @@ const StyledNavbarItem = styled.div`
     width: 1.313rem;
     height: 1.25rem;
   }
-`;
-
-const Space = styled.div`
-  width: 100%;
-  height: 5.75rem;
 `;

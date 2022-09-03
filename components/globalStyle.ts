@@ -44,12 +44,19 @@ const GlobalStyle = createGlobalStyle`
     font-display: swap;
   }
 
-  html, body, #__next {
+  html, body {
+    font-family: 'Pretendard';
+  }
+
+  body {
+    padding-bottom: 92px;
+  }
+
+   #__next {
     display: flex;
     flex-direction: column;
     height: 100%;
-    font-family: 'Pretendard';
-  }
+   }
 
   * {
     outline: none;
