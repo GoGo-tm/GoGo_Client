@@ -103,13 +103,13 @@ const AuthCheckBox = styled(Checkbox)`
 
 export {
   AuthBase,
+  AuthCheckBox,
+  AuthCheckBoxBase,
   AuthForm,
   AuthFormItem,
   AuthInput,
   AuthInputBase,
   AuthInputLabel,
-  AuthInputText,
   AuthInputOutline,
-  AuthCheckBoxBase,
-  AuthCheckBox,
+  AuthInputText,
 };

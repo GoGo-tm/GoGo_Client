@@ -1,5 +1,6 @@
-import { AuthInputBase, AuthInputLabel } from './styled';
 import type { PropsWithChildren } from 'react';
+
+import { AuthInputBase, AuthInputLabel } from './styled';
 
 interface AuthInputProps extends PropsWithChildren {
   label: string;

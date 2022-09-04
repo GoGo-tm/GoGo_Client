@@ -1,3 +1,8 @@
+import { signIn } from 'next-auth/react';
+import { ReactElement, useEffect } from 'react';
+import styled from 'styled-components';
+
+import AuthLabel from '~/components/auth/authLabel';
 import {
   AuthBase,
   AuthCheckBox,
@@ -6,16 +11,12 @@ import {
   AuthInput,
   AuthInputOutline,
 } from '~/components/auth/styled';
-import styled from 'styled-components';
-import Header from '~/components/header';
-import Divider from '~/components/divider';
 import Button from '~/components/button';
-import AuthLabel from '~/components/auth/authLabel';
-import validator from '~/utils/validator';
+import Divider from '~/components/divider';
+import Header from '~/components/header';
 import useForm from '~/hooks/useForm';
-import { ReactElement, useEffect } from 'react';
 import userService from '~/utils/user';
-import { signIn } from 'next-auth/react';
+import validator from '~/utils/validator';
 
 interface FormData {
   nickname: string;

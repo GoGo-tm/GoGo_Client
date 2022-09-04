@@ -1,10 +1,11 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
 import misc from '~/utils/misc';
-import type { NextAuthOptions } from 'next-auth';
-import type { NextApiRequest, NextApiResponse } from 'next';
-import userService from '~/utils/user';
 import tokenService from '~/utils/token';
+import userService from '~/utils/user';
 
 interface SignInProps {
   email: string;

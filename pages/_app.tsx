@@ -1,9 +1,5 @@
-import React from 'react';
-import SEO from '~/components/seo';
-import theme from '~/constants/theme';
-import GlobalStyle from '~/components/globalStyle';
-import { ThemeProvider } from 'styled-components';
-import { SessionProvider } from 'next-auth/react';
+import '~/assets/css/variables.less';
+
 import {
   Hydrate,
   QueryClient,
@@ -11,8 +7,14 @@ import {
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next/types';
+import { SessionProvider } from 'next-auth/react';
 import type { ReactElement, ReactNode } from 'react';
-import '~/assets/css/variables.less';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+
+import GlobalStyle from '~/components/globalStyle';
+import SEO from '~/components/seo';
+import theme from '~/constants/theme';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   import('../mocks');

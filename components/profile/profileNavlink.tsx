@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+
 import Divider from '../divider';
 
 const ProfileNavlink = () => {
