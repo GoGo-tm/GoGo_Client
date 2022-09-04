@@ -1,13 +1,13 @@
-import Layout from '~/components/layout';
-import Protected from '~/components/protected';
 import { useSession } from 'next-auth/react';
-import Divider from '~/components/divider';
-import styled from 'styled-components';
-import ProfileNavlink from '~/components/profile/profileNavlink';
-import MyImage from '~/components/profile/myImage';
 import type { ReactElement } from 'react';
+import styled from 'styled-components';
+
+import Divider from '~/components/divider';
+import Layout from '~/components/layout';
+import MyImage from '~/components/profile/myImage';
+import ProfileNavlink from '~/components/profile/profileNavlink';
+import Protected from '~/components/protected';
 import type { NextPageWithLayout } from '~/types/base';
-import { MyImageLoading } from '~/components/loading';
 
 const Profile: NextPageWithLayout<{}> = () => {
   const { data: session, status } = useSession();

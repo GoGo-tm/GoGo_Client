@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { ReactComponent as ProfileIcon } from '../../assets/svgs/profile.svg';
 
 interface Props {

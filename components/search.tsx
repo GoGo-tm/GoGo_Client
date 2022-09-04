@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { ReactComponent as SearchIcon } from '../assets/svgs/magnifier.svg';
 
 const Search = () => {
