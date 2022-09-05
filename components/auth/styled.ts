@@ -101,15 +101,24 @@ const AuthCheckBox = styled(Checkbox)`
   }
 `;
 
+const AuthTermsBase = styled.main`
+  white-space: pre-wrap;
+  line-height: 1.563rem;
+  font-size: ${({ theme }) => theme.fontSize.r3};
+  margin: 0 2.313rem;
+  margin-top: 1.75rem;
+`;
+
 export {
   AuthBase,
+  AuthCheckBox,
+  AuthCheckBoxBase,
   AuthForm,
   AuthFormItem,
   AuthInput,
   AuthInputBase,
   AuthInputLabel,
-  AuthInputText,
   AuthInputOutline,
-  AuthCheckBoxBase,
-  AuthCheckBox,
+  AuthInputText,
+  AuthTermsBase,
 };
