@@ -4,6 +4,7 @@ import {
   NextPage,
 } from 'next';
 import dynamic from 'next/dynamic';
+
 import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 
 const HikingMap = dynamic(() => import('~/components/hikingMap'), {

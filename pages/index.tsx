@@ -1,14 +1,15 @@
 import { GetServerSideProps } from 'next';
-import AsyncBoundary from '~/components/boundaries/asyncBoundary';
+import type { InferGetServerSidePropsType } from 'next/types';
+import type { ReactElement } from 'react';
+import styled from 'styled-components';
+
 import Banner from '~/components/banner';
-import Navbar from '~/components/navbar';
-import Search from '~/components/search';
+import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 import Divider from '~/components/divider';
 import Title, { Highlight } from '~/components/home/title';
 import { BannerLoading } from '~/components/loading';
-import styled from 'styled-components';
-import type { InferGetServerSidePropsType } from 'next/types';
-import type { ReactElement } from 'react';
+import Navbar from '~/components/navbar';
+import Search from '~/components/search';
 import type { NextPageWithLayout } from '~/types/base';
 
 const Home: NextPageWithLayout<
@@ -70,9 +71,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Base = styled.main`
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
 `;
 
 const Outline = styled.div`

@@ -1,12 +1,13 @@
-import type { ReactElement, ReactNode } from 'react';
-import styled from 'styled-components';
-import NavLink from './navlink';
-import { ReactComponent as Home } from '../assets/svgs/home.svg';
-import { ReactComponent as Hiking } from '../assets/svgs/hiking.svg';
-import { ReactComponent as MyLog } from '../assets/svgs/mylog.svg';
-import { ReactComponent as Profile } from '../assets/svgs/profile.svg';
 import { Breadcrumb } from 'antd';
 import type { Route } from 'antd/lib/breadcrumb/Breadcrumb';
+import type { ReactElement, ReactNode } from 'react';
+import styled from 'styled-components';
+
+import { ReactComponent as Hiking } from '../assets/svgs/hiking.svg';
+import { ReactComponent as Home } from '../assets/svgs/home.svg';
+import { ReactComponent as MyLog } from '../assets/svgs/mylog.svg';
+import { ReactComponent as Profile } from '../assets/svgs/profile.svg';
+import NavLink from './navlink';
 
 export interface Item {
   path: string;
@@ -25,12 +26,7 @@ const routes: Route[] = [
 const icons = [<Home />, <Hiking />, <MyLog />, <Profile />];
 
 const Navbar = () => {
-  return (
-    <>
-      <StyledNavbar routes={routes} itemRender={NavbarItem} />
-      <Space />
-    </>
-  );
+  return <StyledNavbar routes={routes} itemRender={NavbarItem} />;
 };
 
 function NavbarItem(
@@ -95,9 +91,4 @@ const StyledNavbarItem = styled.div`
     width: 1.313rem;
     height: 1.25rem;
   }
-`;
-
-const Space = styled.div`
-  width: 100%;
-  height: 5.75rem;
 `;

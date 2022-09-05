@@ -1,5 +1,5 @@
-import React from "react";
-import Head from "next/head";
+import Head from 'next/head';
+import React from 'react';
 
 interface SEOProps {
   title?: string;
@@ -7,7 +7,7 @@ interface SEOProps {
   /**
    * Set `robots` only when you don't want search engines to index the page.
    */
-  robots?: "noindex" | "nofollow" | "noindex, nofollow" | "index, follow";
+  robots?: 'noindex' | 'nofollow' | 'noindex, nofollow' | 'index, follow';
   description?: string;
   /**
    * Truncate after maxDescriptionCharacters. Default value is 150.
@@ -19,7 +19,7 @@ interface SEOProps {
      * Twitter card type
      * https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards
      */
-    card?: "summary" | "summary_large_image" | "player" | "app";
+    card?: 'summary' | 'summary_large_image' | 'player' | 'app';
     /**
      * Twitter username starting with @
      */
@@ -39,7 +39,7 @@ interface SEOProps {
     title?: string;
     description?: string;
     url?: string;
-    type?: "article" | "book" | "website" | "profile";
+    type?: 'article' | 'book' | 'website' | 'profile';
     /**
      * URL for og:image
      */
