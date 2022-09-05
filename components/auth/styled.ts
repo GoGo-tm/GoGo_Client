@@ -105,8 +105,7 @@ const AuthTermsBase = styled.main`
   white-space: pre-wrap;
   line-height: 1.563rem;
   font-size: ${({ theme }) => theme.fontSize.r3};
-  margin: 0 2.313rem;
-  margin-top: 1.75rem;
+  margin: 1.75rem 2.313rem;
 `;
 
 export {

@@ -1,4 +1,10 @@
-import Header from '~/components/header';
+import Image from 'next/image';
+import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import type { ReactElement } from 'react';
+import styled from 'styled-components';
+
+import AuthLabel from '~/components/auth/authLabel';
 import {
   AuthBase,
   AuthForm,
@@ -6,16 +12,11 @@ import {
   AuthInput,
   AuthInputOutline,
 } from '~/components/auth/styled';
-import styled from 'styled-components';
-import Image from 'next/image';
-import Divider from '~/components/divider';
 import Button, { Apple, Kakao, Naver } from '~/components/button';
-import Link from 'next/link';
-import AuthLabel from '~/components/auth/authLabel';
-import validator from '~/utils/validator';
+import Divider from '~/components/divider';
+import Header from '~/components/header';
 import useForm from '~/hooks/useForm';
-import { signIn } from 'next-auth/react';
-import type { ReactElement } from 'react';
+import validator from '~/utils/validator';
 
 interface FormData {
   email: string;
