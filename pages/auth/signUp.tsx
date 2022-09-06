@@ -1,5 +1,5 @@
 import { signIn } from 'next-auth/react';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 import AuthLabel from '~/components/auth/authLabel';
@@ -18,6 +18,8 @@ import useForm from '~/hooks/useForm';
 import userService from '~/utils/user';
 import validator from '~/utils/validator';
 
+import { ReactComponent as Icon } from '../../assets/svgs/right.svg';
+
 interface FormData {
   nickname: string;
   email: string;
@@ -30,9 +32,14 @@ interface FormData {
 }
 
 const SignUp = () => {
-  const { formData, success, error, handleSubmit } = useForm<FormData>({
-    serviceCallback: userService.signUp,
-  });
+  const { formData, isPending, success, error, handleSubmit } =
+    useForm<FormData>({
+      serviceCallback: userService.signUp,
+    });
+
+  const onLocationTerms = useCallback((path: string) => {
+    window.open(path);
+  }, []);
 
   useEffect(() => {
     if (success)
@@ -40,7 +47,7 @@ const SignUp = () => {
         email: formData?.email,
         password: formData?.password,
       });
-  }, [success]);
+  }, [formData?.email, formData?.password, success]);
   return (
     <AuthForm
       name="signUp"
@@ -139,6 +146,7 @@ const SignUp = () => {
           <AuthFormItem
             name="SERVICE"
             valuePropName="checked"
+            full
             rules={[
               {
                 validator: validator.service,
@@ -146,6 +154,7 @@ const SignUp = () => {
             ]}
           >
             <AuthCheckBox name="SERVICE">서비스 이용 약관 (필수)</AuthCheckBox>
+            <Icon onClick={() => onLocationTerms('/auth/terms/service')} />
           </AuthFormItem>
           <AuthFormItem
             name="PRIVACY_POLICY"
@@ -159,18 +168,20 @@ const SignUp = () => {
             <AuthCheckBox name="PRIVACY_POLICY">
               개인정보 처리 방침 (필수)
             </AuthCheckBox>
+            <Icon onClick={() => onLocationTerms('/auth/terms/privacy')} />
           </AuthFormItem>
           <AuthFormItem name="LOCATION" valuePropName="checked">
             <AuthCheckBox name="LOCATION">
               위치정보 이용 동의 (선택)
             </AuthCheckBox>
+            <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
           </AuthFormItem>
         </RadioOutline>
       </AuthBase>
       <Divider />
       <AuthBase>
         <AuthFormItem full>
-          <Button type="submit">회원가입</Button>
+          <Button type="submit">{isPending ? '진행중...' : '회원가입'}</Button>
         </AuthFormItem>
       </AuthBase>
     </AuthForm>
