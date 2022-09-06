@@ -16,10 +16,6 @@ import GlobalStyle from '~/components/globalStyle';
 import SEO from '~/components/seo';
 import theme from '~/constants/theme';
 
-if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  import('../mocks');
-}
-
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
