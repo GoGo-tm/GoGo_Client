@@ -73,6 +73,14 @@ const AuthFormItem = styled(Form.Item)<{ full?: boolean }>`
   .ant-form-item-feedback-icon-success {
     color: ${({ theme }) => theme.colors.primary};
   }
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const AuthInput = styled(Input)`

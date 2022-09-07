@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import type { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 
 import AuthLabel from '~/components/auth/authLabel';
@@ -24,13 +24,17 @@ interface FormData {
 }
 
 const SignIn = () => {
-  const { success, error, handleSubmit } = useForm<FormData>({
+  const { isPending, success, error, handleSubmit } = useForm<FormData>({
     serviceCallback: async (values) =>
       signIn('credentials', {
         email: values.email,
         password: values.password,
       }),
   });
+
+  useEffect(() => {
+    console.log('pending', isPending);
+  }, [isPending]);
   return (
     <>
       <AuthBase root>
@@ -77,7 +81,7 @@ const SignIn = () => {
             <Link href="/">비밀번호를 잊으셨나요?</Link>
           </LinkOutline>
           <AuthFormItem full>
-            <Button type="submit">로그인</Button>
+            <Button type="submit">{isPending ? '진행중...' : '로그인'}</Button>
           </AuthFormItem>
           <LinkOutline>
             회원이 아니신가요?

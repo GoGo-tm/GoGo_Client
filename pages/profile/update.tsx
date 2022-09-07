@@ -7,11 +7,16 @@ import styled from 'styled-components';
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
 
+import { ReactComponent as Icon } from '../../assets/svgs/right.svg';
+
 const Update = () => {
   const [focus, setFocus] = useState<boolean>(false);
   const handleOnFocus = useCallback(() => setFocus(true), []);
   const handleOnBlur = useCallback(() => setFocus(false), []);
   const isFocus = useMemo(() => (focus ? true : false), [focus]);
+  const onLocationTerms = useCallback((path: string) => {
+    window.open(path);
+  }, []);
   return (
     <>
       <Base>
@@ -37,9 +42,12 @@ const Update = () => {
       <Divider margin="1.313" />
       <Base full>
         <UpdateForm name="term">
-          <UpdateCheckBox>
-            <UpdateCheckBoxText>위치정보 이용 동의 (선택)</UpdateCheckBoxText>
-          </UpdateCheckBox>
+          <UpdateFormItem name="LOCATION" valuePropName="checked">
+            <UpdateCheckBox>
+              <UpdateCheckBoxText>위치정보 이용 동의 (선택)</UpdateCheckBoxText>
+            </UpdateCheckBox>
+            <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
+          </UpdateFormItem>
         </UpdateForm>
         <UpdateUserButtonOutline>
           <span>로그아웃</span>
@@ -93,6 +101,17 @@ const UpdateForm = styled(Form)`
   .ant-input {
     font-size: ${({ theme }) => theme.fontSize.m3};
     line-height: 1.563rem;
+  }
+`;
+
+const UpdateFormItem = styled(Form.Item)`
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  svg {
+    cursor: pointer;
   }
 `;
 
