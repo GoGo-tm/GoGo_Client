@@ -1,3 +1,4 @@
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
@@ -5,16 +6,27 @@ import styled from 'styled-components';
 
 import Banner from '~/components/banner';
 import AsyncBoundary from '~/components/boundaries/asyncBoundary';
+import Card from '~/components/card';
 import Divider from '~/components/divider';
 import Title, { Highlight } from '~/components/home/title';
 import { BannerLoading } from '~/components/loading';
 import Navbar from '~/components/navbar';
 import Search from '~/components/search';
+import QueryKeys from '~/constants/queries';
+import useHikingTrailsQuery from '~/hooks/queries/useHikingTrailsQuery';
 import type { NextPageWithLayout } from '~/types/base';
+import misc from '~/utils/misc';
 
 const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
+  const { data: hikingsData } = useHikingTrailsQuery(
+    misc.makeQueries({
+      order: 'POPULARITY',
+      size: 5,
+    })
+  );
+
   return (
     <Base>
       <AsyncBoundary
@@ -29,6 +41,24 @@ const Home: NextPageWithLayout<
           요즘
           <Highlight> HOT</Highlight>한 등산로
         </Title>
+        <CardPack>
+          <AsyncBoundary
+            rejectedFallback={<div>error..!</div>}
+            pendingFallback={<div>loading..!</div>}
+          >
+            {hikingsData?.contents.map((content) => (
+              <Card
+                key={content.id}
+                title={content.name}
+                location={content.address}
+                level={content.difficulty}
+                km={content.length}
+                like={content.favoriteCount}
+                img={content.imageUrl}
+              />
+            ))}
+          </AsyncBoundary>
+        </CardPack>
       </Outline>
       <Divider />
       <Outline>
@@ -65,8 +95,23 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery([QueryKeys.HIKING_TRAILS_QUERY_KEY], () =>
+    fetch(
+      `${
+        process.env.NEXT_PUBLIC_URL
+      }/server/api/hiking-trails${misc.makeQueries({
+        order: 'POPULARITY',
+        size: 5,
+      })}`
+    ).then((res) => res.json())
+  );
+
   return {
-    props: {},
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
 
@@ -83,4 +128,9 @@ const Outline = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   padding: 0 1rem;
+`;
+
+const CardPack = styled.div`
+  display: flex;
+  overflow-x: auto;
 `;
