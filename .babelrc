@@ -14,7 +14,8 @@
       {
         "libraryName": "antd",
         "style": true
-      }
+      },
+      "antd"
     ],
     "inline-react-svg"
   ]
