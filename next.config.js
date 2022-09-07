@@ -8,7 +8,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const nextConfig = withBundleAnalyzer({
-  compress: true,
   reactStrictMode: true,
   async rewrites() {
     return [
@@ -55,7 +54,6 @@ module.exports = withPlugins(
         modifyVars: { '@primary-color': '#009D68' },
         lessVarsFilePath: './assets/css/variables.less',
         lessVarsFilePathAppendToEndOfContent: false,
-        cssLoaderOptions: {},
       },
     ],
   ],
