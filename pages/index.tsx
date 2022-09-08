@@ -8,6 +8,7 @@ import Banner from '~/components/banner';
 import AsyncBoundary from '~/components/boundaries/asyncBoundary';
 import Card from '~/components/card';
 import Divider from '~/components/divider';
+import Guide from '~/components/home/guide';
 import Title, { Highlight } from '~/components/home/title';
 import { BannerLoading } from '~/components/loading';
 import Navbar from '~/components/navbar';
@@ -66,6 +67,7 @@ const Home: NextPageWithLayout<
           등산이
           <Highlight> 처음</Highlight>이신가요?
         </Title>
+        <Guide />
       </Outline>
       <Divider />
       <Outline>
