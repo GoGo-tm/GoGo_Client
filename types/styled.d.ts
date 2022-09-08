@@ -1,6 +1,6 @@
-import "styled-components";
+import 'styled-components';
 
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
       primary: string;
@@ -14,6 +14,8 @@ declare module "styled-components" {
         medium: string;
         dense: string;
       };
+      black: string;
+      white: string;
     };
     fontSize: {
       // * Regular
