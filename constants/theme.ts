@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import type { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
@@ -13,6 +13,8 @@ const theme: DefaultTheme = {
       medium: '#B2B3B6',
       dense: '#898A8C',
     },
+    black: '#000',
+    white: '#fff',
   },
   fontSize: {
     // * Regular
