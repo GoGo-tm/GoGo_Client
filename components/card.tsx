@@ -8,12 +8,13 @@ interface Props {
   level: string;
   km: number;
   like: number;
+  img?: string | null;
 }
 
-const Card = ({ title, location, level, km, like }: Props) => {
+const Card = ({ title, location, level, km, like, img }: Props) => {
   return (
     <CardWrapper>
-      <img src="/images/Rectangle33.png" width="100%" />
+      <img src={img ? img : '/images/Rectangle33.png'} width="100%" />
       <ContentWrapper>
         <Title>
           {title}

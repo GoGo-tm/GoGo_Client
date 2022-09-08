@@ -2,6 +2,10 @@ type ErrorWithMessage = {
   message: string;
 };
 
+interface Queries {
+  [key: string]: number | string;
+}
+
 function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
   return (
     typeof error === 'object' &&
@@ -36,6 +40,14 @@ const misc = {
     return value;
   },
   getErrorMessage,
+  makeQueries: (queries: Queries) => {
+    return Object.entries(queries)
+      .map(([key, value], idx) => {
+        if (idx === 0) return `?${key}=${value}`;
+        return `&${key}=${value}`;
+      })
+      .join('');
+  },
 };
 
 export default misc;
