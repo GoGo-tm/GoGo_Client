@@ -41,6 +41,8 @@ declare module 'styled-components' {
       // * Bold
       b1: string;
       b2: string;
+      b3: string;
+      b4: string;
       // * Extra Bold
       eb1: string;
     };
