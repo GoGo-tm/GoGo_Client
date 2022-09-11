@@ -46,9 +46,11 @@ const BaseTypography = styled.p<TypographyProps>`
           typeof props.size === 'string'
             ? contants.fontSize[props.size]
             : props.size
-        }rem`
+        }`
       : ''};
     font-weight: ${props.weight && FONT_WEIGHT[props.weight]};
     color: ${props.color};
+    white-space: pre-wrap;
+    line-height: 1.563rem;
   `}
 `;

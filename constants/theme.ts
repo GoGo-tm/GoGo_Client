@@ -39,7 +39,9 @@ const theme: DefaultTheme = {
     sb6: '1.563rem',
     // * Bold
     b1: '0.875rem',
-    b2: '1.375rem',
+    b2: '1.25rem',
+    b3: '1.375rem',
+    b4: '1.5rem',
     // * Extra Bold
     eb1: '0.75rem',
   },
