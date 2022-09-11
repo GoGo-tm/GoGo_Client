@@ -26,4 +26,7 @@ export default Guide;
 
 const GuidWrapper = styled.section`
   position: relative;
+  img {
+    cursor: pointer;
+  }
 `;
