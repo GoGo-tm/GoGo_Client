@@ -9,6 +9,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
+  images: {
+    domains: ['www.forest.go.kr'],
+  },
   async rewrites() {
     return [
       {
