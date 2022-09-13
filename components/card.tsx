@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 
 import theme from '~/constants/theme';
@@ -12,9 +13,21 @@ interface Props {
 }
 
 const Card = ({ title, location, level, km, like, img }: Props) => {
+  const src = img ? img : '/images/등산_기본이미지.png';
+
   return (
     <CardWrapper>
-      <img src={img ? img : '/images/Rectangle33.png'} width="100%" />
+      <ImageWrapper>
+        <HikingImage
+          src={src}
+          alt="등산로"
+          width={186}
+          height={118}
+          objectFit="cover"
+          layout="responsive"
+          priority
+        />
+      </ImageWrapper>
       <ContentWrapper>
         <Title>
           {title}
@@ -31,9 +44,19 @@ const Card = ({ title, location, level, km, like, img }: Props) => {
 export default Card;
 
 const CardWrapper = styled.div`
+  display: inline-block;
   box-shadow: 0px 4px 4px #ecedef;
   border-radius: 10px;
   padding: 1rem 0;
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const HikingImage = styled(Image)`
+  border-radius: 0.625rem 0.625rem 0 0;
 `;
 
 const ContentWrapper = styled.div`
