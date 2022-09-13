@@ -42,24 +42,27 @@ const Home: NextPageWithLayout<
           요즘
           <Highlight> HOT</Highlight>한 등산로
         </Title>
-        <CardPack>
-          <AsyncBoundary
-            rejectedFallback={<div>error..!</div>}
-            pendingFallback={<div>loading..!</div>}
-          >
-            {hikingsData?.contents.map((content) => (
-              <Card
-                key={content.id}
-                title={content.name}
-                location={content.address}
-                level={content.difficulty}
-                km={content.length}
-                like={content.favoriteCount}
-                img={content.imageUrl}
-              />
-            ))}
-          </AsyncBoundary>
-        </CardPack>
+        <CardOutline>
+          <CardWrapper>
+            <AsyncBoundary
+              rejectedFallback={<div>error..!</div>}
+              pendingFallback={<div>loading..!</div>}
+            >
+              {hikingsData?.contents.map((content) => (
+                <CardPack key={content.id}>
+                  <Card
+                    title={content.name}
+                    location={content.address}
+                    level={content.difficulty}
+                    km={content.length}
+                    like={content.favoriteCount}
+                    img={content.imageUrl}
+                  />
+                </CardPack>
+              ))}
+            </AsyncBoundary>
+          </CardWrapper>
+        </CardOutline>
       </Outline>
       <Divider />
       <Outline>
@@ -132,7 +135,18 @@ const Outline = styled.div`
   padding: 0 1rem;
 `;
 
+const CardOutline = styled.div`
+  width: 100%;
+  overflow: auto;
+`;
+
+const CardWrapper = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.625rem;
+`;
+
 const CardPack = styled.div`
-  display: flex;
-  overflow-x: auto;
+  width: 11.625rem;
+  cursor: pointer;
 `;
