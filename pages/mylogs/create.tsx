@@ -1,4 +1,3 @@
-import type { DatePickerProps } from 'antd';
 import { DatePicker, Form, Input, Select, Upload } from 'antd';
 import type { RcFile } from 'antd/lib/upload';
 import axios from 'axios';
@@ -67,7 +66,7 @@ const Create = () => {
     try {
       const formData = new FormData();
 
-      files.forEach((file, i) => formData.append(`images[${i}]`, file));
+      files.forEach((file) => formData.append(`images`, file));
       formData.append('hikingTrailId', hikingTrailId?.toString());
       formData.append('starRating', values.starRating.toString());
       formData.append('memo', values.memo);
@@ -81,7 +80,6 @@ const Create = () => {
           Authorization: `Bearer ${session?.accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials: true,
       });
 
       if (response.status === 200)
