@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
 import Tab from '~/components/mylogs/tab';
+import Toggle from '~/components/mylogs/toggle';
 import Protected from '~/components/protected';
 import type { NextPageWithLayout } from '~/types/base';
 
@@ -49,6 +50,7 @@ Mylogs.getLayout = function (page: ReactElement) {
       <MyLogsBase>
         <Tab />
         {page}
+        <Toggle />
       </MyLogsBase>
     </Layout>
   );
@@ -58,6 +60,8 @@ export default Mylogs;
 
 const MyLogsBase = styled.main`
   position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 const MylogsSpace = styled.div`
