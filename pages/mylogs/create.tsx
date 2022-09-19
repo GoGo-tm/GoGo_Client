@@ -18,7 +18,6 @@ import Layout from '~/components/layout';
 import SearchDataList from '~/components/mylogs/searchDataList';
 import misc from '~/utils/misc';
 
-import { ReactComponent as CalendarIcon } from '../../assets/svgs/calendar.svg';
 import { ReactComponent as SearchIcon } from '../../assets/svgs/magnifier.svg';
 import { ReactComponent as CameraIcon } from '../../assets/svgs/mylogCamera.svg';
 import { ReactComponent as StarIcon } from '../../assets/svgs/starSolid.svg';
@@ -29,14 +28,13 @@ interface AntdFormData {
   hikingDate: {
     _d: Date;
   };
-  [key: string]: any;
 }
 
 const { Option } = Select;
 
 const Create = () => {
   const { data: session } = useSession();
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>();
   const [hikingTrailId, setHikingTrailId] = useState<number | null>(null);
   const [files, setFiles] = useState<RcFile[]>([]);
   const deferredQuery = useDeferredValue(query);
@@ -83,10 +81,6 @@ const Create = () => {
 
       if (response.status === 200)
         throw new Error('등산 로그 작성에 실패했습니다.');
-
-      const data = await response.data;
-
-      return data;
     } catch (error) {
       throw new Error(misc.getErrorMessage(error));
     }
@@ -100,10 +94,18 @@ const Create = () => {
 
   return (
     <CreateBase>
-      <CreateForm onFinish={(v) => handleSubmit(v as AntdFormData)}>
+      <CreateForm onFinish={(value) => handleSubmit(value as AntdFormData)}>
         <CreateItemOutline>
           <SearchIcon id="icon" />
-          <CreateFormItem name="hikings">
+          <CreateFormItem
+            name="hikings"
+            rules={[
+              {
+                required: true,
+                message: '다녀온 등산로를 선택해주세요.',
+              },
+            ]}
+          >
             <CreateInput
               list="hikings"
               name="hikings"
@@ -115,8 +117,29 @@ const Create = () => {
           </CreateFormItem>
         </CreateItemOutline>
         <CreateItemOutline>
-          <CalendarIcon id="icon" />
-          <CreateFormItem name="hikingDate">
+          <svg
+            id="icon"
+            width="18.71"
+            height="18.71"
+            viewBox="0 0 70 70"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 67.2C0 68.7487 1.25125 70 2.8 70H67.2C68.7487 70 70 68.7487 70 67.2V30.45H0V67.2ZM67.2 6.3H52.5V0.7C52.5 0.315 52.185 0 51.8 0H46.9C46.515 0 46.2 0.315 46.2 0.7V6.3H23.8V0.7C23.8 0.315 23.485 0 23.1 0H18.2C17.815 0 17.5 0.315 17.5 0.7V6.3H2.8C1.25125 6.3 0 7.55125 0 9.1V24.5H70V9.1C70 7.55125 68.7487 6.3 67.2 6.3Z"
+              fill="#898A8C"
+            />
+          </svg>
+
+          <CreateFormItem
+            name="hikingDate"
+            rules={[
+              {
+                required: true,
+                message: '등산로를 다녀온 날짜를 선택해주세요.',
+              },
+            ]}
+          >
             <CreateDatePicker
               name="hikingDate"
               placeholder="날짜를 선택해주세요"
@@ -126,7 +149,15 @@ const Create = () => {
         </CreateItemOutline>
         <CreateItemOutline>
           <StarIcon id="icon" />
-          <CreateFormItem name="starRating">
+          <CreateFormItem
+            name="starRating"
+            rules={[
+              {
+                required: true,
+                message: '다녀온 등산로의 만족도를 평가해주세요.',
+              },
+            ]}
+          >
             <CreateSelect suffixIcon={null} placeholder="만족도를 표시해주세요">
               <CreateOption value={0}>☆ ☆ ☆ ☆ ☆</CreateOption>
               <CreateOption value={1}>★ ☆ ☆ ☆ ☆</CreateOption>
@@ -138,7 +169,15 @@ const Create = () => {
           </CreateFormItem>
         </CreateItemOutline>
         <CreateItemOutline>
-          <CreateFormItem name="memo">
+          <CreateFormItem
+            name="memo"
+            rules={[
+              {
+                required: true,
+                message: '등산로 기록을 작성해주세요.',
+              },
+            ]}
+          >
             <CreateTextArea
               name="memo"
               style={{ height: 212 }}
