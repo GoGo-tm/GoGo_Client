@@ -61,12 +61,11 @@ const Create = () => {
 
   const handleSubmit = async (values: AntdFormData) => {
     if (!hikingTrailId) return;
-    console.log(values, files, session);
 
     try {
       const formData = new FormData();
 
-      files.forEach((file) => formData.append(`images`, file));
+      files.forEach((file) => formData.append(`imageFiles`, file));
       formData.append('hikingTrailId', hikingTrailId?.toString());
       formData.append('starRating', values.starRating.toString());
       formData.append('memo', values.memo);
@@ -75,7 +74,7 @@ const Create = () => {
         new Date(values.hikingDate._d).toDateString()
       );
 
-      const response = await axios.post('/server/api/hiking-log', formData, {
+      const response = await axios.post('/server/api/images/temp', formData, {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
           'Content-Type': 'multipart/form-data',
