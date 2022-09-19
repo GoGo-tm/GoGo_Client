@@ -1,6 +1,7 @@
 import { DatePicker, Form, Input, Select, Upload } from 'antd';
-import type { RcFile } from 'antd/lib/upload';
+import type { RcFile, UploadFile } from 'antd/lib/upload';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import {
   ChangeEvent,
@@ -10,12 +11,14 @@ import {
   useEffect,
   useMemo,
   useState,
+  useTransition,
 } from 'react';
 import styled from 'styled-components';
 
 import Button from '~/components/button';
 import Layout from '~/components/layout';
 import SearchDataList from '~/components/mylogs/searchDataList';
+import Typography from '~/components/typography';
 import misc from '~/utils/misc';
 
 import { ReactComponent as SearchIcon } from '../../assets/svgs/magnifier.svg';
@@ -30,21 +33,24 @@ interface AntdFormData {
   };
 }
 
+interface Files {
+  uid: string;
+  image: string;
+  url: string;
+}
+
 const { Option } = Select;
 
 const Create = () => {
   const { data: session } = useSession();
   const [query, setQuery] = useState<string>();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [hikingTrailId, setHikingTrailId] = useState<number | null>(null);
-  const [files, setFiles] = useState<RcFile[]>([]);
+  const [files, setFiles] = useState<Files[]>([]);
   const deferredQuery = useDeferredValue(query);
   const onChangeQuery = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-  }, []);
-
-  const handleFiles = useCallback((file: RcFile) => {
-    setFiles((prev) => prev.concat(file));
-    return false;
   }, []);
 
   const dataList = useMemo(
@@ -57,55 +63,111 @@ const Create = () => {
     [deferredQuery, setQuery]
   );
 
-  const handleSubmit = async (values: AntdFormData) => {
-    if (!hikingTrailId) return;
+  const handleImageRemove = useCallback(
+    async (file: UploadFile<any>) => {
+      const { uid } = file;
+      const target = files[files.findIndex((v) => v.uid === uid)];
 
+      try {
+        const response = await axios.delete(
+          `/server/api/images/${target.image}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session?.accessToken}`,
+            },
+          }
+        );
+
+        if (response.status !== 200)
+          throw new Error('이미지 업로드에 실패했습니다');
+
+        setFiles((prev) => prev.filter((v) => v.uid !== uid));
+      } catch (error) {
+        throw new Error(misc.getErrorMessage(error));
+      }
+    },
+    [files]
+  );
+
+  const handleImageUpload = useCallback(async (file: RcFile) => {
+    const formData = new FormData();
+    formData.append('files', file);
     try {
-      const formData = new FormData();
-
-      files.forEach((file) => formData.append(`imageFiles`, file));
-      formData.append('hikingTrailId', hikingTrailId?.toString());
-      formData.append('starRating', values.starRating.toString());
-      formData.append('memo', values.memo);
-      formData.append(
-        'hikingDate',
-        new Date(values.hikingDate._d).toDateString()
+      const response = await axios.post(
+        '/server/api/images/HIKING_LOG',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
 
-      const response = await axios.post('/server/api/images/temp', formData, {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      if (response.status !== 200)
+        throw new Error('이미지 업로드에 실패했습니다');
 
-      if (response.status === 200)
-        throw new Error('등산 로그 작성에 실패했습니다.');
+      const url = await response.data[0];
+      const image = url.split('/HIKING_LOG/')[1];
+
+      setFiles((prev) => prev.concat({ uid: file.uid, image, url }));
     } catch (error) {
       throw new Error(misc.getErrorMessage(error));
     }
-  };
+  }, []);
+
+  const handleSubmit = useCallback(
+    async (values: AntdFormData) => {
+      if (!hikingTrailId) return;
+
+      const imageUrls = files.map((v) => v.url);
+
+      const data = {
+        hikingDate: values.hikingDate._d,
+        hikingTrailId,
+        starRating: values.starRating,
+        memo: values.memo,
+        imageUrls,
+      };
+
+      try {
+        const response = await axios.post('/server/api/hiking-log', data, {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+        });
+
+        if (response.status !== 200)
+          throw new Error('등산 로그 작성에 실패했습니다.');
+
+        const id = await response.data;
+
+        router.push(`/mylogs/${id}`);
+      } catch (error) {
+        throw new Error(misc.getErrorMessage(error));
+      }
+    },
+    [files, hikingTrailId]
+  );
 
   useEffect(() => {
     return () => {
       setHikingTrailId(null);
     };
-  }, [session]);
+  }, []);
 
   return (
     <CreateBase>
-      <CreateForm onFinish={(value) => handleSubmit(value as AntdFormData)}>
+      <CreateForm
+        onFinish={(value) =>
+          startTransition(() => {
+            handleSubmit(value as AntdFormData);
+          })
+        }
+      >
         <CreateItemOutline>
           <SearchIcon id="icon" />
-          <CreateFormItem
-            name="hikings"
-            rules={[
-              {
-                required: true,
-                message: '다녀온 등산로를 선택해주세요.',
-              },
-            ]}
-          >
+          <CreateFormItem name="hikings">
             <CreateInput
               list="hikings"
               name="hikings"
@@ -186,19 +248,28 @@ const Create = () => {
           </CreateFormItem>
         </CreateItemOutline>
         <CreateItemOutline>
-          <Upload
+          <CreateUpload
             listType="picture-card"
+            accept="image/*"
             name="images"
-            beforeUpload={handleFiles}
+            maxCount={5}
+            headers={{
+              Authorization: `Bearer ${session?.accessToken}`,
+              'Content-Type': 'multipart/form-data',
+            }}
+            beforeUpload={handleImageUpload}
+            onRemove={handleImageRemove}
           >
-            <div>
+            <CreateUploadButtonOutline>
               <CameraIcon />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
+              <Typography as="span" size="r3" weight="semiBold" color="primary">
+                {files.length} / 5
+              </Typography>
+            </CreateUploadButtonOutline>
+          </CreateUpload>
         </CreateItemOutline>
         <CreateFormItem>
-          <Button type="submit">저장하기</Button>
+          <Button type="submit">{isPending ? '로딩중..' : '저장하기'}</Button>
         </CreateFormItem>
       </CreateForm>
     </CreateBase>
@@ -319,3 +390,25 @@ const CreateTextArea = styled(Input.TextArea)`
   border-radius: 0.625rem;
   padding: 1.063rem 24px;
 `;
+
+const CreateUpload = styled(Upload)`
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  & > div {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    background-color: #fff;
+    border: 0.044rem solid #d9d9d9;
+    border-radius: 0.625rem;
+  }
+  .ant-upload-list-picture .ant-upload-list-item,
+  .ant-upload-list-picture-card .ant-upload-list-item {
+    border: 0.044rem solid #d9d9d9;
+    border-radius: 0.625rem;
+  }
+`;
+
+const CreateUploadButtonOutline = styled.div``;
