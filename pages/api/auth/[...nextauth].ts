@@ -76,8 +76,8 @@ export const settings: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
-      session.accessTokenExpiresIn = token.accessTokenExpiresIn;
+      session.accessToken = token.accessToken as string;
+      session.accessTokenExpiresIn = token.accessTokenExpiresIn as number;
 
       return session;
     },

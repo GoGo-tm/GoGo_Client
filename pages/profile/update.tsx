@@ -1,5 +1,6 @@
 import { Checkbox, Form, Input } from 'antd';
 import type { GetStaticPropsContext } from 'next';
+import { signOut } from 'next-auth/react';
 import type { ReactElement } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
@@ -16,6 +17,9 @@ const Update = () => {
   const isFocus = useMemo(() => (focus ? true : false), [focus]);
   const onLocationTerms = useCallback((path: string) => {
     window.open(path);
+  }, []);
+  const onLogout = useCallback(() => {
+    signOut();
   }, []);
   return (
     <>
@@ -50,8 +54,8 @@ const Update = () => {
           </UpdateFormItem>
         </UpdateForm>
         <UpdateUserButtonOutline>
-          <span>로그아웃</span>
-          <span>탈퇴하기</span>
+          <UpdateUserButton onClick={onLogout}>로그아웃</UpdateUserButton>
+          <UpdateUserButton>탈퇴하기</UpdateUserButton>
         </UpdateUserButtonOutline>
       </Base>
     </>
@@ -196,4 +200,10 @@ const UpdateCheckBox = styled(Checkbox)`
 
 const UpdateCheckBoxText = styled.p`
   font-size: ${({ theme }) => theme.fontSize.r3};
+`;
+
+const UpdateUserButton = styled.button`
+  border: none;
+  background: none;
+  outline: none;
 `;
