@@ -49,7 +49,7 @@ const BaseTypography = styled.p<TypographyProps>`
         }`
       : ''};
     font-weight: ${props.weight && FONT_WEIGHT[props.weight]};
-    color: ${props.color};
+    color: ${contants.colors[props.color || 'black']};
     white-space: pre-wrap;
     line-height: 1.563rem;
   `}
