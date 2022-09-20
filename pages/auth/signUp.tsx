@@ -15,8 +15,8 @@ import Button from '~/components/button';
 import Divider from '~/components/divider';
 import Header from '~/components/header';
 import useForm from '~/hooks/useForm';
-import userService from '~/utils/user';
-import validator from '~/utils/validator';
+import * as userService from '~/utils/user';
+import * as validator from '~/utils/validator';
 
 import { ReactComponent as Icon } from '../../assets/svgs/right.svg';
 

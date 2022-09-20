@@ -16,7 +16,7 @@ import Search from '~/components/search';
 import QueryKeys from '~/constants/queries';
 import useHikingTrailsQuery from '~/hooks/queries/useHikingTrailsQuery';
 import type { NextPageWithLayout } from '~/types/base';
-import misc from '~/utils/misc';
+import * as misc from '~/utils/misc';
 
 const Home: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>

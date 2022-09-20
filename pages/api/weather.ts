@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import mapService from '~/utils/map';
-import misc from '~/utils/misc';
-import weatherService from '~/utils/weather';
+import * as mapService from '~/utils/map';
+import * as misc from '~/utils/misc';
+import * as weatherService from '~/utils/weather';
 
 export default async function handler(
   req: NextApiRequest,

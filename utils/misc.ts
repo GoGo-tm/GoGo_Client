@@ -25,29 +25,25 @@ function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
   }
 }
 
-function getErrorMessage(error: unknown) {
+export function getErrorMessage(error: unknown) {
   return toErrorWithMessage(error).message;
 }
 
-const misc = {
-  env: (key: string): string => {
-    const value = process.env[key];
+export const env = (key: string): string => {
+  const value = process.env[key];
 
-    if (!value) {
-      throw new Error(`Missing: process.env['${key}'].`);
-    }
+  if (!value) {
+    throw new Error(`Missing: process.env['${key}'].`);
+  }
 
-    return value;
-  },
-  getErrorMessage,
-  makeQueries: (queries: Queries) => {
-    return Object.entries(queries)
-      .map(([key, value], idx) => {
-        if (idx === 0) return `?${key}=${value}`;
-        return `&${key}=${value}`;
-      })
-      .join('');
-  },
+  return value;
 };
 
-export default misc;
+export const makeQueries = (queries: Queries) => {
+  return Object.entries(queries)
+    .map(([key, value], idx) => {
+      if (idx === 0) return `?${key}=${value}`;
+      return `&${key}=${value}`;
+    })
+    .join('');
+};
