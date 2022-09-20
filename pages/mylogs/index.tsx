@@ -1,5 +1,5 @@
+import { withAuthSsr } from 'hof/withAuthSsr';
 import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
@@ -7,16 +7,10 @@ import Divider from '~/components/divider';
 import Layout from '~/components/layout';
 import Tab from '~/components/mylogs/tab';
 import Toggle from '~/components/mylogs/toggle';
-import Protected from '~/components/protected';
 import type { NextPageWithLayout } from '~/types/base';
 
 const Mylogs: NextPageWithLayout<{}> = () => {
-  const { data: session, status } = useSession();
   const { query } = useRouter();
-
-  if (status === 'unauthenticated') {
-    return <Protected content="로그인하고 나만의 등산로그를 기록해보세요!" />;
-  }
 
   if (query?.tab === 'wrap') {
     return (
@@ -39,7 +33,6 @@ const Mylogs: NextPageWithLayout<{}> = () => {
   return (
     <>
       <h1>my logs</h1>
-      <button onClick={() => signOut()}>로그아웃</button>
     </>
   );
 };
@@ -57,6 +50,14 @@ Mylogs.getLayout = function (page: ReactElement) {
 };
 
 export default Mylogs;
+
+export const getServerSideProps = withAuthSsr(({ req }) => {
+  return {
+    props: {
+      user: req.session,
+    },
+  };
+}, '/auth/redirect');
 
 const MyLogsBase = styled.main`
   position: relative;

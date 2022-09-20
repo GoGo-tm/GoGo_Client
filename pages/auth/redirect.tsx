@@ -2,13 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import Button from './button';
+import Button from '~/components/button';
+import Typography from '~/components/typography';
 
-interface Props {
-  content: string;
-}
-
-const Protected = ({ content }: Props) => {
+const Protected = () => {
   return (
     <Base>
       <Outline>
@@ -18,7 +15,9 @@ const Protected = ({ content }: Props) => {
           width={200}
           height={158}
         />
-        <Paragraph>{content}</Paragraph>
+        <Typography size="r4" weight="regular">
+          로그인하고 나만의 등산로그를 기록해보세요!
+        </Typography>
       </Outline>
       <Link href="/auth/signIn">
         <Button>로그인/회원가입</Button>
@@ -43,10 +42,7 @@ const Outline = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const Paragraph = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.r4};
-  font-weight: 400;
-  padding-top: 1rem;
+  p {
+    padding-top: 1rem;
+  }
 `;

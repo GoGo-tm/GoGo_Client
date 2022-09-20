@@ -1,8 +1,9 @@
 import { DatePicker, Form, Input, Select, Upload } from 'antd';
 import type { RcFile, UploadFile } from 'antd/lib/upload';
 import axios from 'axios';
+import { withAuthSsr } from 'hof/withAuthSsr';
+import type { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import {
   ChangeEvent,
   ReactElement,
@@ -41,8 +42,9 @@ interface Files {
 
 const { Option } = Select;
 
-const Create = () => {
-  const { data: session } = useSession();
+const Create = ({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [query, setQuery] = useState<string>();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -73,7 +75,7 @@ const Create = () => {
           `/server/api/images/${target.image}`,
           {
             headers: {
-              Authorization: `Bearer ${session?.accessToken}`,
+              Authorization: `Bearer ${user?.accessToken}`,
             },
           }
         );
@@ -98,7 +100,7 @@ const Create = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
+            Authorization: `Bearer ${user?.accessToken}`,
             'Content-Type': 'multipart/form-data',
           },
         }
@@ -133,7 +135,7 @@ const Create = () => {
       try {
         const response = await axios.post('/server/api/hiking-log', data, {
           headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
+            Authorization: `Bearer ${user?.accessToken}`,
           },
         });
 
@@ -154,7 +156,7 @@ const Create = () => {
     return () => {
       setHikingTrailId(null);
     };
-  }, []);
+  }, [user]);
 
   return (
     <CreateBase>
@@ -254,7 +256,6 @@ const Create = () => {
             name="images"
             maxCount={5}
             headers={{
-              Authorization: `Bearer ${session?.accessToken}`,
               'Content-Type': 'multipart/form-data',
             }}
             beforeUpload={handleImageUpload}
@@ -277,6 +278,14 @@ const Create = () => {
 };
 
 export default Create;
+
+export const getServerSideProps = withAuthSsr(({ req }) => {
+  return {
+    props: {
+      user: req.session,
+    },
+  };
+}, '/auth/redirect');
 
 Create.getLayout = function (page: ReactElement) {
   return <Layout title="등산로그 기록하기">{page}</Layout>;

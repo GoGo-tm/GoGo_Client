@@ -46,6 +46,7 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     font-family: 'Pretendard';
+    height: 100%;
   }
 
   body {
