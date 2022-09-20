@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
 import useMylogsSearchQuery from '~/hooks/queries/useMylogsSearchQuery';
 

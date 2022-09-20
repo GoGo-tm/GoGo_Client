@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
-import misc from './misc';
+
 import { PTY_CONTENTS, PTY_NULL_TYPE, SKY_CONTENTS } from '~/constants/weather';
+
+import * as misc from './misc';
 
 const isBaseTime = ['02', '05', '08', '11', '14', '17', '20', '23'];
 const isBaseTimePlus1Hour = ['03', '06', '09', '12', '15', '18', '21', '00'];
@@ -55,30 +57,26 @@ const getPtyOrSkyOfItems = (items: Item[]) => {
   return PTY_CONTENTS[parseInt(getFcstValueOfUniqueItem(items, 'PTY'))];
 };
 
-const weatherService = {
-  getWeather: async ({ url, apiKey, nx, ny }: GetWeather) => {
-    const [baseDate, baseHour] = getBaseTime();
+export const getWeather = async ({ url, apiKey, nx, ny }: GetWeather) => {
+  const [baseDate, baseHour] = getBaseTime();
 
-    try {
-      const res = await fetch(
-        `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
-          baseHour + '00'
-        }&nx=${nx}&ny=${ny}&dataType=JSON`
-      );
+  try {
+    const res = await fetch(
+      `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
+        baseHour + '00'
+      }&nx=${nx}&ny=${ny}&dataType=JSON`
+    );
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (data.response.header.resultCode !== '00') {
-        throw misc.getErrorMessage(data.response.header.resultMsg);
-      }
-
-      const weather = getPtyOrSkyOfItems(data.response.body.items.item);
-
-      return weather;
-    } catch (error) {
-      misc.getErrorMessage(error);
+    if (data.response.header.resultCode !== '00') {
+      throw misc.getErrorMessage(data.response.header.resultMsg);
     }
-  },
-};
 
-export default weatherService;
+    const weather = getPtyOrSkyOfItems(data.response.body.items.item);
+
+    return weather;
+  } catch (error) {
+    misc.getErrorMessage(error);
+  }
+};

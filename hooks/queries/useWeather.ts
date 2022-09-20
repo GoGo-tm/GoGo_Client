@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import QueryKeys from '~/constants/queries';
 
 interface Weather {

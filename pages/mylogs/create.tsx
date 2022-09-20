@@ -19,7 +19,7 @@ import Button from '~/components/button';
 import Layout from '~/components/layout';
 import SearchDataList from '~/components/mylogs/searchDataList';
 import Typography from '~/components/typography';
-import misc from '~/utils/misc';
+import * as misc from '~/utils/misc';
 
 import { ReactComponent as SearchIcon } from '../../assets/svgs/magnifier.svg';
 import { ReactComponent as CameraIcon } from '../../assets/svgs/mylogCamera.svg';

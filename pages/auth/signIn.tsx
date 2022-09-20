@@ -16,7 +16,7 @@ import Button, { Apple, Kakao, Naver } from '~/components/button';
 import Divider from '~/components/divider';
 import Header from '~/components/header';
 import useForm from '~/hooks/useForm';
-import validator from '~/utils/validator';
+import * as validator from '~/utils/validator';
 
 interface FormData {
   email: string;
