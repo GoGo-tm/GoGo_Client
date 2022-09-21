@@ -27,7 +27,6 @@ const Home: NextPageWithLayout<
       size: 5,
     })
   );
-  console.log(hikingsData);
 
   return (
     <Base>
