@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import QueryKeys from '~/constants/queries';
-import type { MylogsResponseResults } from '~/types/mylogs';
+import type { HikingLogResponseResults } from '~/types/mylogs';
 
 interface UseMylogs {
   lastId?: number;
@@ -12,7 +12,7 @@ interface UseMylogs {
 
 export default function useMylogs(query: UseMylogs, options?: {}) {
   const { accessToken } = query;
-  return useQuery<MylogsResponseResults, Error>(
+  return useQuery<HikingLogResponseResults, Error>(
     [QueryKeys.MYLOGS_KEY],
     () =>
       axios

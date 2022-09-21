@@ -11,6 +11,6 @@ interface HikingLogDto {
   length: number;
 }
 
-type MylogsResponseResults = ServerResponseResults<HikingLogDto>;
+type HikingLogResponseResults = ServerResponseResults<HikingLogDto>;
 
-export type { HikingLogDto, MylogsResponseResults };
+export type { HikingLogDto, HikingLogResponseResults };
