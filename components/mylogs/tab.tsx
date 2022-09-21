@@ -60,7 +60,7 @@ const StyledTabItem = styled.div`
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 0.625rem 2.313rem;
-  border: 0.044rem solid ${({ theme }) => theme.colors.gray.light};
+  border: 0.044rem solid ${({ theme }) => theme.colors.gray_light};
   svg {
     width: 21px;
     height: 18px;

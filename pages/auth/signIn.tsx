@@ -124,7 +124,7 @@ const LinkOutline = styled.div<{ right?: boolean }>`
   font-size: ${({ theme }) => theme.fontSize.r2};
   padding-top: 0.7rem;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray.medium};
+  color: ${({ theme }) => theme.colors.gray_medium};
 `;
 
 const ButtonOutline = styled.div`
@@ -145,5 +145,5 @@ const Paragraph = styled.p`
 const Highlight = styled.b`
   font-weight: 600;
   padding-left: 0.25rem;
-  color: ${({ theme }) => theme.colors.gray.dense};
+  color: ${({ theme }) => theme.colors.gray_dense};
 `;

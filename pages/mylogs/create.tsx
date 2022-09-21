@@ -339,7 +339,7 @@ const CreateItemOutline = styled.div`
     width: 1.169rem;
     height: 1.169rem;
   }
-  fill: ${({ theme }) => theme.colors.gray.dense};
+  fill: ${({ theme }) => theme.colors.gray_dense};
   .ant-select-selection-item {
     color: ${({ theme }) => theme.colors.primary};
   }

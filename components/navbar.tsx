@@ -61,7 +61,7 @@ const StyledNavbar = styled(Breadcrumb)`
   border-radius: 1.5rem 1.5rem 0 0;
   ol {
     width: 100%;
-    fill: ${({ theme: { colors } }) => colors.gray.light};
+    fill: ${({ theme: { colors } }) => colors.gray_light};
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -84,8 +84,8 @@ const StyledNavbarItem = styled.div`
   font-weight: bolder;
   height: 3.75rem;
   gap: 0.375rem;
-  color: ${({ theme: { colors } }) => colors.gray.light};
-  fill: ${({ theme: { colors } }) => colors.gray.light};
+  color: ${({ theme: { colors } }) => colors.gray_light};
+  fill: ${({ theme: { colors } }) => colors.gray_light};
   cursor: pointer;
   svg {
     width: 1.313rem;

@@ -37,7 +37,7 @@ const AuthInputText = styled.input`
   &::placeholder {
     font-size: ${({ theme }) => theme.fontSize.r3};
     font-weight: 400;
-    color: ${({ theme }) => theme.colors.gray.dense};
+    color: ${({ theme }) => theme.colors.gray_dense};
   }
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -92,7 +92,6 @@ const AuthInput = styled(Input)`
   &::placeholder {
     font-size: ${({ theme }) => theme.fontSize.r3};
     font-weight: 400;
-    /* color: ${({ theme }) => theme.colors.gray.dense}; */
   }
   &:focus {
     box-shadow: none;

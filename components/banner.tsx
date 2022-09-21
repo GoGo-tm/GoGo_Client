@@ -68,7 +68,7 @@ export default Banner;
 
 const Base = styled.section`
   position: relative;
-  background-color: ${({ theme }) => theme.colors.banner.primary};
+  background-color: ${({ theme }) => theme.colors.banner_primary};
 `;
 
 const WeatherImage = styled(Image)`

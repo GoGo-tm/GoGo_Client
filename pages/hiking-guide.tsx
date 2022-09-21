@@ -332,7 +332,7 @@ const UnderLine = styled.span`
 `;
 
 const GrayLine = styled.span`
-  color: ${({ theme }) => theme.colors.gray.medium};
+  color: ${({ theme }) => theme.colors.gray_medium};
 `;
 
 const HikingGuideSVGPack = styled.div`

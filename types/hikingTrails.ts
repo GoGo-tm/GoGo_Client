@@ -1,16 +1,13 @@
-interface HikingTrails {
+import type { Difficulty } from './base';
+
+interface HikingTrailDto {
   id: number;
   imageUrl: null | string;
   name: string;
   address: string;
   favoriteCount: number;
-  difficulty: 'EASY' | 'NORMAL' | 'HARD';
+  difficulty: Difficulty;
   length: number;
 }
 
-interface ResponseHikingTrails {
-  contents: HikingTrails[];
-  hasNext: boolean;
-}
-
-export type { HikingTrails, ResponseHikingTrails };
+export type { HikingTrailDto };
