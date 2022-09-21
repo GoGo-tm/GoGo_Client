@@ -1,4 +1,4 @@
-import type { Difficulty, ServerResponseResults } from './base';
+import type { Difficulty } from './base';
 
 interface HikingLogDto {
   id: number;
@@ -11,6 +11,4 @@ interface HikingLogDto {
   length: number;
 }
 
-type HikingLogResponseResults = ServerResponseResults<HikingLogDto>;
-
-export type { HikingLogDto, HikingLogResponseResults };
+export type { HikingLogDto };

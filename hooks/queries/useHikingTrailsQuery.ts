@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
 import QueryKeys from '~/constants/queries';
-import { HikingTrailResponseResults } from '~/types/hikingTrails';
+import { ServerResponseResults } from '~/types/base';
+import { HikingTrailDto } from '~/types/hikingTrails';
 
 export default function useHikingTrailsQuery(query: string, options?: {}) {
-  return useQuery<HikingTrailResponseResults, Error>(
+  return useQuery<ServerResponseResults<HikingTrailDto>, Error>(
     [QueryKeys.HIKING_TRAILS_QUERY_KEY],
     () =>
       fetch(
