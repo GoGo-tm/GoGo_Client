@@ -1,3 +1,5 @@
+import { Difficulty } from '~/types/base';
+
 type ErrorWithMessage = {
   message: string;
 };
@@ -6,16 +8,16 @@ interface Queries {
   [key: string]: number | string;
 }
 
-function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+const isErrorWithMessage = (error: unknown): error is ErrorWithMessage => {
   return (
     typeof error === 'object' &&
     error !== null &&
     'message' in error &&
     typeof (error as Record<string, unknown>).message === 'string'
   );
-}
+};
 
-function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
+const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
   if (isErrorWithMessage(maybeError)) return maybeError;
 
   try {
@@ -23,11 +25,16 @@ function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
   } catch {
     return new Error(String(maybeError));
   }
-}
+};
 
-export function getErrorMessage(error: unknown) {
-  return toErrorWithMessage(error).message;
-}
+export const getLevel = (difficulty: Difficulty) => {
+  if (difficulty === 'EASY') return '쉬움';
+  if (difficulty === 'NORMAL') return '보통';
+  return '어려움';
+};
+
+export const getErrorMessage = (error: unknown) =>
+  toErrorWithMessage(error).message;
 
 export const env = (key: string): string => {
   const value = process.env[key];
