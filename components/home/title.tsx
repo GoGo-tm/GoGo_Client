@@ -25,7 +25,7 @@ const Base = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  fill: ${({ theme }) => theme.colors.gray.medium};
+  fill: ${({ theme }) => theme.colors.gray_medium};
   font-size: ${({ theme }) => theme.fontSize.sb4};
   font-weight: 600;
   svg {
