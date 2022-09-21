@@ -32,7 +32,7 @@ const Input = styled.input`
   outline: none;
   font-size: ${({ theme }) => theme.fontSize.r4};
   &::placeholder {
-    color: ${({ theme }) => theme.colors.gray.dense};
+    color: ${({ theme }) => theme.colors.gray_dense};
   }
 `;
 
@@ -42,5 +42,5 @@ const Icon = styled(SearchIcon)<{ focus?: boolean }>`
   position: absolute;
   width: 1.156rem;
   left: 1.25rem;
-  fill: ${({ theme }) => theme.colors.gray.dense};
+  fill: ${({ theme }) => theme.colors.gray_dense};
 `;

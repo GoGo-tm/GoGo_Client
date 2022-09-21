@@ -165,7 +165,7 @@ const UpdateUserButtonOutline = styled.div`
   text-decoration: underline;
   line-height: 1.563rem;
   font-size: ${({ theme }) => theme.fontSize.r3};
-  color: ${({ theme }) => theme.colors.gray.dense};
+  color: ${({ theme }) => theme.colors.gray_dense};
   margin-bottom: 1.25rem;
   span {
     cursor: pointer;
