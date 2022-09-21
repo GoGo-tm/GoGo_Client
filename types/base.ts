@@ -1,8 +1,15 @@
-import type { NextPage } from "next/types";
-import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from 'next/types';
+import type { ReactElement, ReactNode } from 'react';
 
 type NextPageWithLayout<T> = NextPage<T> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-export type { NextPageWithLayout };
+type Difficulty = 'EASY' | 'NORMAL' | 'HARD';
+
+interface ServerResponseResults<T> {
+  contents: T[];
+  hasNext: boolean;
+}
+
+export type { Difficulty, NextPageWithLayout, ServerResponseResults };
