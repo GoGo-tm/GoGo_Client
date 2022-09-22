@@ -146,7 +146,7 @@ const SignUp = () => {
           <AuthFormItem
             name="SERVICE"
             valuePropName="checked"
-            full
+            $full
             rules={[
               {
                 validator: validator.service,
