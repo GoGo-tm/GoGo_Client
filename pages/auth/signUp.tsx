@@ -146,7 +146,7 @@ const SignUp = () => {
           <AuthFormItem
             name="SERVICE"
             valuePropName="checked"
-            full
+            $full
             rules={[
               {
                 validator: validator.service,
@@ -180,7 +180,7 @@ const SignUp = () => {
       </AuthBase>
       <Divider />
       <AuthBase>
-        <AuthFormItem full>
+        <AuthFormItem $full>
           <Button type="submit">{isPending ? '진행중...' : '회원가입'}</Button>
         </AuthFormItem>
       </AuthBase>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import AuthLabel from '~/components/auth/authLabel';
@@ -24,7 +24,7 @@ interface FormData {
 }
 
 const SignIn = () => {
-  const { isPending, success, error, handleSubmit } = useForm<FormData>({
+  const { isPending, handleSubmit } = useForm<FormData>({
     serviceCallback: async (values) =>
       signIn('credentials', {
         email: values.email,
@@ -32,13 +32,10 @@ const SignIn = () => {
       }),
   });
 
-  useEffect(() => {
-    console.log('pending', isPending);
-  }, [isPending]);
   return (
     <>
       <AuthBase root>
-        <ParagraphOutline>
+        <section>
           <Image
             src="/images/01_Logotype.png"
             alt="logo.png"
@@ -46,7 +43,7 @@ const SignIn = () => {
             height={25}
           />
           <Paragraph>{'로그인하고\n나만의 등산로그를 기록해보세요!'}</Paragraph>
-        </ParagraphOutline>
+        </section>
       </AuthBase>
       <AuthForm onFinish={(v) => handleSubmit(v as FormData)}>
         <AuthBase>
@@ -73,14 +70,15 @@ const SignIn = () => {
                   placeholder="비밀번호를 입력해주세요."
                   type="password"
                   name="password"
+                  autoComplete="off"
                 />
               </AuthFormItem>
             </AuthLabel>
           </AuthInputOutline>
-          <LinkOutline right>
+          <LinkOutline $right>
             <Link href="/">비밀번호를 잊으셨나요?</Link>
           </LinkOutline>
-          <AuthFormItem full>
+          <AuthFormItem $full>
             <Button type="submit">{isPending ? '진행중...' : '로그인'}</Button>
           </AuthFormItem>
           <LinkOutline>
@@ -114,16 +112,13 @@ SignIn.getLayout = function getLayout(page: ReactElement) {
 
 export default SignIn;
 
-const ParagraphOutline = styled.section``;
-
-const LinkOutline = styled.div<{ right?: boolean }>`
+const LinkOutline = styled.div<{ $right?: boolean }>`
   width: 100%;
   display: flex;
-  justify-content: ${({ right }) => (right ? 'flex-end' : 'center')};
-  padding-bottom: ${({ right }) => right && '1rem'};
+  justify-content: ${({ $right }) => ($right ? 'flex-end' : 'center')};
+  padding-bottom: ${({ $right }) => $right && '1rem'};
   font-size: ${({ theme }) => theme.fontSize.r2};
   padding-top: 0.7rem;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.gray_medium};
 `;
 
