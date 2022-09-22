@@ -48,8 +48,8 @@ const AuthForm = styled(Form)`
   line-height: inherit;
 `;
 
-const AuthFormItem = styled(Form.Item)<{ full?: boolean }>`
-  width: ${({ full }) => full && '100%'};
+const AuthFormItem = styled(Form.Item)<{ $full?: boolean }>`
+  width: ${({ $full }) => $full && '100%'};
   margin-bottom: 0;
   .ant-input-affix-wrapper:focus,
   .ant-input-affix-wrapper-focused {
