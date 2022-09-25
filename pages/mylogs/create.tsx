@@ -72,7 +72,7 @@ const Create = ({
 
       try {
         const response = await axios.delete(
-          `/server/api/images/${target.image}`,
+          `/server/api/images/one/HIKING_LOG/${target.image}`,
           {
             headers: {
               Authorization: `Bearer ${user?.accessToken}`,
@@ -93,10 +93,10 @@ const Create = ({
 
   const handleImageUpload = useCallback(async (file: RcFile) => {
     const formData = new FormData();
-    formData.append('files', file);
+    formData.append('file', file);
     try {
       const response = await axios.post(
-        '/server/api/images/HIKING_LOG',
+        '/server/api/images/one/HIKING_LOG',
         formData,
         {
           headers: {
@@ -109,7 +109,7 @@ const Create = ({
       if (response.status !== 200)
         throw new Error('이미지 업로드에 실패했습니다');
 
-      const url = await response.data[0];
+      const url = await response.data;
       const image = url.split('/HIKING_LOG/')[1];
 
       setFiles((prev) => prev.concat({ uid: file.uid, image, url }));

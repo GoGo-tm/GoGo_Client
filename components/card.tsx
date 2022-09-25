@@ -45,14 +45,13 @@ export default Card;
 
 const CardWrapper = styled.div`
   display: inline-block;
-  box-shadow: 0px 4px 4px #ecedef;
-  border-radius: 10px;
-  padding: 1rem 0;
+  padding-bottom: 1rem;
 `;
 
 const ImageWrapper = styled.div`
   width: 100%;
   position: relative;
+  border-radius: 0.625rem 0.625rem 0 0;
 `;
 
 const HikingImage = styled(Image)`
@@ -61,6 +60,9 @@ const HikingImage = styled(Image)`
 
 const ContentWrapper = styled.div`
   padding: 10px 10px 0 10px;
+  padding-bottom: 1rem;
+  box-shadow: 0px 4px 4px #ecedef;
+  border-radius: 10px;
 `;
 
 const Title = styled.div`

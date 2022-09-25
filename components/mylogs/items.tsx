@@ -9,7 +9,12 @@ import * as misc from '~/utils/misc';
 import Typography from '../typography';
 import Rate from './rate';
 
-export const Wrap = memo(function Wrap(props: HikingLogDto) {
+interface ItemProps {
+  onPush: (path: string) => void;
+  data: HikingLogDto;
+}
+
+export const Wrap = memo(function Wrap(props: ItemProps) {
   return (
     <WrapBase>
       <h1>wrap</h1>
@@ -17,12 +22,12 @@ export const Wrap = memo(function Wrap(props: HikingLogDto) {
   );
 });
 
-export const NoWrap = memo(function NoWrap(props: HikingLogDto) {
+export const NoWrap = memo(function NoWrap({ data, onPush }: ItemProps) {
   return (
-    <NoWrapBase>
+    <NoWrapBase onClick={() => onPush(`/mylogs/${data.id}`)}>
       <NoWrapImageOutline>
         <Image
-          src={props.hikingTrailImageUrl}
+          src={data.hikingTrailImageUrl}
           alt="thumbnail"
           width={120}
           height={94}
@@ -31,20 +36,20 @@ export const NoWrap = memo(function NoWrap(props: HikingLogDto) {
       <NoWrapContentsOutline>
         <NoWrapTitle>
           <Typography as="h2" size="m4" weight="semiBold" lineHeight="1.563rem">
-            {props.hikingTrailName}
+            {data.hikingTrailName}
           </Typography>
-          <Typography as="span" size="r1" weight="regular">
-            {dayjs(props.hikingDate).format('YYYY.MM.DD')}
+          <Typography as="span" size="r1" weight="regular" color="gray_dense">
+            {dayjs(data.hikingDate).format('YYYY.MM.DD')}
           </Typography>
         </NoWrapTitle>
         <NoWrapInfo>
-          <Typography as="p" size="r1" weight="regular">
-            {`${props.address} *${misc.getLevel(props.difficulty)} *${
-              props.length
-            }`}
+          <Typography as="p" size="r1" weight="regular" color="gray_dense">
+            {`${data.address} *${misc.getLevel(data.difficulty)} *${
+              data.length
+            }km`}
           </Typography>
         </NoWrapInfo>
-        <Rate rate={props.starRating} />
+        <Rate rate={data.starRating} />
       </NoWrapContentsOutline>
     </NoWrapBase>
   );
@@ -59,6 +64,7 @@ const NoWrapBase = styled.div`
   padding-top: 1rem;
   padding-bottom: 0.688rem;
   border-bottom: 0.019rem solid #b7b7b7;
+  cursor: pointer;
 `;
 
 const NoWrapImageOutline = styled.div`

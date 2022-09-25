@@ -11,4 +11,14 @@ interface HikingLogDto {
   length: number;
 }
 
-export type { HikingLogDto };
+interface HikingLogDetailDto {
+  starRating: 0;
+  address: string;
+  difficulty: Difficulty;
+  length: number;
+  hikingDate: string;
+  hikingTrailImageUrl: string;
+  memo: string;
+}
+
+export type { HikingLogDetailDto, HikingLogDto };
