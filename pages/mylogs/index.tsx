@@ -3,7 +3,7 @@ import axios from 'axios';
 import { withAuthSsr } from 'hof/withAuthSsr';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import type { ReactElement } from 'react';
+import { ReactElement, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Divider from '~/components/divider';
@@ -23,6 +23,11 @@ const Mylogs: NextPageWithLayout<
     { accessToken: user?.accessToken },
     { enabled: !!user?.accessToken }
   );
+  const router = useRouter();
+
+  const onPush = useCallback((path: string) => {
+    router.push(path);
+  }, []);
 
   if (query?.tab === 'wrap') {
     return (
@@ -30,7 +35,7 @@ const Mylogs: NextPageWithLayout<
         <MylogsSpace />
         <Divider margin="0" dense="8" color="#F3F4F4" />
         {data?.contents.map((v) => (
-          <Wrap key={v.id} {...v} />
+          <Wrap key={v.id} data={v} onPush={onPush} />
         ))}
       </>
     );
@@ -42,7 +47,7 @@ const Mylogs: NextPageWithLayout<
         <MylogsSpace />
         <Divider margin="0" dense="8" color="#F3F4F4" />
         {data?.contents.map((v) => (
-          <NoWrap key={v.id} {...v} />
+          <NoWrap key={v.id} data={v} onPush={onPush} />
         ))}
       </>
     );
