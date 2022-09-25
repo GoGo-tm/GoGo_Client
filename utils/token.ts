@@ -15,13 +15,14 @@ export const refreshToken = async (
       }
     );
 
-    return res.data;
+    const newToken = await res.data;
+
+    return newToken;
   } catch (e) {
     throw new Error(misc.getErrorMessage(e));
   }
 };
 export const isTokenExpired = (expiry: number) => {
-  const shouldRefreshTime = Math.round(expiry - 60 * 60 * 1000 - Date.now());
-  if (shouldRefreshTime > 0) return true;
+  if (expiry < Date.now()) return true;
   return false;
 };
