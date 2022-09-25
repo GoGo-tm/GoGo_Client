@@ -37,7 +37,9 @@ const Home: NextPageWithLayout<
         <Banner />
       </AsyncBoundary>
       <Outline>
-        <Search />
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
         <Title image="/images/13_Rocket.png" arrow>
           요즘
           <Highlight> HOT</Highlight>한 등산로
@@ -49,16 +51,15 @@ const Home: NextPageWithLayout<
               pendingFallback={<div>loading..!</div>}
             >
               {hikingsData?.contents.map((content) => (
-                <CardPack key={content.id}>
-                  <Card
-                    title={content.name}
-                    location={content.address}
-                    level={content.difficulty}
-                    km={content.length}
-                    like={content.favoriteCount}
-                    img={content.imageUrl}
-                  />
-                </CardPack>
+                <Card
+                  key={content.id}
+                  title={content.name}
+                  location={content.address}
+                  level={content.difficulty}
+                  km={content.length}
+                  like={content.favoriteCount}
+                  img={content.imageUrl}
+                />
               ))}
             </AsyncBoundary>
           </CardWrapper>
@@ -124,7 +125,6 @@ const Base = styled.main`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   overflow-y: auto;
 `;
 
@@ -136,17 +136,20 @@ const Outline = styled.div`
 `;
 
 const CardOutline = styled.div`
-  width: 100%;
+  display: grid;
   overflow: auto;
+  width: 100%;
 `;
 
 const CardWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
   gap: 0.625rem;
+  & > div {
+    width: 11.625rem;
+  }
 `;
 
-const CardPack = styled.div`
-  width: 11.625rem;
+const SearchWrapper = styled.div`
   cursor: pointer;
+  margin-top: 1.5rem;
 `;
