@@ -58,14 +58,17 @@ export const settings: NextAuthOptions = {
       }
 
       if (tokenService.isTokenExpired(token.accessTokenExpiresIn as number)) {
-        const newToken = await tokenService.refreshToken(
-          token.accessToken as string,
-          token.refreshToken as string
-        );
-        if (newToken.accessToken && newToken.refreshToken) {
+        const { accessToken, refreshToken, accessTokenExpiresIn } =
+          await tokenService.refreshToken(
+            token.accessToken as string,
+            token.refreshToken as string
+          );
+        if (accessToken && refreshToken) {
           return {
             ...token,
-            ...newToken,
+            accessToken,
+            refreshToken,
+            accessTokenExpiresIn,
           };
         }
         return {
