@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import Layout from '~/components/layout';
+import Carousel from '~/components/mylogs/carousel';
 import Rate from '~/components/mylogs/rate';
 import Typography from '~/components/typography';
 import type { NextPageWithLayout } from '~/types/base';
@@ -15,7 +16,7 @@ import * as mylogService from '~/utils/mylog';
 const Mylog: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ hikingLog }) => {
-  const { hikingDate, difficulty, starRating, memo } =
+  const { hikingDate, difficulty, starRating, memo, hikingLogImageUrls } =
     hikingLog as HikingLogDetailDto;
 
   return (
@@ -36,6 +37,7 @@ const Mylog: NextPageWithLayout<
           </Typography>
         </MylogTitleOutline>
       </MylogTitle>
+      <Carousel images={hikingLogImageUrls} />
       <MylogContent>
         <Typography size="r4" weight="regular">
           {memo}
@@ -90,4 +92,7 @@ const MylogTitleOutline = styled.div`
   gap: 0.65rem;
 `;
 
-const MylogContent = styled.div``;
+const MylogContent = styled.div`
+  padding: 0 1.188rem;
+  line-height: 1.563rem;
+`;

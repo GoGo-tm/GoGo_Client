@@ -17,7 +17,7 @@ interface HikingLogDetailDto {
   difficulty: Difficulty;
   length: number;
   hikingDate: string;
-  hikingTrailImageUrl: string;
+  hikingLogImageUrls: string[];
   memo: string;
 }
 
