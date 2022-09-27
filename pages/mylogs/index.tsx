@@ -3,40 +3,30 @@ import axios from 'axios';
 import { withAuthSsr } from 'hof/withAuthSsr';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import { ReactElement, useCallback } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
-import { NoWrap, Wrap } from '~/components/mylogs/items';
+import { NoWraps } from '~/components/mylogs/items';
 import Tab from '~/components/mylogs/tab';
 import Toggle from '~/components/mylogs/toggle';
 import QueryKeys from '~/constants/queries';
-import useMylogs from '~/hooks/queries/useMylogs';
 import type { NextPageWithLayout } from '~/types/base';
 
 const Mylogs: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ user }) => {
-  const { query } = useRouter();
-  const { data } = useMylogs(
-    { accessToken: user?.accessToken },
-    { enabled: !!user?.accessToken }
-  );
   const router = useRouter();
+  const { query } = router;
 
-  const onPush = useCallback((path: string) => {
-    router.push(path);
-  }, []);
+  if (!user?.accessToken) router.push('/auth/redirect');
 
   if (query?.tab === 'wrap') {
     return (
       <>
         <MylogsSpace />
         <Divider margin="0" dense="8" color="#F3F4F4" />
-        {data?.contents.map((v) => (
-          <Wrap key={v.id} data={v} onPush={onPush} />
-        ))}
       </>
     );
   }
@@ -46,9 +36,7 @@ const Mylogs: NextPageWithLayout<
       <>
         <MylogsSpace />
         <Divider margin="0" dense="8" color="#F3F4F4" />
-        {data?.contents.map((v) => (
-          <NoWrap key={v.id} data={v} onPush={onPush} />
-        ))}
+        <NoWraps accessToken={user?.accessToken} />
       </>
     );
   }
@@ -94,9 +82,11 @@ export const getServerSideProps = withAuthSsr(async ({ req }) => {
 }, '/auth/redirect');
 
 const MyLogsBase = styled.main`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
   position: relative;
   width: 100%;
-  height: 100%;
 `;
 
 const MylogsSpace = styled.div`
