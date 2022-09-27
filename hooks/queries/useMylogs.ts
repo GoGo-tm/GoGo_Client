@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import type { QueryFunctionContext } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import QueryKeys from '~/constants/queries';
 import type { ServerResponseResults } from '~/types/base';
 import type { HikingLogDto } from '~/types/mylogs';
+import { getMylogsByQuery } from '~/utils/mylog';
 
 interface UseMylogs {
   lastId?: number;
@@ -11,18 +12,31 @@ interface UseMylogs {
   accessToken?: string;
 }
 
-export default function useMylogs(query: UseMylogs, options?: {}) {
-  const { accessToken } = query;
-  return useQuery<ServerResponseResults<HikingLogDto>, Error>(
+export default function useMylogs(query: UseMylogs) {
+  const { accessToken, size = 5 } = query;
+
+  if (!accessToken) throw new Error('로그인이 필요한 서비스입니다.');
+
+  const fetchMylogs = async ({
+    pageParam,
+  }: QueryFunctionContext): Promise<ServerResponseResults<HikingLogDto>> => {
+    console.log(size);
+
+    const mylogs = await getMylogsByQuery({
+      lastId: pageParam,
+      size,
+      accessToken,
+    });
+
+    return mylogs;
+  };
+
+  return useInfiniteQuery<ServerResponseResults<HikingLogDto>, Error>(
     [QueryKeys.MYLOGS_KEY],
-    () =>
-      axios
-        .get(`/server/api/hiking-log`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((res) => res.data),
-    options
+    fetchMylogs,
+    {
+      getNextPageParam: (d) =>
+        d.hasNext ? d.contents[d.contents.length - 1].id : undefined,
+    }
   );
 }

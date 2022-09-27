@@ -1,20 +1,57 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { memo } from 'react';
+import { useRouter } from 'next/router';
+import React, { memo, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
+import useMylogs from '~/hooks/queries/useMylogs';
+import useIntersect from '~/hooks/useIntersect';
 import type { HikingLogDto } from '~/types/mylogs';
 import * as misc from '~/utils/misc';
 
+import DefaultImage from '../../public/images/등산_기본이미지.png';
 import Typography from '../typography';
 import Rate from './rate';
+
+interface Props {
+  accessToken?: string;
+}
 
 interface ItemProps {
   onPush: (path: string) => void;
   data: HikingLogDto;
 }
 
-export const Wrap = memo(function Wrap(props: ItemProps) {
+export const NoWraps = ({ accessToken }: Props) => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useMylogs({
+    size: 5,
+    accessToken,
+  });
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
+  const router = useRouter();
+  const onPush = useCallback((path: string) => router.push(path), [router]);
+
+  const mylogs = useMemo(
+    () => data && data.pages && data.pages.flatMap(({ contents }) => contents),
+    [data]
+  );
+
+  return (
+    <React.Fragment>
+      {mylogs?.map((mylog) => (
+        <NoWrap key={mylog.id} data={mylog} onPush={onPush} />
+      ))}
+      <Target ref={ref} />
+    </React.Fragment>
+  );
+};
+
+const Wrap = memo(function Wrap(props: ItemProps) {
   return (
     <WrapBase>
       <h1>wrap</h1>
@@ -22,12 +59,14 @@ export const Wrap = memo(function Wrap(props: ItemProps) {
   );
 });
 
-export const NoWrap = memo(function NoWrap({ data, onPush }: ItemProps) {
+const NoWrap = memo(function NoWrap({ data, onPush }: ItemProps) {
   return (
     <NoWrapBase onClick={() => onPush(`/mylogs/${data.id}`)}>
       <NoWrapImageOutline>
         <Image
-          src={data.hikingTrailImageUrl}
+          src={
+            data.hikingTrailImageUrl ? data.hikingTrailImageUrl : DefaultImage
+          }
           alt="thumbnail"
           width={120}
           height={94}
@@ -89,4 +128,8 @@ const NoWrapTitle = styled.div`
 const NoWrapInfo = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.85rem;
+`;
+
+const Target = styled.div`
+  width: 100%;
 `;
