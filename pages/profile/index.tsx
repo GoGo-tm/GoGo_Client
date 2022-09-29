@@ -1,7 +1,6 @@
 import { withAuthSsr } from 'hof/withAuthSsr';
 import { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
-import styled from 'styled-components';
 
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
@@ -13,11 +12,11 @@ const Profile: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ user }) => {
   return (
-    <Base>
-      <MyImage>{user?.user.email}</MyImage>
+    <main>
+      <MyImage email={user?.user.email} name={user?.user.name}></MyImage>
       <Divider margin="0" dense="8" color="#F3F4F4" />
       <ProfileNavlink />
-    </Base>
+    </main>
   );
 };
 
@@ -34,5 +33,3 @@ export const getServerSideProps = withAuthSsr(({ req }) => {
     },
   };
 }, '/auth/redirect');
-
-const Base = styled.main``;
