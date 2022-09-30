@@ -1,10 +1,13 @@
 import { Breadcrumb } from 'antd';
 import type { Route } from 'antd/lib/breadcrumb/Breadcrumb';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as ListIcon } from '../../assets/svgs/hikingList.svg';
 import { ReactComponent as MountainIcon } from '../../assets/svgs/mountain.svg';
 import { ReactComponent as CameraIcon } from '../../assets/svgs/mylogCamera.svg';
+import Divider from '../divider';
 import NavLink from '../navlink';
 
 const routes: Route[] = [
@@ -16,7 +19,17 @@ const routes: Route[] = [
 const icons = [<MountainIcon />, <CameraIcon />, <ListIcon />];
 
 const Tab = () => {
-  return <StyledTab routes={routes} itemRender={TabItem} />;
+  const { query } = useRouter();
+  const isQueryTab = useMemo(
+    () => (query.tab === 'nowrap' || query.tab === 'wrap' ? true : false),
+    [query]
+  );
+  return (
+    <Base $isQueryTab={isQueryTab}>
+      <StyledTab routes={routes} itemRender={TabItem} />
+      {isQueryTab && <Divider margin="0" dense="8" color="#F3F4F4" />}
+    </Base>
+  );
 };
 
 const TabItem = (route: Route, _: any, __: Route[], paths: string[]) => {
@@ -29,13 +42,20 @@ const TabItem = (route: Route, _: any, __: Route[], paths: string[]) => {
 
 export default Tab;
 
+const Base = styled.div<{ $isQueryTab: boolean }>`
+  position: ${({ $isQueryTab }) => ($isQueryTab ? 'sticky' : 'absolute')};
+  width: 100%;
+  top: 0;
+  background-color: ${({ $isQueryTab }) => ($isQueryTab ? '#fff' : 'none')};
+  z-index: 999;
+`;
+
 const StyledTab = styled(Breadcrumb)`
   width: 100%;
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 1rem;
+  margin: 1rem 0;
   .ant-breadcrumb-separator {
     display: none;
   }

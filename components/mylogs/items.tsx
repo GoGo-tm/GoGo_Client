@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { memo, useCallback, useMemo } from 'react';
+import type { ParsedUrlQuery } from 'querystring';
+import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useMylogs from '~/hooks/queries/useMylogs';
@@ -15,6 +15,8 @@ import Rate from './rate';
 
 interface Props {
   accessToken?: string;
+  query?: ParsedUrlQuery;
+  onPush: (path: string) => void;
 }
 
 interface ItemProps {
@@ -22,7 +24,7 @@ interface ItemProps {
   data: HikingLogDto;
 }
 
-export const NoWraps = ({ accessToken }: Props) => {
+export const MylogItems = ({ accessToken, query, onPush }: Props) => {
   const { data, hasNextPage, isFetching, fetchNextPage } = useMylogs({
     size: 5,
     accessToken,
@@ -33,8 +35,6 @@ export const NoWraps = ({ accessToken }: Props) => {
       fetchNextPage();
     }
   });
-  const router = useRouter();
-  const onPush = useCallback((path: string) => router.push(path), [router]);
 
   const mylogs = useMemo(
     () => data && data.pages && data.pages.flatMap(({ contents }) => contents),
@@ -42,12 +42,24 @@ export const NoWraps = ({ accessToken }: Props) => {
   );
 
   return (
-    <React.Fragment>
-      {mylogs?.map((mylog) => (
-        <NoWrap key={mylog.id} data={mylog} onPush={onPush} />
-      ))}
+    <>
+      {query?.tab === 'wrap'
+        ? mylogs?.map((mylog) => (
+            <Wrap
+              key={mylog.id}
+              data={mylog}
+              onPush={() => onPush(`/mylogs/${mylog.id}`)}
+            />
+          ))
+        : mylogs?.map((mylog) => (
+            <NoWrap
+              key={mylog.id}
+              data={mylog}
+              onPush={() => onPush(`/mylogs/${mylog.id}`)}
+            />
+          ))}
       <Target ref={ref} />
-    </React.Fragment>
+    </>
   );
 };
 
@@ -132,4 +144,5 @@ const NoWrapInfo = styled.div`
 
 const Target = styled.div`
   width: 100%;
+  height: 5.625rem;
 `;

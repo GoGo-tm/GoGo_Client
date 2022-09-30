@@ -36,8 +36,8 @@ const Toggle = () => {
 export default Toggle;
 
 const ToggleBase = styled.div`
-  position: absolute;
-  bottom: 2.086rem;
+  position: fixed;
+  bottom: 7.711rem;
   right: 0.984rem;
   cursor: pointer;
 `;
