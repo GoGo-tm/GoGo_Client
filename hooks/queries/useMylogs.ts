@@ -1,7 +1,7 @@
 import type { QueryFunctionContext } from '@tanstack/react-query';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import QueryKeys from '~/constants/queries';
+import { myLogKeys } from '~/constants/queries';
 import type { ServerResponseResults } from '~/types/base';
 import type { HikingLogDto } from '~/types/mylogs';
 import { getMylogsByQuery } from '~/utils/mylog';
@@ -20,8 +20,6 @@ export default function useMylogs(query: UseMylogs) {
   const fetchMylogs = async ({
     pageParam,
   }: QueryFunctionContext): Promise<ServerResponseResults<HikingLogDto>> => {
-    console.log(size);
-
     const mylogs = await getMylogsByQuery({
       lastId: pageParam,
       size,
@@ -32,7 +30,7 @@ export default function useMylogs(query: UseMylogs) {
   };
 
   return useInfiniteQuery<ServerResponseResults<HikingLogDto>, Error>(
-    [QueryKeys.MYLOGS_KEY],
+    myLogKeys.lists(),
     fetchMylogs,
     {
       getNextPageParam: (d) =>

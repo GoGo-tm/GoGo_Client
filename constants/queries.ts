@@ -5,4 +5,9 @@ enum QueryKeys {
   MYLOGS_KEY = 'MYLOGS_KEY',
 }
 
+export const myLogKeys = {
+  all: ['MYLOGS', 'MYLOG'],
+  lists: () => [...myLogKeys.all, 'LIST'],
+};
+
 export default QueryKeys;
