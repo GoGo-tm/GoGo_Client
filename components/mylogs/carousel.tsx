@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { ReactComponent as LeftIcon } from '../../assets/svgs/left.svg';
 import { ReactComponent as RightIcon } from '../../assets/svgs/right.svg';
+import { MylogImageLoading } from '../loading';
 
 interface CarouselProps {
   images: string[];
@@ -22,6 +23,7 @@ const Dot = memo(function Dot({ active }: DotProps) {
 });
 
 const CarouselItem = memo(function CarouselItem({ image }: CarouselItemProps) {
+  const loadingRef = useRef<HTMLDivElement>(null);
   return (
     <CarouselItemBase>
       <Image
@@ -31,7 +33,9 @@ const CarouselItem = memo(function CarouselItem({ image }: CarouselItemProps) {
         height={358}
         layout="fixed"
         priority
+        onLoadingComplete={() => loadingRef.current?.remove()}
       />
+      <MylogImageLoading ref={loadingRef} />
     </CarouselItemBase>
   );
 });
@@ -83,6 +87,7 @@ const CarouselBase = styled.section`
 
 const CarouselItemBase = styled.div`
   width: 22.375rem;
+  position: relative;
   img {
     border-radius: 0.625rem;
   }
