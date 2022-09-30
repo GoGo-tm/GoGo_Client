@@ -3,12 +3,11 @@ import axios from 'axios';
 import { withAuthSsr } from 'hof/withAuthSsr';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
+import { ReactElement, useCallback } from 'react';
 import styled from 'styled-components';
 
-import Divider from '~/components/divider';
 import Layout from '~/components/layout';
-import { NoWraps } from '~/components/mylogs/items';
+import { MylogItems } from '~/components/mylogs/items';
 import Tab from '~/components/mylogs/tab';
 import Toggle from '~/components/mylogs/toggle';
 import QueryKeys from '~/constants/queries';
@@ -19,14 +18,20 @@ const Mylogs: NextPageWithLayout<
 > = ({ user }) => {
   const router = useRouter();
   const { query } = router;
+  const onPush = useCallback((path: string) => {
+    router.push(path);
+  }, []);
 
   if (!user?.accessToken) router.push('/auth/redirect');
 
   if (query?.tab === 'wrap') {
     return (
       <>
-        <MylogsSpace />
-        <Divider margin="0" dense="8" color="#F3F4F4" />
+        <MylogItems
+          query={query}
+          onPush={onPush}
+          accessToken={user?.accessToken}
+        />
       </>
     );
   }
@@ -34,9 +39,11 @@ const Mylogs: NextPageWithLayout<
   if (query?.tab === 'nowrap') {
     return (
       <>
-        <MylogsSpace />
-        <Divider margin="0" dense="8" color="#F3F4F4" />
-        <NoWraps accessToken={user?.accessToken} />
+        <MylogItems
+          query={query}
+          onPush={onPush}
+          accessToken={user?.accessToken}
+        />
       </>
     );
   }
@@ -50,13 +57,15 @@ const Mylogs: NextPageWithLayout<
 
 Mylogs.getLayout = function (page: ReactElement) {
   return (
-    <Layout title="등산로그">
-      <MyLogsBase>
-        <Tab />
-        {page}
-        <Toggle />
-      </MyLogsBase>
-    </Layout>
+    <>
+      <Layout title="등산로그">
+        <MyLogsBase>
+          <Tab />
+          {page}
+          <Toggle />
+        </MyLogsBase>
+      </Layout>
+    </>
   );
 };
 
@@ -84,12 +93,6 @@ export const getServerSideProps = withAuthSsr(async ({ req }) => {
 const MyLogsBase = styled.main`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   position: relative;
   width: 100%;
-`;
-
-const MylogsSpace = styled.div`
-  width: 100%;
-  height: 4.5rem;
 `;
