@@ -4,21 +4,20 @@ import styled from 'styled-components';
 import * as mapService from '~/utils/map';
 
 interface Props {
-  tm123: {
-    paths: number[][];
+  hiking: {
+    geometries: { latitude: number; longitude: number }[];
   };
 }
 
-const HikingMap = ({ tm123 }: Props) => {
+const HikingMap = ({ hiking }: Props) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
 
   useEffect(() => {
-    const coords = mapService.tm123ToCoords(tm123.paths);
+    const coords = mapService.tm123ToCoords(hiking.geometries);
     const mid = Math.floor(coords.length / 2);
 
     mapRef.current = new naver.maps.Map('map', {
       zoom: 16,
-      zoomControl: true,
       center: coords[mid],
     });
 
@@ -26,7 +25,7 @@ const HikingMap = ({ tm123 }: Props) => {
       path: coords,
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
-      strokeWeight: 6,
+      strokeWeight: 4,
       map: mapRef.current,
     });
 
