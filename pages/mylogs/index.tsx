@@ -18,41 +18,37 @@ const Mylogs: NextPageWithLayout<
 > = ({ user }) => {
   const router = useRouter();
   const { query } = router;
+
   const onPush = useCallback((path: string) => {
     router.push(path);
   }, []);
 
   if (!user?.accessToken) router.push('/auth/redirect');
 
-  if (query?.tab === 'wrap') {
-    return (
-      <>
+  switch (query.tab) {
+    case 'wrap':
+      return (
         <MylogItems
           query={query}
           onPush={onPush}
           accessToken={user?.accessToken}
         />
-      </>
-    );
-  }
-
-  if (query?.tab === 'nowrap') {
-    return (
-      <>
+      );
+    case 'nowrap':
+      return (
         <MylogItems
           query={query}
           onPush={onPush}
           accessToken={user?.accessToken}
         />
-      </>
-    );
+      );
+    default:
+      return (
+        <div>
+          <h1>hi</h1>
+        </div>
+      );
   }
-
-  return (
-    <>
-      <h1>my logs</h1>
-    </>
-  );
 };
 
 Mylogs.getLayout = function (page: ReactElement) {
@@ -95,4 +91,9 @@ const MyLogsBase = styled.main`
   flex-direction: column;
   position: relative;
   width: 100%;
+`;
+
+const Target = styled.div`
+  width: 100%;
+  height: 5.625rem;
 `;

@@ -42,25 +42,24 @@ export const MylogItems = ({ accessToken, query, onPush }: Props) => {
   );
 
   return (
-    <React.Fragment>
-      {query?.tab === 'wrap' &&
-        mylogs?.map((mylog) => (
-          <Wrap
-            key={mylog.id}
-            data={mylog}
-            onPush={() => onPush(`/mylogs/${mylog.id}`)}
-          />
-        ))}
-      {query?.tab === 'nowrap' &&
-        mylogs?.map((mylog) => (
-          <NoWrap
-            key={mylog.id}
-            data={mylog}
-            onPush={() => onPush(`/mylogs/${mylog.id}`)}
-          />
-        ))}
+    <>
+      {query?.tab === 'wrap'
+        ? mylogs?.map((mylog) => (
+            <Wrap
+              key={mylog.id}
+              data={mylog}
+              onPush={() => onPush(`/mylogs/${mylog.id}`)}
+            />
+          ))
+        : mylogs?.map((mylog) => (
+            <NoWrap
+              key={mylog.id}
+              data={mylog}
+              onPush={() => onPush(`/mylogs/${mylog.id}`)}
+            />
+          ))}
       <Target ref={ref} />
-    </React.Fragment>
+    </>
   );
 };
 
