@@ -46,7 +46,7 @@ const Base = styled.div<{ $isQueryTab: boolean }>`
   position: ${({ $isQueryTab }) => ($isQueryTab ? 'sticky' : 'absolute')};
   width: 100%;
   top: 0;
-  background-color: #fff;
+  background-color: ${({ $isQueryTab }) => ($isQueryTab ? '#fff' : 'none')};
   z-index: 999;
 `;
 
