@@ -12,7 +12,7 @@ const HikingMap = dynamic(() => import('~/components/hikingMap'), {
 });
 
 const HikingById: NextPage = ({
-  tm123,
+  hiking,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div>
@@ -21,7 +21,7 @@ const HikingById: NextPage = ({
         pendingFallback={<div>loading..</div>}
         rejectedFallback={<div>error...</div>}
       >
-        <HikingMap tm123={tm123} />
+        <HikingMap hiking={hiking} />
       </AsyncBoundary>
     </div>
   );
@@ -29,16 +29,18 @@ const HikingById: NextPage = ({
 
 export default HikingById;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await fetch('http://localhost:3000/api/hiking');
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/server/api/hiking-trails/${params?.id}`
+  );
 
-  if (!res.ok) throw Error('error');
+  if (!response.ok) throw Error('error');
 
-  const tm123: number[][] = await res.json();
+  const hiking: number[][] = await response.json();
 
   return {
     props: {
-      tm123,
+      hiking,
     },
   };
 };
