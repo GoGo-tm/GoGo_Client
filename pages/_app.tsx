@@ -9,7 +9,7 @@ import type { AppProps } from 'next/app';
 import type { NextPage } from 'next/types';
 import { SessionProvider } from 'next-auth/react';
 import type { ReactElement, ReactNode } from 'react';
-import React from 'react';
+import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '~/components/globalStyle';
@@ -28,7 +28,7 @@ function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
-  const [queryClient] = React.useState(
+  const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
@@ -44,6 +44,7 @@ function MyApp({
         },
       })
   );
+
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
