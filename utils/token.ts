@@ -8,7 +8,7 @@ export const refreshToken = async (
 ) => {
   try {
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/reissue`,
+      `${process.env.NEXT_PUBLIC_URL}/server/api/auth/reissue`,
       {
         accessToken,
         refreshToken,

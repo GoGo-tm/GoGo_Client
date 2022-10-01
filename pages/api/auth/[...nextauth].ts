@@ -76,6 +76,7 @@ export const settings: NextAuthOptions = {
           accessTokenExpiresIn: 0,
         };
       }
+
       return token;
     },
     async session({ session, token }) {
