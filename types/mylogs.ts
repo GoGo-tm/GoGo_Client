@@ -4,6 +4,7 @@ interface HikingLogDto {
   id: number;
   hikingTrailName: string;
   hikingTrailImageUrl: string;
+  imageUrls: string[];
   hikingDate: string;
   starRating: 0;
   difficulty: Difficulty;
