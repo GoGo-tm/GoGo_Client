@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { ParsedUrlQuery } from 'querystring';
 import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
@@ -43,31 +44,78 @@ export const MylogItems = ({ accessToken, query, onPush }: Props) => {
 
   return (
     <>
-      {query?.tab === 'wrap'
-        ? mylogs?.map((mylog) => (
+      {query?.tab === 'wrap' ? (
+        <ItemOutline>
+          {mylogs?.map((mylog) => (
             <Wrap
               key={mylog.id}
               data={mylog}
               onPush={() => onPush(`/mylogs/${mylog.id}`)}
             />
-          ))
-        : mylogs?.map((mylog) => (
-            <NoWrap
-              key={mylog.id}
-              data={mylog}
-              onPush={() => onPush(`/mylogs/${mylog.id}`)}
-            />
           ))}
+        </ItemOutline>
+      ) : (
+        mylogs?.map((mylog) => (
+          <NoWrap
+            key={mylog.id}
+            data={mylog}
+            onPush={() => onPush(`/mylogs/${mylog.id}`)}
+          />
+        ))
+      )}
       <Target ref={ref} />
     </>
   );
 };
 
 const Wrap = memo(function Wrap(props: ItemProps) {
+  const { data, onPush } = props;
+  const { imageUrls, id } = data;
+  const representative = useMemo(() => {
+    if (imageUrls.length) return imageUrls[0];
+    return DefaultImage;
+  }, [data]);
+  const isMultiImages = imageUrls.length >= 2 ? true : false;
   return (
-    <WrapBase>
-      <h1>wrap</h1>
-    </WrapBase>
+    <Link href={`/mylogs/${id}`}>
+      <WrapBase>
+        <Image
+          src={representative}
+          alt="등산로그"
+          layout="responsive"
+          width={116}
+          height={116}
+          priority
+        />
+        {isMultiImages && (
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 13 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.55556 1H1.61111C1.2736 1 1 1.2736 1 1.61111V9.55556C1 9.89306 1.2736 10.1667 1.61111 10.1667H9.55556C9.89306 10.1667 10.1667 9.89306 10.1667 9.55556V1.61111C10.1667 1.2736 9.89306 1 9.55556 1Z"
+              stroke="#B2B3B6"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M12 2.83337V11.0834C12 11.3265 11.9034 11.5596 11.7315 11.7316C11.5596 11.9035 11.3264 12 11.0833 12H2.83333M1 6.8056L3.33933 4.72599C3.45208 4.62578 3.5979 4.57081 3.74874 4.57165C3.89958 4.5725 4.04478 4.6291 4.15639 4.73057L7.11111 7.41671"
+              stroke="#B2B3B6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M5.88889 6.19441L7.35097 4.97586C7.45668 4.88783 7.589 4.83804 7.72652 4.83455C7.86403 4.83105 7.99871 4.87406 8.10875 4.95661L10.1667 6.49997M1 4.97219V7.41664M10.1667 4.97219V7.41664"
+              stroke="#B2B3B6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </WrapBase>
+    </Link>
   );
 });
 
@@ -82,6 +130,7 @@ const NoWrap = memo(function NoWrap({ data, onPush }: ItemProps) {
           alt="thumbnail"
           width={120}
           height={94}
+          priority
         />
       </NoWrapImageOutline>
       <NoWrapContentsOutline>
@@ -106,7 +155,20 @@ const NoWrap = memo(function NoWrap({ data, onPush }: ItemProps) {
   );
 });
 
-const WrapBase = styled.div``;
+const WrapBase = styled.div`
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  img {
+    border-radius: 0.625rem;
+  }
+  svg {
+    position: absolute;
+    z-index: 999;
+    right: 8px;
+    top: 10px;
+  }
+`;
 
 const NoWrapBase = styled.div`
   width: 100%;
@@ -140,6 +202,15 @@ const NoWrapTitle = styled.div`
 const NoWrapInfo = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.85rem;
+`;
+
+const ItemOutline = styled.div`
+  display: grid;
+  width: 100%;
+  row-gap: 5px;
+  column-gap: 7px;
+  padding: 1.313rem 1.063rem;
+  grid-template-columns: 1fr 1fr 1fr;
 `;
 
 const Target = styled.div`
