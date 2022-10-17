@@ -1,14 +1,33 @@
 /** @type {import('next').NextConfig} */
 
 const withPlugins = require('next-compose-plugins');
-const withPwa = require('next-pwa');
 const withAntdLess = require('next-plugin-antd-less');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
+/**
+ * 차후 pwa도 swc로 마이그레이션 예정
+ */
+// const withPwa = require('next-pwa');
 
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
+  swcMinify: true,
+  compiler: {
+    styledComponents: {
+      ssr: true,
+      displayName: true,
+      fileName: true,
+      pure: true,
+    },
+  },
+  experimental: {
+    modularizeImports: {
+      antd: {
+        transform: 'antd/lib/{{member}}',
+      },
+    },
+  },
   images: {
     domains: [
       'www.forest.go.kr',
@@ -43,17 +62,20 @@ const nextConfig = withBundleAnalyzer({
 
 module.exports = withPlugins(
   [
-    [
-      withPwa,
-      {
-        pwa: {
-          dest: 'public',
-          register: true,
-          skipWaiting: true,
-          disable: process.env.NODE_ENV === 'development',
-        },
-      },
-    ],
+    /**
+     * pwa 웹팩 설정
+     */
+    // [
+    //   withPwa,
+    //   {
+    //     pwa: {
+    //       dest: 'public',
+    //       register: true,
+    //       skipWaiting: true,
+    //       disable: process.env.NODE_ENV === 'development',
+    //     },
+    //   },
+    // ],
     [
       withAntdLess,
       {
