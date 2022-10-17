@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as OutlineIcon } from '../../assets/svgs/starLine.svg';
-import { ReactComponent as SolideIcon } from '../../assets/svgs/starSolid.svg';
+import OutlineIcon from '../../assets/svgs/starLine.svg';
+import SolideIcon from '../../assets/svgs/starSolid.svg';
 
 interface Props {
   rate: number;

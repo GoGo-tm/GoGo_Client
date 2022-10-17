@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { memo, useCallback, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { ReactComponent as LeftIcon } from '../../assets/svgs/left.svg';
-import { ReactComponent as RightIcon } from '../../assets/svgs/right.svg';
+import LeftIcon from '../../assets/svgs/left.svg';
+import RightIcon from '../../assets/svgs/right.svg';
 import { MylogImageLoading } from '../loading';
 
 interface CarouselProps {

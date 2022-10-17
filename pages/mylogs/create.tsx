@@ -22,9 +22,9 @@ import SearchDataList from '~/components/mylogs/searchDataList';
 import Typography from '~/components/typography';
 import * as misc from '~/utils/misc';
 
-import { ReactComponent as SearchIcon } from '../../assets/svgs/magnifier.svg';
-import { ReactComponent as CameraIcon } from '../../assets/svgs/mylogCamera.svg';
-import { ReactComponent as StarIcon } from '../../assets/svgs/starSolid.svg';
+import SearchIcon from '../../assets/svgs/magnifier.svg';
+import CameraIcon from '../../assets/svgs/mylogCamera.svg';
+import StarIcon from '../../assets/svgs/starSolid.svg';
 
 interface AntdFormData {
   memo: string;

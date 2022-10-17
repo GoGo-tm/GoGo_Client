@@ -43,3 +43,5 @@ yarn-error.log*
 
 # mock
 **/public/mockServiceWorker.js
+
+package-lock.json
