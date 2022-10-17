@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import useWeather from '~/hooks/queries/useWeather';
 
-import { ReactComponent as LocationIcon } from '../assets/svgs/location.svg';
+import LocationIcon from '../assets/svgs/location.svg';
 
 interface Props {
   content: string;

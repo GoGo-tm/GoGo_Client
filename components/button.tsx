@@ -1,9 +1,9 @@
 import type { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as AppleIcon } from '../assets/svgs/apple.svg';
-import { ReactComponent as KakaoIcon } from '../assets/svgs/kakao.svg';
-import { ReactComponent as NaverIcon } from '../assets/svgs/naver.svg';
+import AppleIcon from '../assets/svgs/apple.svg';
+import KakaoIcon from '../assets/svgs/kakao.svg';
+import NaverIcon from '../assets/svgs/naver.svg';
 
 interface Props extends PropsWithChildren {
   type?: 'button' | 'submit' | 'reset' | undefined;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as ArrowIcon } from '../../assets/svgs/right.svg';
+import ArrowIcon from '../../assets/svgs/right.svg';
 
 interface Props extends PropsWithChildren {
   image: string;

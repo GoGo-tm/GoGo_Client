@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as ListIcon } from '../../assets/svgs/hikingList.svg';
-import { ReactComponent as MountainIcon } from '../../assets/svgs/mountain.svg';
-import { ReactComponent as CameraIcon } from '../../assets/svgs/mylogCamera.svg';
+import ListIcon from '../../assets/svgs/hikingList.svg';
+import MountainIcon from '../../assets/svgs/mountain.svg';
+import CameraIcon from '../../assets/svgs/mylogCamera.svg';
 import Divider from '../divider';
 import NavLink from '../navlink';
 

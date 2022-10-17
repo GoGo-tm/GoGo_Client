@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
 
-import { ReactComponent as Icon } from '../../assets/svgs/right.svg';
+import Icon from '../../assets/svgs/right.svg';
 
 const Update = () => {
   const [focus, setFocus] = useState<boolean>(false);
