@@ -1,5 +1,6 @@
 import '~/assets/css/variables.less';
 
+import type { DehydratedState } from '@tanstack/react-query';
 import {
   Hydrate,
   QueryClient,
@@ -7,6 +8,7 @@ import {
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next/types';
+import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import type { ReactElement, ReactNode } from 'react';
 import { useState } from 'react';
@@ -16,18 +18,18 @@ import GlobalStyle from '~/components/globalStyle';
 import SEO from '~/components/seo';
 import theme from '~/constants/theme';
 
-type NextPageWithLayout = NextPage & {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout<T> = AppProps<T> & {
   Component: NextPageWithLayout;
 };
 
 function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
+  pageProps: { session, dehydratedState, ...pageProps },
+}: AppPropsWithLayout<{ session: Session; dehydratedState: DehydratedState }>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -50,7 +52,7 @@ function MyApp({
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={dehydratedState}>
           <SessionProvider session={session}>
             <SEO
               og={{
