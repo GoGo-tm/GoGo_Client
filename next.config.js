@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const withPlugins = require('next-compose-plugins');
-const withAntdLess = require('next-plugin-antd-less');
+const withLess = require('next-with-less');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -19,13 +19,6 @@ const nextConfig = withBundleAnalyzer({
       displayName: true,
       fileName: true,
       pure: true,
-    },
-  },
-  experimental: {
-    modularizeImports: {
-      antd: {
-        transform: 'antd/lib/{{member}}',
-      },
     },
   },
   images: {
@@ -77,7 +70,7 @@ module.exports = withPlugins(
     //   },
     // ],
     [
-      withAntdLess,
+      withLess,
       {
         modifyVars: { '@primary-color': '#009D68' },
         lessVarsFilePath: './assets/css/variables.less',
