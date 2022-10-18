@@ -18,7 +18,7 @@ import useForm from '~/hooks/useForm';
 import * as userService from '~/utils/user';
 import * as validator from '~/utils/validator';
 
-import { ReactComponent as Icon } from '../../assets/svgs/right.svg';
+import Icon from '../../assets/svgs/right.svg';
 
 interface FormData {
   nickname: string;
