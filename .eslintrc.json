@@ -21,7 +21,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "simple-import-sort"],
+  "plugins": ["react", "prettier", "@typescript-eslint", "simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
@@ -29,16 +29,17 @@
     "react/react-in-jsx-scope": "off",
     "import/no-unresolved": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    //이 아래는 의도한 린트가 아니에요. 지워나가야 해요.
-    "react/prop-types": "off",
-    "react/jsx-key": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "no-implicit-coercion": "error",
+    "no-undef": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "jsx-a11y/alt-text": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "import/no-named-as-default": "off",
-    "@typescript-eslint/ban-types": "off",
-    "o@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-var-requires": "off"
+    "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ],
+    "@typescript-eslint/no-var-requires": "warn"
   }
 }
