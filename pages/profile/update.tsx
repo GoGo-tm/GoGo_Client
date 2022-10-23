@@ -33,9 +33,9 @@ const Update = () => {
               onBlur={handleOnBlur}
               focus={isFocus}
             >
-              <PasswordInput value={'qwe123qwe'} />
+              <PasswordInput autoComplete="off" value={'qwe123qwe'} />
               <Divider margin="0.813" />
-              <PasswordInput placeholder="신규 비밀번호" />
+              <PasswordInput autoComplete="off" placeholder="신규 비밀번호" />
             </UpdatePasswordOutline>
           </UpdateInputOutline>
           <UpdateButton type="submit">변경</UpdateButton>
@@ -44,7 +44,7 @@ const Update = () => {
       <Divider margin="1.313" />
       <Base full>
         <UpdateForm name="term">
-          <UpdateFormItem name="LOCATION" valuePropName="checked">
+          <UpdateFormItem valuePropName="checked">
             <UpdateCheckBox>위치정보 이용 동의 (선택)</UpdateCheckBox>
             <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
           </UpdateFormItem>
@@ -86,24 +86,11 @@ const Base = styled.div<{ full?: boolean }>`
 
 const UpdateForm = styled(Form)`
   width: 100%;
-  .ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper-focused {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: none;
-  }
-  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus,
-  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input-focused {
-    box-shadow: none;
-  }
-  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
-    box-shadow: none;
-  }
   .ant-form-item-feedback-icon-success {
     color: ${({ theme }) => theme.colors.primary};
   }
   .ant-input {
-    font-size: ${({ theme }) => theme.fontSize.m3};
+    font-size: ${({ theme }) => theme.fontSize.m2};
     line-height: 1.563rem;
   }
 `;
