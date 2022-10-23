@@ -53,6 +53,14 @@ const GlobalStyle = createGlobalStyle`
     padding-bottom: 92px;
   }
 
+  button {
+    font-family: 'Pretendard';
+  }
+
+  input { 
+    font-family: 'Pretendard';
+  }
+
    #__next {
     display: flex;
     flex-direction: column;
