@@ -6,12 +6,13 @@ import Navbar from './navbar';
 interface Props {
   children: ReactNode;
   title: string;
+  pre?: boolean;
 }
 
-const Layout = ({ children, title }: Props) => {
+const Layout = ({ children, title, pre }: Props) => {
   return (
     <>
-      <Header title={title} />
+      <Header title={title} pre={pre} />
       {children}
       <Navbar />
     </>
