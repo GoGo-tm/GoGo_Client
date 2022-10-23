@@ -1,8 +1,7 @@
 import { Checkbox, Form, Input } from 'antd';
 import type { GetStaticPropsContext } from 'next';
 import { signOut } from 'next-auth/react';
-import type { ReactElement } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { ReactElement, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Divider from '~/components/divider';
@@ -11,7 +10,7 @@ import Layout from '~/components/layout';
 import Icon from '../../assets/svgs/right.svg';
 
 const Update = () => {
-  const [focus, setFocus] = useState<boolean>(false);
+  const [focus, setFocus] = useState(false);
   const handleOnFocus = useCallback(() => setFocus(true), []);
   const handleOnBlur = useCallback(() => setFocus(false), []);
   const isFocus = useMemo(() => (focus ? true : false), [focus]);
@@ -21,6 +20,7 @@ const Update = () => {
   const onLogout = useCallback(() => {
     signOut();
   }, []);
+
   return (
     <>
       <Base>
@@ -33,23 +33,19 @@ const Update = () => {
               onBlur={handleOnBlur}
               focus={isFocus}
             >
-              <UpdateCurrentPasswordInput value={'qwe123qwe'} />
+              <PasswordInput autoComplete="off" value={'qwe123qwe'} />
               <Divider margin="0.813" />
-              <UpdateNewPasswordInput placeholder="신규 비밀번호" />
+              <PasswordInput autoComplete="off" placeholder="신규 비밀번호" />
             </UpdatePasswordOutline>
           </UpdateInputOutline>
-          <UpdateButtonOutline>
-            <UpdateButton type="submit">변경</UpdateButton>
-          </UpdateButtonOutline>
+          <UpdateButton type="submit">변경</UpdateButton>
         </UpdateForm>
       </Base>
       <Divider margin="1.313" />
       <Base full>
         <UpdateForm name="term">
-          <UpdateFormItem name="LOCATION" valuePropName="checked">
-            <UpdateCheckBox>
-              <UpdateCheckBoxText>위치정보 이용 동의 (선택)</UpdateCheckBoxText>
-            </UpdateCheckBox>
+          <UpdateFormItem valuePropName="checked">
+            <UpdateCheckBox>위치정보 이용 동의 (선택)</UpdateCheckBox>
             <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
           </UpdateFormItem>
         </UpdateForm>
@@ -63,7 +59,11 @@ const Update = () => {
 };
 
 Update.getLayout = function getLayout(page: ReactElement) {
-  return <Layout title="내 정보 수정">{page}</Layout>;
+  return (
+    <Layout title="내 정보 수정" pre={true}>
+      {page}
+    </Layout>
+  );
 };
 
 export default Update;
@@ -86,24 +86,11 @@ const Base = styled.div<{ full?: boolean }>`
 
 const UpdateForm = styled(Form)`
   width: 100%;
-  .ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper-focused {
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: none;
-  }
-  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:focus,
-  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input-focused {
-    box-shadow: none;
-  }
-  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
-  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
-    box-shadow: none;
-  }
   .ant-form-item-feedback-icon-success {
     color: ${({ theme }) => theme.colors.primary};
   }
   .ant-input {
-    font-size: ${({ theme }) => theme.fontSize.m3};
+    font-size: ${({ theme }) => theme.fontSize.m2};
     line-height: 1.563rem;
   }
 `;
@@ -135,15 +122,9 @@ const UpdatePasswordOutline = styled.div<{ focus: boolean }>`
   padding: 0.938rem 1.125rem;
 `;
 
-const UpdateButtonOutline = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 1.313rem;
-`;
-
 const UpdateTextInput = styled(Input)`
   border: 0.7px solid #b2b3b6;
+  width: 100%;
   border-radius: 0.625rem;
   line-height: 1.563rem;
   padding: 0.938rem 2.125rem;
@@ -172,14 +153,12 @@ const UpdateUserButtonOutline = styled.div`
   }
 `;
 
-const UpdateCurrentPasswordInput = styled(Input.Password)`
-  border: none;
-  padding: 0 1rem;
-`;
-
-const UpdateNewPasswordInput = styled(Input.Password)`
-  border: none;
-  padding: 0 1rem;
+const PasswordInput = styled(Input.Password)`
+  & > input {
+    width: 94%;
+    border: none;
+    padding: 0 1rem;
+  }
 `;
 
 const UpdateButton = styled.button`
@@ -190,20 +169,17 @@ const UpdateButton = styled.button`
   font-size: ${({ theme }) => theme.fontSize.r3};
   padding: 0.531rem 1.6rem;
   border-radius: 1.563rem;
+  margin-top: 1.313rem;
+  float: right;
   cursor: pointer;
 `;
-const UpdateCheckBox = styled(Checkbox)`
-  .ant-checkbox-inner {
-    border-radius: 7.5px;
-  }
-`;
 
-const UpdateCheckBoxText = styled.p`
+const UpdateCheckBox = styled(Checkbox)`
   font-size: ${({ theme }) => theme.fontSize.r3};
 `;
 
 const UpdateUserButton = styled.button`
+  color: #898a8c;
   border: none;
   background: none;
-  outline: none;
 `;
