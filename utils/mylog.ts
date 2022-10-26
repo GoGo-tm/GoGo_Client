@@ -14,7 +14,6 @@ export const getMylogsByQuery = async ({
   size: number;
   accessToken: string;
 }): Promise<ServerResponseResults<HikingLogDto>> => {
-  console.log(size);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_URL}/server/api/hiking-log`,

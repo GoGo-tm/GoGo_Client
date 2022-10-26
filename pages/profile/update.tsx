@@ -1,5 +1,4 @@
 import { Checkbox, Form, Input } from 'antd';
-import type { GetStaticPropsContext } from 'next';
 import { signOut } from 'next-auth/react';
 import { ReactElement, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
