@@ -34,7 +34,7 @@ const Typography = ({
   ...props
 }: TypographyProps): React.ReactElement => {
   return (
-    <BaseTypography as={as} color={color} {...props}>
+    <BaseTypography as={as} color={color} lineHeight={lineHeight} {...props}>
       {props.children}
     </BaseTypography>
   );
