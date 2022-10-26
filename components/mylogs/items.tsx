@@ -69,12 +69,12 @@ export const MylogItems = ({ accessToken, query, onPush }: Props) => {
 };
 
 const Wrap = memo(function Wrap(props: ItemProps) {
-  const { data, onPush } = props;
+  const { data } = props;
   const { imageUrls, id } = data;
   const representative = useMemo(() => {
     if (imageUrls.length) return imageUrls[0];
     return DefaultImage;
-  }, [data]);
+  }, [imageUrls]);
   const isMultiImages = imageUrls.length >= 2 ? true : false;
   return (
     <Link href={`/mylogs/${id}`}>
