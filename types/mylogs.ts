@@ -13,7 +13,8 @@ interface HikingLogDto {
 }
 
 interface HikingLogDetailDto {
-  starRating: 0;
+  hikingTrailName: string;
+  starRating: number;
   address: string;
   difficulty: Difficulty;
   length: number;
