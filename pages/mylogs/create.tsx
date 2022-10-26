@@ -62,7 +62,7 @@ const Create = ({
         setHikingTrailId={setHikingTrailId}
       />
     ),
-    [deferredQuery, setQuery]
+    [deferredQuery]
   );
 
   const handleImageRemove = useCallback(
@@ -88,35 +88,38 @@ const Create = ({
         throw new Error(misc.getErrorMessage(error));
       }
     },
-    [files]
+    [files, user?.accessToken]
   );
 
-  const handleImageUpload = useCallback(async (file: RcFile) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    try {
-      const response = await axios.post(
-        '/server/api/images/one/HIKING_LOG',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.accessToken}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+  const handleImageUpload = useCallback(
+    async (file: RcFile) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const response = await axios.post(
+          '/server/api/images/one/HIKING_LOG',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.accessToken}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
 
-      if (response.status !== 200)
-        throw new Error('이미지 업로드에 실패했습니다');
+        if (response.status !== 200)
+          throw new Error('이미지 업로드에 실패했습니다');
 
-      const url = await response.data;
-      const image = url.split('/HIKING_LOG/')[1];
+        const url = await response.data;
+        const image = url.split('/HIKING_LOG/')[1];
 
-      setFiles((prev) => prev.concat({ uid: file.uid, image, url }));
-    } catch (error) {
-      throw new Error(misc.getErrorMessage(error));
-    }
-  }, []);
+        setFiles((prev) => prev.concat({ uid: file.uid, image, url }));
+      } catch (error) {
+        throw new Error(misc.getErrorMessage(error));
+      }
+    },
+    [user?.accessToken]
+  );
 
   const handleSubmit = useCallback(
     async (values: AntdFormData) => {
@@ -149,7 +152,7 @@ const Create = ({
         throw new Error(misc.getErrorMessage(error));
       }
     },
-    [files, hikingTrailId]
+    [files, hikingTrailId, router, user?.accessToken]
   );
 
   useEffect(() => {

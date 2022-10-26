@@ -7,7 +7,7 @@ const Guide = () => {
   const navigate = useRouter();
   const onLocationHikingGuide = useCallback(() => {
     navigate.push('/hiking-guide');
-  }, []);
+  }, [navigate]);
   return (
     <GuidWrapper>
       <Image

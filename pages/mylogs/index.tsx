@@ -19,9 +19,12 @@ const Mylogs: NextPageWithLayout<
   const router = useRouter();
   const { query } = router;
 
-  const onPush = useCallback((path: string) => {
-    router.push(path);
-  }, []);
+  const onPush = useCallback(
+    (path: string) => {
+      router.push(path);
+    },
+    [router]
+  );
 
   if (!user?.accessToken) router.push('/auth/redirect');
 
@@ -91,9 +94,4 @@ const MyLogsBase = styled.main`
   flex-direction: column;
   position: relative;
   width: 100%;
-`;
-
-const Target = styled.div`
-  width: 100%;
-  height: 5.625rem;
 `;

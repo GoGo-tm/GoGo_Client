@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 import { forwardRef, PropsWithChildren } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 interface MyImageLoadingProps extends PropsWithChildren {
   loading?: boolean;
