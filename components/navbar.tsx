@@ -23,7 +23,12 @@ const routes: Route[] = [
   { path: '/profile', breadcrumbName: '내 정보' },
 ];
 
-const icons = [<Home />, <Hiking />, <MyLog />, <Profile />];
+const icons = [
+  <Home key="Home" />,
+  <Hiking key="Hiking" />,
+  <MyLog key="MyLog" />,
+  <Profile key="Profile" />,
+];
 
 const Navbar = () => {
   return <StyledNavbar routes={routes} itemRender={NavbarItem} />;

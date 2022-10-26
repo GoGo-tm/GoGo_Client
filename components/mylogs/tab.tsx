@@ -16,7 +16,11 @@ const routes: Route[] = [
   { path: '/mylogs?tab=nowrap', breadcrumbName: 'nowrap' },
 ];
 
-const icons = [<MountainIcon />, <CameraIcon />, <ListIcon />];
+const icons = [
+  <MountainIcon key="MountainIcon" />,
+  <CameraIcon key="CameraIcon" />,
+  <ListIcon key="ListIcon" />,
+];
 
 const Tab = () => {
   const { query } = useRouter();
