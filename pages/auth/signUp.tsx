@@ -32,10 +32,9 @@ interface FormData {
 }
 
 const SignUp = () => {
-  const { formData, isPending, success, error, handleSubmit } =
-    useForm<FormData>({
-      serviceCallback: userService.signUp,
-    });
+  const { formData, isPending, success, handleSubmit } = useForm<FormData>({
+    serviceCallback: userService.signUp,
+  });
 
   const onLocationTerms = useCallback((path: string) => {
     window.open(path);

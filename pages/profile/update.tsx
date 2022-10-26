@@ -68,7 +68,7 @@ Update.getLayout = function getLayout(page: ReactElement) {
 
 export default Update;
 
-export const getStaticProps = (ctx: GetStaticPropsContext) => {
+export const getStaticProps = () => {
   return {
     props: {
       user: 'hi',

@@ -14,7 +14,7 @@ interface Props {
 const Card = ({ title, location, level, km, star, date }: Props) => {
   return (
     <div>
-      <img src="/images/Rectangle33.png" width="100%" />
+      <img src="/images/Rectangle33.png" alt="Rectangle33" width="100%" />
       <Header>
         <Title>{title}</Title>
         <Date>{date}</Date>

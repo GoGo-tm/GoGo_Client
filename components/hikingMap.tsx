@@ -38,7 +38,7 @@ const HikingMap = ({ hiking }: Props) => {
       position: coords[coords.length - 1],
       map: mapRef.current,
     });
-  }, []);
+  }, [hiking.geometries]);
 
   return <Map id="map"></Map>;
 };

@@ -9,7 +9,7 @@ interface Props {
 
 const SearchDataList = ({ query, setHikingTrailId }: Props) => {
   const { data } = useMylogsSearchQuery(query, {
-    enabled: !!query,
+    enabled: Boolean(query),
   });
 
   const options = useMemo(() => {
@@ -19,7 +19,7 @@ const SearchDataList = ({ query, setHikingTrailId }: Props) => {
     return data?.contents.map((hiking) => (
       <option key={hiking.id} value={hiking.name} />
     ));
-  }, [data]);
+  }, [data, setHikingTrailId]);
 
   return <datalist id="hikings">{options}</datalist>;
 };
