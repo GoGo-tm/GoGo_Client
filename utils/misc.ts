@@ -28,9 +28,25 @@ const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
 };
 
 export const getLevel = (difficulty: Difficulty) => {
-  if (difficulty === 'EASY') return '쉬움';
-  if (difficulty === 'NORMAL') return '보통';
-  return '어려움';
+  switch (difficulty) {
+    case 'EASY':
+      return '쉬움';
+    case 'NORMAL':
+      return '보통';
+    case 'HARD':
+      return '어려움';
+    default:
+      return '측정중';
+  }
+};
+
+export const getMeter = (meter: number) => {
+  if (meter / 1000) {
+    const km = Math.round(meter / 1000);
+    const m = Math.round((meter % 1000) / 100);
+    return `${km}.${m}km`;
+  }
+  return `${meter % 1000}m`;
 };
 
 export const getErrorMessage = (error: unknown) =>
