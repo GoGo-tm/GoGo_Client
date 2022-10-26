@@ -51,7 +51,6 @@ const SignUp = () => {
     <AuthForm
       name="signUp"
       onFinish={(values) => handleSubmit(values as FormData)}
-      onFinishFailed={(v) => console.log(v)}
     >
       <AuthBase root>
         <AuthInputOutline>
