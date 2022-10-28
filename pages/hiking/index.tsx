@@ -1,11 +1,14 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Radio, Tag } from 'antd';
-import { ReactElement, useState } from 'react';
+import axios from 'axios';
+import { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Card from '~/components/card';
 import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
+import { HikingTrailDto } from '~/types/hikingTrails';
+import { getLevel, getMeter } from '~/utils/misc';
 
 type Tag = '지역' | '난이도' | '구간거리' | '소요시간';
 
@@ -15,6 +18,7 @@ const tagsData = ['지역', '난이도', '구간거리', '소요시간'];
 const Hiking: NextPageWithLayout<{}> = () => {
   const [sort, setSort] = useState('인기순');
   const [selectedTags, setSelectedTags] = useState<Tag[]>(['지역']);
+  const [cardList, setCardList] = useState<HikingTrailDto[]>();
 
   const handleChange = (tag: Tag, checked: boolean) => {
     const nextSelectedTags = checked
@@ -38,6 +42,15 @@ const Hiking: NextPageWithLayout<{}> = () => {
       ]}
     />
   );
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get<{ contents: HikingTrailDto[] }>(
+        '/server/api/hiking-trails'
+      );
+      setCardList(response.data?.contents);
+    })();
+  }, []);
 
   return (
     <div style={{ padding: '15px' }}>
@@ -63,36 +76,16 @@ const Hiking: NextPageWithLayout<{}> = () => {
       </HikingSort>
       <CardWrapper>
         <CardPack>
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-        </CardPack>
-        <CardPack>
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
+          {cardList?.map((v) => (
+            <Card
+              key={v.id}
+              title={v.name}
+              km={getMeter(v.length)}
+              level={getLevel(v.difficulty)}
+              like={v.favoriteCount}
+              location={v.address}
+            />
+          ))}
         </CardPack>
       </CardWrapper>
     </div>
