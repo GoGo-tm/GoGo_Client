@@ -7,7 +7,7 @@ interface Props {
   title: string;
   location: string;
   level: string;
-  km: number;
+  km: string;
   like: number;
   img?: string | null;
 }
