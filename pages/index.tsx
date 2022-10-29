@@ -58,7 +58,7 @@ const Home: NextPageWithLayout<
                   level={content.difficulty}
                   km={content.length}
                   like={content.favoriteCount}
-                  img={content.imageUrl}
+                  imageUrl={content.imageUrl}
                 />
               ))}
             </AsyncBoundary>

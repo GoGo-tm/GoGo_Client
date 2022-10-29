@@ -1,40 +1,44 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import Heart from '~/assets/svgs/heartSolid.svg';
 import theme from '~/constants/theme';
+import { Difficulty } from '~/types/base';
+import { getLevel, getMeter } from '~/utils/misc';
 
 interface Props {
   title: string;
   location: string;
-  level: string;
+  level: Difficulty;
   km: number;
   like: number;
-  img?: string | null;
+  imageUrl?: string | null;
 }
 
-const Card = ({ title, location, level, km, like, img }: Props) => {
-  const src = img ? img : '/images/등산_기본이미지.png';
+const Card = ({ title, location, level, km, like, imageUrl }: Props) => {
+  const src = imageUrl ?? '/images/등산_기본이미지.png';
 
   return (
     <CardWrapper>
-      <ImageWrapper>
-        <HikingImage
-          src={src}
-          alt="등산로"
-          width={186}
-          height={118}
-          objectFit="cover"
-          layout="responsive"
-          priority
-        />
-      </ImageWrapper>
+      <HikingImage
+        src={src}
+        alt="등산로"
+        width={186}
+        height={118}
+        objectFit="cover"
+        layout="responsive"
+        priority
+      />
       <ContentWrapper>
         <Title>
           {title}
-          <span> · {like}</span>
+          <div>
+            <Heart /> {like}
+          </div>
         </Title>
+        <Content>{location}</Content>
         <Content>
-          {location} · {level} · {km}km
+          {getLevel(level)} · {getMeter(km)}
         </Content>
       </ContentWrapper>
     </CardWrapper>
@@ -44,14 +48,9 @@ const Card = ({ title, location, level, km, like, img }: Props) => {
 export default Card;
 
 const CardWrapper = styled.div`
+  width: 49%;
   display: inline-block;
-  padding-bottom: 1rem;
-`;
-
-const ImageWrapper = styled.div`
-  width: 100%;
-  position: relative;
-  border-radius: 0.625rem 0.625rem 0 0;
+  padding-bottom: 0.625rem;
 `;
 
 const HikingImage = styled(Image)`
@@ -66,6 +65,8 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
+  gap: 0.5rem;
   font-size: ${theme.fontSize.sb3};
   font-weight: bold;
 `;

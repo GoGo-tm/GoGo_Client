@@ -1,20 +1,25 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Radio, Tag } from 'antd';
-import { ReactElement, useState } from 'react';
+import axios from 'axios';
+import { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Card from '~/components/card';
 import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
+import { HikingTrailDto } from '~/types/hikingTrails';
+
+type Tag = '지역' | '난이도' | '구간거리' | '소요시간';
 
 const { CheckableTag } = Tag;
 const tagsData = ['지역', '난이도', '구간거리', '소요시간'];
 
 const Hiking: NextPageWithLayout<{}> = () => {
   const [sort, setSort] = useState('인기순');
-  const [selectedTags, setSelectedTags] = useState<string[]>(['지역']);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(['지역']);
+  const [cardList, setCardList] = useState<HikingTrailDto[]>();
 
-  const handleChange = (tag: string, checked: boolean) => {
+  const handleChange = (tag: Tag, checked: boolean) => {
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
@@ -36,63 +41,50 @@ const Hiking: NextPageWithLayout<{}> = () => {
       ]}
     />
   );
+
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get<{ contents: HikingTrailDto[] }>(
+        '/server/api/hiking-trails'
+      );
+      setCardList(response.data?.contents);
+    })();
+  }, []);
+
   return (
     <div style={{ padding: '15px' }}>
-      <div>
-        <HikingDetailSort>
-          {tagsData.map((tag) => (
-            <CheckableTag
-              key={tag}
-              checked={selectedTags.indexOf(tag) > -1}
-              onChange={(checked) => handleChange(tag, checked)}
-            >
-              {tag}
-            </CheckableTag>
-          ))}
-        </HikingDetailSort>
-        <HikingSort>
-          <Radio.Group defaultValue={'all'} style={{ marginBottom: 8 }}>
-            <Radio.Button value="all">전체</Radio.Button>
-            <Radio.Button value="mark">즐겨찾기</Radio.Button>
-          </Radio.Group>
-          <Dropdown.Button icon={<DownOutlined />} overlay={menu}>
-            {sort}
-          </Dropdown.Button>
-        </HikingSort>
-      </div>
+      <HikingDetailSort>
+        {tagsData.map((tag) => (
+          <CheckableTag
+            key={tag}
+            checked={selectedTags.indexOf(tag as Tag) > -1}
+            onChange={(checked) => handleChange(tag as Tag, checked)}
+          >
+            {tag}
+          </CheckableTag>
+        ))}
+      </HikingDetailSort>
+      <HikingSort>
+        <Radio.Group defaultValue={'all'} style={{ marginBottom: 8 }}>
+          <Radio.Button value="all">전체</Radio.Button>
+          <Radio.Button value="mark">즐겨찾기</Radio.Button>
+        </Radio.Group>
+        <Dropdown.Button icon={<DownOutlined />} overlay={menu}>
+          {sort}
+        </Dropdown.Button>
+      </HikingSort>
       <CardWrapper>
-        <CardPack>
+        {cardList?.map((v) => (
           <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
+            key={v.id}
+            title={v.name}
+            km={v.length}
+            level={v.difficulty}
+            imageUrl={v.imageUrl}
+            like={v.favoriteCount}
+            location={v.address}
           />
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-        </CardPack>
-        <CardPack>
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-          <Card
-            title="관악산 A 코스"
-            km={1.5}
-            level="쉬움"
-            like={50}
-            location="서울특별시 관악구"
-          />
-        </CardPack>
+        ))}
       </CardWrapper>
     </div>
   );
@@ -120,11 +112,6 @@ const HikingDetailSort = styled.div`
 const CardWrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-`;
-
-const CardPack = styled.div`
-  width: 49%;
-  display: flex;
-  flex-direction: column;
 `;
