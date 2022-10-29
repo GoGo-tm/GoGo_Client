@@ -8,7 +8,6 @@ import Card from '~/components/card';
 import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
-import { getLevel, getMeter } from '~/utils/misc';
 
 type Tag = '지역' | '난이도' | '구간거리' | '소요시간';
 
@@ -75,18 +74,16 @@ const Hiking: NextPageWithLayout<{}> = () => {
         </Dropdown.Button>
       </HikingSort>
       <CardWrapper>
-        <CardPack>
-          {cardList?.map((v) => (
-            <Card
-              key={v.id}
-              title={v.name}
-              km={getMeter(v.length)}
-              level={getLevel(v.difficulty)}
-              like={v.favoriteCount}
-              location={v.address}
-            />
-          ))}
-        </CardPack>
+        {cardList?.map((v) => (
+          <Card
+            key={v.id}
+            title={v.name}
+            km={v.length}
+            level={v.difficulty}
+            like={v.favoriteCount}
+            location={v.address}
+          />
+        ))}
       </CardWrapper>
     </div>
   );
@@ -114,11 +111,6 @@ const HikingDetailSort = styled.div`
 const CardWrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-`;
-
-const CardPack = styled.div`
-  width: 49%;
-  display: flex;
-  flex-direction: column;
 `;
