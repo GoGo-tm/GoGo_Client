@@ -80,6 +80,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
             title={v.name}
             km={v.length}
             level={v.difficulty}
+            imageUrl={v.imageUrl}
             like={v.favoriteCount}
             location={v.address}
           />

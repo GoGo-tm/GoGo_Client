@@ -56,9 +56,9 @@ const Home: NextPageWithLayout<
                   title={content.name}
                   location={content.address}
                   level={content.difficulty}
-                  km={`${content.length}`}
+                  km={content.length}
                   like={content.favoriteCount}
-                  img={content.imageUrl}
+                  imageUrl={content.imageUrl}
                 />
               ))}
             </AsyncBoundary>

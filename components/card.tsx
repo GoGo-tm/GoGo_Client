@@ -12,11 +12,11 @@ interface Props {
   level: Difficulty;
   km: number;
   like: number;
-  img?: string;
+  imageUrl?: string | null;
 }
 
-const Card = ({ title, location, level, km, like, img }: Props) => {
-  const src = img ?? '/images/등산_기본이미지.png';
+const Card = ({ title, location, level, km, like, imageUrl }: Props) => {
+  const src = imageUrl ?? '/images/등산_기본이미지.png';
 
   return (
     <CardWrapper>
