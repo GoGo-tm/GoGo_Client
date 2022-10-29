@@ -1,13 +1,24 @@
-import type { PropsWithChildren } from 'react';
+import {
+  ButtonHTMLAttributes,
+  CSSProperties,
+  forwardRef,
+  Ref,
+  useId,
+} from 'react';
 import styled from 'styled-components';
 
 import AppleIcon from '../assets/svgs/apple.svg';
 import KakaoIcon from '../assets/svgs/kakao.svg';
 import NaverIcon from '../assets/svgs/naver.svg';
 
-interface Props extends PropsWithChildren {
-  type?: 'button' | 'submit' | 'reset' | undefined;
-  onClick?: () => void;
+export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  fullWidth?: boolean;
+  className?: string;
+  border?: 'normal' | 'rounded';
+  type?: 'submit' | 'reset' | 'button';
+  width?: CSSProperties['width'];
+  disabled?: boolean;
+  active?: boolean;
 }
 
 export const Kakao = () => {
@@ -37,15 +48,38 @@ export const Apple = () => {
   );
 };
 
-const Button = ({ type = 'button', onClick, children }: Props) => {
+const Button = (props: Props, ref: Ref<HTMLButtonElement>) => {
+  const {
+    type,
+    children,
+    className = 'button',
+    active,
+    disabled = false,
+    width = '100%',
+    style = {},
+    ...rest
+  } = props;
+  const buttonId = useId();
   return (
-    <StyledButton type={type} onClick={onClick}>
+    <StyledButton
+      ref={ref}
+      aria-pressed={active}
+      disabled={disabled}
+      type={type}
+      id={buttonId}
+      className={className}
+      style={{
+        width,
+        ...style,
+      }}
+      {...rest}
+    >
       {children}
     </StyledButton>
   );
 };
 
-export default Button;
+export default forwardRef(Button);
 
 const StyledButton = styled.button`
   outline: none;
@@ -55,7 +89,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   font-weight: 500;
   color: #fff;
-  width: 100%;
   padding: 0.938rem 0;
   border-radius: 2.188rem;
 `;
