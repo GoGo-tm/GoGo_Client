@@ -10,6 +10,7 @@ import Layout from '~/components/layout';
 import { MylogItems } from '~/components/mylogs/items';
 import Tab from '~/components/mylogs/tab';
 import Toggle from '~/components/mylogs/toggle';
+import Typography from '~/components/typography';
 import QueryKeys from '~/constants/queries';
 import type { NextPageWithLayout } from '~/types/base';
 
@@ -26,7 +27,17 @@ const Mylogs: NextPageWithLayout<
     [router]
   );
 
-  if (!user?.accessToken) router.push('/auth/redirect');
+  if (!user?.accessToken)
+    router.push({
+      pathname: '/auth/redirect',
+    });
+  if (!query.tab)
+    router.push({
+      pathname: '/mylogs',
+      query: {
+        tab: 'home',
+      },
+    });
 
   switch (query.tab) {
     case 'wrap':
@@ -47,8 +58,19 @@ const Mylogs: NextPageWithLayout<
       );
     default:
       return (
-        <div>
-          <h1>hi</h1>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '20rem',
+          }}
+        >
+          <Typography as="h1" size="m5" weight="bold">
+            11월 중순 서비스 오픈 예정! 😎
+          </Typography>
         </div>
       );
   }
