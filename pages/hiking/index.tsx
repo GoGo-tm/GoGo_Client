@@ -1,11 +1,11 @@
 import { Dropdown, Menu, Radio, Tag } from 'antd';
 import axios from 'axios';
+import router from 'next/router';
 import { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Card from '~/components/card';
 import Layout from '~/components/layout';
-import theme from '~/constants/theme';
 import type { NextPageWithLayout } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
 
@@ -55,13 +55,13 @@ const Hiking: NextPageWithLayout<{}> = () => {
     <div style={{ padding: '15px' }}>
       <HikingDetailSort>
         {tagsData.map((tag) => (
-          <CheckableTag
+          <StyledCheckableTag
             key={tag}
             checked={selectedTags.indexOf(tag as Tag) > -1}
             onChange={(checked) => handleChange(tag as Tag, checked)}
           >
             {tag}
-          </CheckableTag>
+          </StyledCheckableTag>
         ))}
       </HikingDetailSort>
       <HikingSort>
@@ -96,6 +96,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
             imageUrl={v.imageUrl}
             like={v.favoriteCount}
             location={v.address}
+            onClick={() => router.push(`/hiking/${v.id}`)}
           />
         ))}
       </CardWrapper>
@@ -127,4 +128,9 @@ const CardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+`;
+
+const StyledCheckableTag = styled(CheckableTag)`
+  border-radius: 25px;
+  padding: 6px 12px;
 `;
