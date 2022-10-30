@@ -1,4 +1,3 @@
-import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Radio, Tag } from 'antd';
 import axios from 'axios';
 import { ReactElement, useEffect, useState } from 'react';
@@ -6,6 +5,7 @@ import styled from 'styled-components';
 
 import Card from '~/components/card';
 import Layout from '~/components/layout';
+import theme from '~/constants/theme';
 import type { NextPageWithLayout } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
 
@@ -69,7 +69,20 @@ const Hiking: NextPageWithLayout<{}> = () => {
           <Radio.Button value="all">전체</Radio.Button>
           <Radio.Button value="mark">즐겨찾기</Radio.Button>
         </Radio.Group>
-        <Dropdown.Button icon={<DownOutlined />} overlay={menu}>
+        <Dropdown.Button
+          icon={
+            <svg
+              width="11"
+              height="9"
+              viewBox="0 0 11 9"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M10.6286 0L5.27443 9L0 0H10.6286Z" fill="#898A8C" />
+            </svg>
+          }
+          overlay={menu}
+        >
           {sort}
         </Dropdown.Button>
       </HikingSort>
