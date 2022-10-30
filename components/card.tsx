@@ -12,14 +12,23 @@ interface Props {
   level: Difficulty;
   km: number;
   like: number;
+  onClick?: () => void;
   imageUrl?: string | null;
 }
 
-const Card = ({ title, location, level, km, like, imageUrl }: Props) => {
+const Card = ({
+  title,
+  location,
+  level,
+  km,
+  like,
+  imageUrl,
+  onClick,
+}: Props) => {
   const src = imageUrl ?? '/images/등산_기본이미지.png';
 
   return (
-    <CardWrapper>
+    <CardWrapper onClick={onClick}>
       <HikingImage
         src={src}
         alt="등산로"

@@ -5,34 +5,40 @@ import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import Heart from '~/assets/svgs/heartSolid.svg';
 import Container from '~/components/container';
 import Divider from '~/components/divider';
-import { HikingLogDetailDto } from '~/types/mylogs';
 import { getLevel, getMeter } from '~/utils/misc';
+import { HikingTrailDto } from '~/types/hikingTrails';
 
 const HikingById: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ user }) => {
-  const [data, setData] = useState<HikingLogDetailDto>({
-    starRating: 0,
+  const [data, setData] = useState<HikingTrailDto>({
+    id: 0,
+    imageUrl: '',
+    name: '...',
     address: 'string',
+    favoriteCount: 0,
     difficulty: 'HARD',
     length: 0,
-    hikingDate: 'string',
-    hikingLogImageUrls: [''],
-    memo: 'string',
-    hikingTrailName: '...',
+    uptime: 0,
+    downtime: 0,
   });
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get('/server/api/hiking-log/5', {
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      });
+      const response = await axios.get(
+        `/server/api/hiking-trails/${router.query.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.accessToken}`,
+          },
+        }
+      );
       setData(response.data);
     })();
   }, [user?.accessToken]);
@@ -41,7 +47,7 @@ const HikingById: NextPageWithLayout<
     <Container renderImage={renderImage}>
       <Wrapper>
         <TitleWrapper>
-          <Title>{data.hikingTrailName}</Title>
+          <Title>{data.name}</Title>
           <Heart />
         </TitleWrapper>
         <MountainDescription>
@@ -106,8 +112,10 @@ const HikingById: NextPageWithLayout<
               fill="#B2B3B6"
             />
           </svg>
-          평균소요시간 총 120분
-          <span style={{ color: '#B2B3B6' }}>(상행 60분 + 하행 60분)</span>
+          평균소요시간 총 {data.uptime + data.downtime}분
+          <span style={{ color: '#B2B3B6' }}>
+            (상행 {data.uptime}분 + 하행 {data.downtime}분)
+          </span>
         </MountainDescription>
       </Wrapper>
       <Divider margin="0.813" />
