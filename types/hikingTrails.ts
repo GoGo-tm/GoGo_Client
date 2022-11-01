@@ -8,6 +8,8 @@ interface HikingTrailDto {
   favoriteCount: number;
   difficulty: Difficulty;
   length: number;
+  uptime: number;
+  downtime: number;
 }
 
 export type { HikingTrailDto };
