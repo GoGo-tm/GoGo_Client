@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
@@ -25,7 +19,7 @@ const AutoComplete = ({ query, id, setHikingTrailId }: AutoCompleteProps) => {
   });
 
   const options = useMemo(() => {
-    if (data && data.contents && data.contents.length >= 1) {
+    if (data?.contents?.length >= 1) {
       setHikingTrailId(data.contents[0].id);
     }
     return data?.contents.map((hiking) => (
@@ -57,28 +51,26 @@ const Search = () => {
         );
       }
     },
-    [hikingTrailId]
+    [hikingTrailId, router]
   );
   return (
-    <>
-      <Base>
-        <Label />
-        <Input
-          type="text"
-          list="search"
-          placeholder="등산로명을 검색해보세요"
-          value={query}
-          onChange={onChangeQuery}
-          onKeyUp={onKeyUp}
-        />
-        <Icon />
-        <AutoComplete
-          id="search"
-          query={query}
-          setHikingTrailId={setHikingTrailId}
-        />
-      </Base>
-    </>
+    <Base>
+      <Label />
+      <Input
+        type="text"
+        list="search"
+        placeholder="등산로명을 검색해보세요"
+        value={query}
+        onChange={onChangeQuery}
+        onKeyUp={onKeyUp}
+      />
+      <Icon />
+      <AutoComplete
+        id="search"
+        query={query}
+        setHikingTrailId={setHikingTrailId}
+      />
+    </Base>
   );
 };
 
