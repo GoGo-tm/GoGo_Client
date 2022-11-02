@@ -2,16 +2,16 @@ import axios from 'axios';
 import { withAuthSsr } from 'hof/withAuthSsr';
 import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { NextPageWithLayout } from 'pages/_app';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 import Heart from '~/assets/svgs/heartSolid.svg';
 import Container from '~/components/container';
 import Divider from '~/components/divider';
-import { getLevel, getMeter } from '~/utils/misc';
 import { HikingTrailDto } from '~/types/hikingTrails';
+import { getLevel, getMeter } from '~/utils/misc';
 
 const HikingById: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -41,7 +41,7 @@ const HikingById: NextPageWithLayout<
       );
       setData(response.data);
     })();
-  }, [user?.accessToken]);
+  }, [router.query.id, user?.accessToken]);
 
   return (
     <Container renderImage={renderImage}>
