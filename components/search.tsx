@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import useMylogsSearchQuery from '~/hooks/queries/useMylogsSearchQuery';
 
-import SearchIcon from '../assets/svgs/magnifier.svg';
+// import SearchIcon from '../assets/svgs/magnifier.svg';
 
 interface AutoCompleteProps {
   id: string;
@@ -29,12 +29,13 @@ const AutoComplete = ({ query, id, setHikingTrailId }: AutoCompleteProps) => {
   //     <option key={hiking.id} value={hiking.name} />
   //   ));
   // }, [data.contents, setHikingTrailId]);
-  return <datalist id={id}>{options}</datalist>;
+  // return <datalist id={id}>{options}</datalist>;
 };
 
 const Search = () => {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hikingTrailId, setHikingTrailId] = useState<number | null>(null);
 
   const onChangeQuery = (e: ChangeEvent<HTMLInputElement>) =>
@@ -67,12 +68,12 @@ const Search = () => {
         onChange={onChangeQuery}
         onKeyUp={onKeyUp}
       />
-      <Icon />
-      <AutoComplete
+      {/* <Icon /> */}
+      {/* <AutoComplete
         id="search"
         query={query}
         setHikingTrailId={setHikingTrailId}
-      />
+      /> */}
     </Base>
   );
 };
@@ -100,9 +101,9 @@ const Input = styled.input`
   }
 `;
 
-const Icon = styled(SearchIcon)<{ focus?: boolean }>`
-  position: absolute;
-  width: 1.156rem;
-  left: 1.25rem;
-  fill: ${({ theme }) => theme.colors.gray_dense};
-`;
+// const Icon = styled(SearchIcon)<{ focus?: boolean }>`
+//   position: absolute;
+//   width: 1.156rem;
+//   left: 1.25rem;
+//   fill: ${({ theme }) => theme.colors.gray_dense};
+// `;
