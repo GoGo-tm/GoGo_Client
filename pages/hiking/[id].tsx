@@ -142,7 +142,7 @@ const renderImage = () => {
         src="/images/가이드_썸네일.png"
         alt="thumbnail"
         objectFit="cover"
-        layout="fill"
+        layout="responsive"
         width={559}
         height={265}
       />
