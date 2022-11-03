@@ -25,9 +25,9 @@ const Banner = () => {
   return (
     <Base>
       <Wrapper>
-        <Logo
+        <Image
           src="/images/01_Logotype.png"
-          alt='="logo.png'
+          alt="logo"
           width={90}
           height={25}
           blurDataURL={blurDataUrl}
@@ -111,8 +111,4 @@ const LocationContent = styled.div`
 
 const Icon = styled(LocationIcon)`
   width: 0.75rem;
-`;
-
-const Logo = styled(Image)`
-  width: 100%;
 `;

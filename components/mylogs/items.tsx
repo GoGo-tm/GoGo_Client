@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import type { ParsedUrlQuery } from 'querystring';
 import React, { memo, useMemo } from 'react';
