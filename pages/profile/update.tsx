@@ -23,7 +23,7 @@ const Update = () => {
   return (
     <>
       <Base>
-        <UpdateForm name="update">
+        <Form name="update">
           <UpdateInputOutline>
             <UpdateTextInput type="text" placeholder="닉네임" />
             <UpdateTextInput type="email" placeholder="이메일" />
@@ -32,22 +32,30 @@ const Update = () => {
               onBlur={handleOnBlur}
               focus={isFocus}
             >
-              <PasswordInput autoComplete="off" value={'qwe123qwe'} />
-              <Divider margin="0.813" />
-              <PasswordInput autoComplete="off" placeholder="신규 비밀번호" />
+              <Input.Password
+                style={{ border: 'none' }}
+                autoComplete="off"
+                value={'qwe123qwe'}
+              />
+              <Divider margin="0.813" color="#d9d9d9" />
+              <Input.Password
+                style={{ border: 'none' }}
+                autoComplete="off"
+                placeholder="신규 비밀번호"
+              />
             </UpdatePasswordOutline>
           </UpdateInputOutline>
           <UpdateButton type="submit">변경</UpdateButton>
-        </UpdateForm>
+        </Form>
       </Base>
       <Divider margin="1.313" />
       <Base full>
-        <UpdateForm name="term">
-          <UpdateFormItem valuePropName="checked">
-            <UpdateCheckBox>위치정보 이용 동의 (선택)</UpdateCheckBox>
+        <Form name="term">
+          <Form.Item valuePropName="checked">
+            <Checkbox>위치정보 이용 동의 (선택)</Checkbox>
             <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
-          </UpdateFormItem>
-        </UpdateForm>
+          </Form.Item>
+        </Form>
         <UpdateUserButtonOutline>
           <UpdateUserButton onClick={onLogout}>로그아웃</UpdateUserButton>
           <UpdateUserButton>탈퇴하기</UpdateUserButton>
@@ -83,57 +91,24 @@ const Base = styled.div<{ full?: boolean }>`
   font-size: ${({ theme }) => theme.fontSize.m3};
 `;
 
-const UpdateForm = styled(Form)`
-  width: 100%;
-  .ant-form-item-feedback-icon-success {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-  .ant-input {
-    font-size: ${({ theme }) => theme.fontSize.m2};
-    line-height: 1.563rem;
-  }
-`;
-
-const UpdateFormItem = styled(Form.Item)`
-  .ant-form-item-control-input-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  svg {
-    cursor: pointer;
-  }
-`;
-
 const UpdateInputOutline = styled.div`
-  margin-top: 1.688rem;
+  padding-top: 1.688rem;
   display: flex;
-  align-items: center;
   flex-direction: column;
   gap: 0.688rem;
 `;
 
 const UpdatePasswordOutline = styled.div<{ focus: boolean }>`
-  width: 100%;
   border: ${({ focus, theme }) =>
-    focus ? `0.7px solid ${theme.colors.primary}` : '0.7px solid #b2b3b6'};
+    focus ? `0.7px solid ${theme.colors.primary}` : '0.7px solid #d9d9d9'};
   border-radius: 0.625rem;
   padding: 0.938rem 1.125rem;
 `;
 
 const UpdateTextInput = styled(Input)`
-  border: 0.7px solid #b2b3b6;
-  width: 100%;
   border-radius: 0.625rem;
   line-height: 1.563rem;
   padding: 0.938rem 2.125rem;
-  &::placeholder {
-    font-size: ${({ theme }) => theme.fontSize.r3};
-    font-weight: 400;
-  }
-  &:focus {
-    box-shadow: none;
-  }
 `;
 
 const UpdateUserButtonOutline = styled.div`
@@ -146,18 +121,7 @@ const UpdateUserButtonOutline = styled.div`
   line-height: 1.563rem;
   font-size: ${({ theme }) => theme.fontSize.r3};
   color: ${({ theme }) => theme.colors.gray_dense};
-  margin-bottom: 1.25rem;
-  span {
-    cursor: pointer;
-  }
-`;
-
-const PasswordInput = styled(Input.Password)`
-  & > input {
-    width: 94%;
-    border: none;
-    padding: 0 1rem;
-  }
+  padding-bottom: 1.25rem;
 `;
 
 const UpdateButton = styled.button`
@@ -173,12 +137,9 @@ const UpdateButton = styled.button`
   cursor: pointer;
 `;
 
-const UpdateCheckBox = styled(Checkbox)`
-  font-size: ${({ theme }) => theme.fontSize.r3};
-`;
-
 const UpdateUserButton = styled.button`
   color: #898a8c;
   border: none;
   background: none;
+  cursor: pointer;
 `;

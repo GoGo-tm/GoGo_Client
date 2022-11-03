@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import theme from '~/constants/theme';
@@ -10,9 +11,14 @@ interface Props {
 }
 
 const Header = ({ title, pre }: Props) => {
+  const router = useRouter();
   return (
     <header>
-      {pre ?? <FixedPre />}
+      {pre ?? (
+        <FixedPre onClick={() => router.back()}>
+          <Pre />
+        </FixedPre>
+      )}
       <Title>{title}</Title>
     </header>
   );
@@ -28,7 +34,7 @@ const Title = styled.h1`
   border-bottom: 0.3px solid #b7b7b7;
 `;
 
-const FixedPre = styled(Pre)`
+const FixedPre = styled.div`
   position: fixed;
   top: 1rem;
   left: 1rem;
