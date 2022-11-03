@@ -1,14 +1,29 @@
 import { Checkbox, Form, Input } from 'antd';
+import axios from 'axios';
+import { withAuthSsr } from 'hof/withAuthSsr';
+import { InferGetServerSidePropsType } from 'next/types';
 import { signOut } from 'next-auth/react';
 import { ReactElement, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Divider from '~/components/divider';
 import Layout from '~/components/layout';
+import { NextPageWithLayout } from '~/types/base';
 
 import Icon from '../../assets/svgs/right.svg';
+import * as misc from '../../utils/misc';
 
-const Update = () => {
+interface FormData {
+  nickname: string;
+  email: string;
+  password: string;
+  newPassword: string;
+  locationChecked: boolean;
+}
+
+const Update: NextPageWithLayout<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ user }) => {
   const [focus, setFocus] = useState(false);
   const handleOnFocus = useCallback(() => setFocus(true), []);
   const handleOnBlur = useCallback(() => setFocus(false), []);
@@ -20,48 +35,106 @@ const Update = () => {
     signOut();
   }, []);
 
+  const onSubmit = async (values: FormData) => {
+    try {
+      const response = await axios
+        .put(
+          '/server/api/members',
+          {
+            nickname: values?.nickname,
+            email: values?.email,
+            password: values?.password,
+            newPassword: values?.newPassword,
+            agreed: values?.locationChecked,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user?.accessToken}`,
+              ContentType: 'application/json',
+            },
+          }
+        )
+        .then(() => alert('내 정보를 성공적으로 수정했어요'));
+
+      return response;
+    } catch (error) {
+      throw new Error(misc.getErrorMessage(error));
+    }
+  };
+
   return (
-    <>
-      <Base>
-        <Form name="update">
-          <UpdateInputOutline>
-            <UpdateTextInput type="text" placeholder="닉네임" />
-            <UpdateTextInput type="email" placeholder="이메일" />
-            <UpdatePasswordOutline
-              onFocus={handleOnFocus}
-              onBlur={handleOnBlur}
-              focus={isFocus}
+    <Base full>
+      <Form name="update" onFinish={onSubmit}>
+        <UpdateInputOutline>
+          <Form.Item
+            style={{ margin: '0' }}
+            name="nickname"
+            rules={[{ required: true, message: '닉네임을 입력해 주세요.' }]}
+          >
+            <UpdateTextInput
+              type="text"
+              value={user?.user.name as string}
+              placeholder="닉네임"
+            />
+          </Form.Item>
+          <Form.Item
+            style={{ margin: '0' }}
+            name="email"
+            rules={[{ required: true, message: '이메일을 입력해 주세요.' }]}
+          >
+            <UpdateTextInput
+              type="email"
+              placeholder="이메일"
+              value={user?.user.email as string}
+            />
+          </Form.Item>
+          <UpdatePasswordOutline
+            onFocus={handleOnFocus}
+            onBlur={handleOnBlur}
+            focus={isFocus}
+          >
+            <Form.Item
+              style={{ margin: '0' }}
+              name="password"
+              rules={[{ required: true, message: '비밀번호를 입력해 주세요.' }]}
             >
               <Input.Password
                 style={{ border: 'none' }}
+                placeholder="현재 비밀번호"
                 autoComplete="off"
-                value={'qwe123qwe'}
               />
-              <Divider margin="0.813" color="#d9d9d9" />
+            </Form.Item>
+            <Divider margin="0.813" color="#d9d9d9" />
+            <Form.Item
+              style={{ margin: '0' }}
+              name="newPassword"
+              rules={[{ required: true, message: '비밀번호를 입력해 주세요.' }]}
+            >
               <Input.Password
                 style={{ border: 'none' }}
                 autoComplete="off"
                 placeholder="신규 비밀번호"
               />
-            </UpdatePasswordOutline>
-          </UpdateInputOutline>
-          <UpdateButton type="submit">변경</UpdateButton>
-        </Form>
-      </Base>
-      <Divider margin="1.313" />
-      <Base full>
-        <Form name="term">
-          <Form.Item valuePropName="checked">
-            <Checkbox>위치정보 이용 동의 (선택)</Checkbox>
+            </Form.Item>
+          </UpdatePasswordOutline>
+        </UpdateInputOutline>
+        <Form.Item
+          style={{ paddingTop: '1rem', paddingLeft: '0.5rem' }}
+          name="locationChecked"
+          valuePropName="checked"
+        >
+          <Checkbox>
+            위치정보 이용 동의 (선택) {'  '}
             <Icon onClick={() => onLocationTerms('/auth/terms/location')} />
-          </Form.Item>
-        </Form>
-        <UpdateUserButtonOutline>
-          <UpdateUserButton onClick={onLogout}>로그아웃</UpdateUserButton>
-          <UpdateUserButton>탈퇴하기</UpdateUserButton>
-        </UpdateUserButtonOutline>
-      </Base>
-    </>
+          </Checkbox>
+        </Form.Item>
+        <UpdateButton type="submit">변경</UpdateButton>
+      </Form>
+      <UpdateUserButtonOutline>
+        <UpdateUserButton onClick={onLogout}>로그아웃</UpdateUserButton>
+        <UpdateUserButton>탈퇴하기</UpdateUserButton>
+      </UpdateUserButtonOutline>
+    </Base>
   );
 };
 
@@ -75,13 +148,13 @@ Update.getLayout = function getLayout(page: ReactElement) {
 
 export default Update;
 
-export const getStaticProps = () => {
+export const getServerSideProps = withAuthSsr(({ req }) => {
   return {
     props: {
-      user: 'hi',
+      user: req.session,
     },
   };
-};
+}, '/auth/redirect');
 
 const Base = styled.div<{ full?: boolean }>`
   display: flex;

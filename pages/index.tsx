@@ -1,5 +1,6 @@
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
+import router from 'next/router';
 import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
@@ -59,6 +60,7 @@ const Home: NextPageWithLayout<
                   km={content.length}
                   like={content.favoriteCount}
                   imageUrl={content.imageUrl}
+                  onClick={() => router.push(`/hiking/${content.id}`)}
                 />
               ))}
             </AsyncBoundary>

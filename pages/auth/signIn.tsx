@@ -76,7 +76,7 @@ const SignIn = () => {
             </AuthLabel>
           </AuthInputOutline>
           <LinkOutline $right>
-            <Link href="/">비밀번호를 잊으셨나요?</Link>
+            <Link href="/auth/passwordReset">비밀번호를 잊으셨나요?</Link>
           </LinkOutline>
           <AuthFormItem $full>
             <Button type="submit">{isPending ? '진행중...' : '로그인'}</Button>
