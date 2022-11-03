@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import styled from 'styled-components';
 
 import useWeather from '~/hooks/queries/useWeather';
 
 import LocationIcon from '../assets/svgs/location.svg';
 
-interface Props {
+interface Weather {
   content: string;
   landingImg: string;
   weatherImg: string;
@@ -16,11 +17,12 @@ const blurDataUrl =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mO8ef36fwYiAOOoQvoqBAC7NSNHzCGqaQAAAABJRU5ErkJggg==';
 
 const Banner = () => {
+  const session = useSession();
   const { data: weatherData } = useWeather({
     staleTime: 5000,
     cacheTime: Infinity,
     suspense: true,
-  }) as { data: Props };
+  }) as { data: Weather };
 
   return (
     <Base>
@@ -33,7 +35,11 @@ const Banner = () => {
           blurDataURL={blurDataUrl}
           placeholder="blur"
         />
-        <WeatherContent>{weatherData?.content}</WeatherContent>
+        <WeatherContent>{`${
+          session.status === 'authenticated'
+            ? session.data.nickname + '님!'
+            : '안녕하세요!'
+        }${weatherData?.content}`}</WeatherContent>
         <LocationContent>
           <Icon />
           {weatherData?.city}

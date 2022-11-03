@@ -16,7 +16,7 @@ const Profile: NextPageWithLayout<
       <Base>
         안녕하세요!
         <br />
-        {user?.user.name}
+        {user?.nickname as string}
         <Email>{user?.user.email}</Email>
       </Base>
       <Divider margin="0" dense="8" color="#F3F4F4" />
