@@ -74,7 +74,7 @@ const Home: NextPageWithLayout<
         <Guide />
       </Outline>
       <Divider />
-      <Outline>
+      {/* <Outline>
         <Title image="/images/14_Shoe.png" arrow>
           등산갈 때 뭐 챙기지?
         </Title>
@@ -84,7 +84,7 @@ const Home: NextPageWithLayout<
         <Title image="/images/13_Rocket.png" arrow>
           <Highlight>의지</Highlight>를 불태워줄 등산-log
         </Title>
-      </Outline>
+      </Outline> */}
     </Base>
   );
 };
