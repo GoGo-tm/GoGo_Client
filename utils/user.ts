@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import type { UserDto } from '~/types/user';
+
 import * as misc from './misc';
 
 interface SignUpProps {
@@ -58,6 +60,21 @@ export const signUp = async ({
     });
 
     return create;
+  } catch (e) {
+    throw new Error(misc.getErrorMessage(e));
+  }
+};
+
+export const getUserInfo = async (accessToken: string) => {
+  try {
+    const userInfo: UserDto = await axios
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/members/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => res.data);
+    return userInfo;
   } catch (e) {
     throw new Error(misc.getErrorMessage(e));
   }
