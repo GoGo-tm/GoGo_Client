@@ -56,6 +56,14 @@ export const settings: NextAuthOptions = {
         token.accessTokenExpiresIn = user.accessTokenExpiresIn;
         token.refreshToken = user.refreshToken;
       }
+      const userInfo = await userService.getUserInfo(
+        token.accessToken as string
+      );
+
+      if (userInfo) {
+        token.nickname = userInfo.nickname;
+        token.type = userInfo.type;
+      }
 
       if (tokenService.isTokenExpired(token.accessTokenExpiresIn as number)) {
         const { accessToken, refreshToken, accessTokenExpiresIn } =
@@ -80,6 +88,8 @@ export const settings: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      session.nickname = token.nickname as string;
+      session.type = token.type as string;
       session.accessToken = token.accessToken as string;
       session.accessTokenExpiresIn = token.accessTokenExpiresIn as number;
 
