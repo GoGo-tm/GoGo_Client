@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 
 const NoticeTitle = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.m4};
-  font-weight: 500;
+  font-weight: bold;
 `;
 
 const NoticeDate = styled.div`
