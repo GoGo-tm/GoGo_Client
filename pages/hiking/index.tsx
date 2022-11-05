@@ -10,12 +10,13 @@ import type { NextPageWithLayout } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
 
 type Tag = '지역' | '난이도' | '구간거리' | '소요시간';
+type OrderTag = '인기순' | '최신순';
 
 const { CheckableTag } = Tag;
 const tagsData = ['지역', '난이도', '구간거리', '소요시간'];
 
 const Hiking: NextPageWithLayout<{}> = () => {
-  const [sort, setSort] = useState('인기순');
+  const [sort, setSort] = useState<OrderTag>('인기순');
   const [selectedTags, setSelectedTags] = useState<Tag[]>(['지역']);
   const [cardList, setCardList] = useState<HikingTrailDto[]>();
 
@@ -28,7 +29,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
 
   const menu = (
     <Menu
-      onClick={(e) => setSort(e.key)}
+      onClick={(e) => setSort(e.key as OrderTag)}
       items={[
         {
           label: '인기순',
