@@ -10,7 +10,7 @@ const HikingMap = ({ geometries }: Props) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
 
   useEffect(() => {
-    const coords = mapService.tm123ToCoords(geometries);
+    const coords = mapService.LatLng(geometries);
     const mid = Math.floor(coords.length / 2);
 
     mapRef.current = new naver.maps.Map('map', {

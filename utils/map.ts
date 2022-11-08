@@ -1,6 +1,4 @@
-export const tm123ToCoords = (
-  paths: { latitude: number; longitude: number }[]
-) => {
+export const LatLng = (paths: { latitude: number; longitude: number }[]) => {
   return paths.map(
     (point) => new naver.maps.LatLng(point.latitude, point.longitude)
   );
