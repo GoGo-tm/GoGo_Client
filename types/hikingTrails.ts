@@ -6,6 +6,7 @@ interface HikingTrailDto {
   name: string;
   address: string;
   favoriteCount: number;
+  geometries: { latitude: number; longitude: number }[];
   difficulty: Difficulty;
   length: number;
   uptime: number;
