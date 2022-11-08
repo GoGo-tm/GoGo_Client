@@ -4,26 +4,24 @@ import styled from 'styled-components';
 import * as mapService from '~/utils/map';
 
 interface Props {
-  hiking: {
-    geometries: { latitude: number; longitude: number }[];
-  };
+  geometries: { latitude: number; longitude: number }[];
 }
 
-const HikingMap = ({ hiking }: Props) => {
+const HikingMap = ({ geometries }: Props) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
 
   useEffect(() => {
-    const coords = mapService.tm123ToCoords(hiking.geometries);
+    const coords = mapService.tm123ToCoords(geometries);
     const mid = Math.floor(coords.length / 2);
 
     mapRef.current = new naver.maps.Map('map', {
-      zoom: 16,
+      zoom: 14,
       center: coords[mid],
     });
 
     new naver.maps.Polyline({
       path: coords,
-      strokeColor: '#FF0000',
+      strokeColor: '#EB305D',
       strokeOpacity: 0.8,
       strokeWeight: 4,
       map: mapRef.current,
@@ -38,14 +36,14 @@ const HikingMap = ({ hiking }: Props) => {
       position: coords[coords.length - 1],
       map: mapRef.current,
     });
-  }, [hiking.geometries]);
+  }, [geometries]);
 
-  return <Map id="map"></Map>;
+  return <Map id="map" />;
 };
 
 export default HikingMap;
 
 const Map = styled.div`
-  width: 800px;
-  height: 800px;
+  width: 100%;
+  height: 300px;
 `;

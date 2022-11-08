@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Heart from '~/assets/svgs/heartSolid.svg';
 import Container from '~/components/container';
 import Divider from '~/components/divider';
+import HikingMap from '~/components/hikingMap';
 import { HikingTrailDto } from '~/types/hikingTrails';
 import { getLevel, getMeter } from '~/utils/misc';
 
@@ -22,6 +23,7 @@ const HikingById: NextPageWithLayout<
     name: '...',
     address: 'string',
     favoriteCount: 0,
+    geometries: [{ latitude: 0, longitude: 0 }],
     difficulty: 'HARD',
     length: 0,
     uptime: 0,
@@ -122,13 +124,7 @@ const HikingById: NextPageWithLayout<
       <Wrapper>
         <Title>등산로 지도</Title>
       </Wrapper>
-      <Image
-        src="/images/가이드_썸네일.png"
-        alt="thumbnail"
-        layout="responsive"
-        width={559}
-        height={500}
-      />
+      <HikingMap geometries={data.geometries} />
     </Container>
   );
 };
