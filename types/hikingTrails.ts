@@ -10,6 +10,7 @@ interface HikingTrailDto {
   difficulty: Difficulty;
   length: number;
   uptime: number;
+  base64: string;
   downtime: number;
 }
 

@@ -46,7 +46,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
   useEffect(() => {
     (async () => {
       const response = await axios.get<{ contents: HikingTrailDto[] }>(
-        '/server/api/hiking-trails'
+        '/api/hikings'
       );
       setCardList(response.data?.contents);
     })();
@@ -98,6 +98,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
             level={v.difficulty}
             imageUrl={v.imageUrl}
             like={v.favoriteCount}
+            base64={v.base64}
             location={v.address}
             onClick={() =>
               router.push({
