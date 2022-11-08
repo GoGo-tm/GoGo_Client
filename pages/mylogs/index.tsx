@@ -31,13 +31,6 @@ const Mylogs: NextPageWithLayout<
     router.push({
       pathname: '/auth/redirect',
     });
-  if (!query.tab)
-    router.push({
-      pathname: '/mylogs',
-      query: {
-        tab: 'home',
-      },
-    });
 
   switch (query.tab) {
     case 'wrap':
@@ -92,7 +85,7 @@ Mylogs.getLayout = function (page: ReactElement) {
 
 export default Mylogs;
 
-export const getServerSideProps = withAuthSsr(async ({ req }) => {
+export const getServerSideProps = withAuthSsr(async ({ req, query }) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery([QueryKeys.MYLOGS_KEY], () =>
     axios
@@ -103,6 +96,20 @@ export const getServerSideProps = withAuthSsr(async ({ req }) => {
       })
       .then((res) => res.data)
   );
+
+  if (!query.tab) {
+    return {
+      props: {
+        user: req.session,
+        dehydratedState: dehydrate(queryClient),
+      },
+      redirect: {
+        destination: '/mylogs?tab=home',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       user: req.session,
