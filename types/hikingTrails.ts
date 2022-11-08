@@ -10,6 +10,7 @@ interface HikingTrailDto {
   length: number;
   uptime: number;
   downtime: number;
+  base64: string;
 }
 
 export type { HikingTrailDto };
