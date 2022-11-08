@@ -45,7 +45,7 @@ const SignUp = () => {
       signIn('credentials', {
         email: formData?.email,
         password: formData?.password,
-      });
+      }).catch(() => alert('회원 가입을 다시 시도해주세요'));
   }, [formData?.email, formData?.password, success]);
   return (
     <AuthForm

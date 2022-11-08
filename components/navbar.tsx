@@ -1,5 +1,7 @@
 import { Breadcrumb } from 'antd';
 import type { Route } from 'antd/lib/breadcrumb/Breadcrumb';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +9,6 @@ import Hiking from '../assets/svgs/hiking.svg';
 import Home from '../assets/svgs/home.svg';
 import MyLog from '../assets/svgs/mylog.svg';
 import Profile from '../assets/svgs/profile.svg';
-import NavLink from './navlink';
 
 export interface Item {
   path: string;
@@ -40,13 +41,14 @@ function NavbarItem(
   __: Route[],
   paths: string[]
 ): ReactNode {
+  const { pathname } = useRouter();
   return (
-    <NavLink href={route.path}>
-      <StyledNavbarItem>
+    <Link href={route.path}>
+      <StyledNavbarItem data-active={pathname === route.path ? true : false}>
         {icons[paths.length]}
         {route.breadcrumbName}
       </StyledNavbarItem>
-    </NavLink>
+    </Link>
   );
 }
 
@@ -71,10 +73,6 @@ const StyledNavbar = styled(Breadcrumb)`
     align-items: center;
     justify-content: space-around;
   }
-  .active {
-    color: ${({ theme: { colors } }) => colors.primary};
-    fill: ${({ theme: { colors } }) => colors.primary};
-  }
   .ant-breadcrumb-separator {
     display: none;
   }
@@ -89,6 +87,10 @@ const StyledNavbarItem = styled.div`
   font-weight: bolder;
   height: 3.75rem;
   gap: 0.375rem;
+  &[data-active='true'] {
+    color: ${({ theme: { colors } }) => colors.primary};
+    fill: ${({ theme: { colors } }) => colors.primary};
+  }
   color: ${({ theme: { colors } }) => colors.gray_light};
   fill: ${({ theme: { colors } }) => colors.gray_light};
   cursor: pointer;

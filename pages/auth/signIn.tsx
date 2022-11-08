@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import styled from 'styled-components';
 
 import AuthLabel from '~/components/auth/authLabel';
@@ -24,13 +25,22 @@ interface FormData {
 }
 
 const SignIn = () => {
-  const { isPending, handleSubmit } = useForm<FormData>({
+  const { push } = useRouter();
+  const { isPending, handleSubmit, success } = useForm<FormData>({
     serviceCallback: async (values) =>
       signIn('credentials', {
         email: values.email,
         password: values.password,
+        redirect: false,
+      }).then((signResponse) => {
+        if (signResponse?.status === 401)
+          alert('유효하지 않은 이메일/비밀번호입니다.');
       }),
   });
+
+  useEffect(() => {
+    if (success) push('/');
+  }, [push, success]);
 
   return (
     <>
