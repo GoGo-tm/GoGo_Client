@@ -99,7 +99,18 @@ const Hiking: NextPageWithLayout<{}> = () => {
             imageUrl={v.imageUrl}
             like={v.favoriteCount}
             location={v.address}
-            onClick={() => router.push(`/hiking/${v.id}`)}
+            onClick={() =>
+              router.push({
+                pathname: `/hiking/${v.id}`,
+                query: {
+                  imageUrl: v.imageUrl,
+                  name: v.name,
+                  address: v.address,
+                  difficulty: v.difficulty,
+                  length: v.length,
+                },
+              })
+            }
           />
         ))}
       </CardWrapper>
