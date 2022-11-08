@@ -105,5 +105,7 @@ export const settings: NextAuthOptions = {
   },
 };
 
-export default (req: NextApiRequest, res: NextApiResponse) =>
+const NextAuthApi = (req: NextApiRequest, res: NextApiResponse) =>
   NextAuth(req, res, settings);
+
+export default NextAuthApi;
