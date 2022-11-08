@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import { HikingTrailDto } from '~/types/hikingTrails';
 import * as mapService from '~/utils/map';
 
-interface Props {
-  geometries: { latitude: number; longitude: number }[];
-}
+type Props = Pick<HikingTrailDto, 'geometries'>;
 
 const HikingMap = ({ geometries }: Props) => {
   const mapRef = useRef<HTMLElement | null | any>(null);
