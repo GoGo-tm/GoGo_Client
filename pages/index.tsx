@@ -61,7 +61,18 @@ const Home: NextPageWithLayout<
                   like={content.favoriteCount}
                   imageUrl={content.imageUrl}
                   base64={content.base64}
-                  onClick={() => router.push(`/hiking/${content.id}`)}
+                  onClick={() =>
+                    router.push({
+                      pathname: `/hiking/${content.id}`,
+                      query: {
+                        imageUrl: content.imageUrl,
+                        name: content.name,
+                        address: content.address,
+                        difficulty: content.difficulty,
+                        length: content.length,
+                      },
+                    })
+                  }
                 />
               ))}
             </AsyncBoundary>
