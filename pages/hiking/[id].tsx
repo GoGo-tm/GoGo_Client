@@ -10,35 +10,48 @@ import styled from 'styled-components';
 import Heart from '~/assets/svgs/heartSolid.svg';
 import Container from '~/components/container';
 import Divider from '~/components/divider';
+import HikingMap from '~/components/hikingMap';
+import { Difficulty } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
 import { getLevel, getMeter } from '~/utils/misc';
+
+type ChangeType = Pick<
+  HikingTrailDto,
+  'favoriteCount' | 'geometries' | 'uptime' | 'downtime'
+>;
 
 const HikingById: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ user }) => {
-  const [data, setData] = useState<HikingTrailDto>({
-    id: 0,
-    imageUrl: '',
-    name: '...',
-    address: 'string',
+  const router = useRouter();
+  const routerData = {
+    id: parseInt(router.query.id as string),
+    imageUrl:
+      (router.query.imageUrl as string) ?? '/images/등산_기본이미지.png',
+    name: router.query.name as string,
+    address: router.query.address as string,
+    difficulty: router.query.difficulty as Difficulty,
+    length: parseInt(router.query.length as string),
+  };
+  const [data, setData] = useState<ChangeType>({
     favoriteCount: 0,
-    difficulty: 'HARD',
-    length: 0,
+    geometries: [{ latitude: 0, longitude: 0 }],
     uptime: 0,
     downtime: 0,
   });
-  const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(
-        `/server/api/hiking-trails/${router.query.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-        }
-      );
+      const response = await axios.get<{
+        favoriteCount: number;
+        geometries: { latitude: number; longitude: number }[];
+        uptime: number;
+        downtime: number;
+      }>(`/server/api/hiking-trails/${router.query.id}`, {
+        headers: {
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
+      });
       setData(response.data);
     })();
   }, [router.query.id, user?.accessToken]);
@@ -47,7 +60,7 @@ const HikingById: NextPageWithLayout<
     <Container renderImage={renderImage}>
       <Wrapper>
         <TitleWrapper>
-          <Title>{data.name}</Title>
+          <Title>{routerData.name}</Title>
           <Heart />
         </TitleWrapper>
         <MountainDescription>
@@ -63,7 +76,7 @@ const HikingById: NextPageWithLayout<
               fill="#B2B3B6"
             />
           </svg>
-          {data.address}
+          {routerData.address}
         </MountainDescription>
         <MountainDescription>
           <svg
@@ -78,7 +91,7 @@ const HikingById: NextPageWithLayout<
               fill="#B2B3B6"
             />
           </svg>
-          난이도 {getLevel(data.difficulty)}
+          난이도 {getLevel(routerData.difficulty)}
         </MountainDescription>
         <MountainDescription>
           <svg
@@ -93,7 +106,7 @@ const HikingById: NextPageWithLayout<
               fill="#B2B3B6"
             />
           </svg>
-          구간거리 {getMeter(data.length)}
+          구간거리 {getMeter(routerData.length)}
         </MountainDescription>
         <MountainDescription>
           <svg
@@ -122,13 +135,7 @@ const HikingById: NextPageWithLayout<
       <Wrapper>
         <Title>등산로 지도</Title>
       </Wrapper>
-      <Image
-        src="/images/가이드_썸네일.png"
-        alt="thumbnail"
-        layout="responsive"
-        width={559}
-        height={500}
-      />
+      <HikingMap geometries={data.geometries} />
     </Container>
   );
 };
