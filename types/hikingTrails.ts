@@ -2,7 +2,7 @@ import type { Difficulty } from './base';
 
 interface HikingTrailDto {
   id: number;
-  imageUrl: null | string;
+  imageUrl: string;
   name: string;
   address: string;
   favoriteCount: number;
