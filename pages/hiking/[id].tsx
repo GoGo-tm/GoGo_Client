@@ -32,6 +32,7 @@ const HikingById: NextPageWithLayout<
     address: router.query.address as string,
     difficulty: router.query.difficulty as Difficulty,
     length: parseInt(router.query.length as string),
+    base64: '',
   };
   const [data, setData] = useState<ChangeType>({
     favoriteCount: 0,

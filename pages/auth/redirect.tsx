@@ -11,6 +11,8 @@ const Protected = () => {
       <Outline>
         <Image
           src="/images/10_Mountain3.png"
+          placeholder="blur"
+          blurDataURL="/images/10_Mountain3_base64.png"
           alt="Mountain.png"
           width={200}
           height={158}

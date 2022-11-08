@@ -8,7 +8,9 @@ import LocationIcon from '../assets/svgs/location.svg';
 
 interface Weather {
   content: string;
+  landingBase64: string;
   landingImg: string;
+  weatherBase64: string;
   weatherImg: string;
   city: string;
 }
@@ -51,7 +53,7 @@ const Banner = () => {
           height={115}
           src={weatherData?.weatherImg}
           alt={weatherData?.weatherImg}
-          blurDataURL={blurDataUrl}
+          blurDataURL={weatherData.weatherBase64}
           placeholder="blur"
         />
       </WeatherImagePositionBox>
@@ -62,7 +64,7 @@ const Banner = () => {
           height={200}
           src={weatherData?.landingImg}
           alt={weatherData?.landingImg}
-          blurDataURL={blurDataUrl}
+          blurDataURL={weatherData.landingBase64}
           placeholder="blur"
         />
       </PositionBox>

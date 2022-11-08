@@ -7,13 +7,21 @@ import ArrowIcon from '../../assets/svgs/right.svg';
 interface Props extends PropsWithChildren {
   image: string;
   arrow?: boolean;
+  base64?: string;
 }
 
-const Title = ({ image, arrow, children }: Props) => {
+const Title = ({ image, base64, arrow, children }: Props) => {
   return (
     <Base>
       <Content>{children}</Content>
-      <Image src={image} alt={image} width={24} height={29} />
+      <Image
+        src={image}
+        alt={image}
+        width={24}
+        height={29}
+        placeholder={base64 ? 'blur' : undefined}
+        blurDataURL={base64 ? base64 : undefined}
+      />
       {arrow && <ArrowIcon />}
     </Base>
   );

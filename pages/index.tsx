@@ -60,6 +60,7 @@ const Home: NextPageWithLayout<
                   km={content.length}
                   like={content.favoriteCount}
                   imageUrl={content.imageUrl}
+                  base64={content.base64}
                   onClick={() =>
                     router.push({
                       pathname: `/hiking/${content.id}`,
@@ -118,9 +119,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await queryClient.prefetchQuery([QueryKeys.HIKING_TRAILS_QUERY_KEY], () =>
     fetch(
-      `${
-        process.env.NEXT_PUBLIC_URL
-      }/server/api/hiking-trails${misc.makeQueries({
+      `${process.env.NEXT_PUBLIC_URL}/api/hikings${misc.makeQueries({
         order: 'POPULARITY',
         size: 5,
       })}`
