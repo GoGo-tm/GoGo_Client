@@ -26,6 +26,7 @@ const HikingById: NextPageWithLayout<
     length: 0,
     uptime: 0,
     downtime: 0,
+    base64: '',
   });
   const router = useRouter();
 
