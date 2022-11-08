@@ -11,7 +11,6 @@ import Divider from '../divider';
 import NavLink from '../navlink';
 
 const routes: Route[] = [
-  { path: '/mylogs?tab=home', breadcrumbName: 'home' },
   { path: '/mylogs?tab=wrap', breadcrumbName: 'wrap' },
   { path: '/mylogs?tab=nowrap', breadcrumbName: 'nowrap' },
 ];
@@ -73,7 +72,7 @@ const StyledTab = styled(Breadcrumb)`
   li:nth-child(1) div {
     border-radius: 1.156rem 0 0 1.156rem;
   }
-  li:nth-child(3) div {
+  li:nth-child(2) div {
     border-radius: 0 1.156rem 1.156rem 0;
   }
 `;
