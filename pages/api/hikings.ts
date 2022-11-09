@@ -45,9 +45,7 @@ export default async function handler(
     //   })
     // ).then((v) => v);
 
-    return res.status(200).json({
-      hikings,
-    });
+    return res.status(200).json(hikings);
   } catch (error) {
     throw new Error(misc.getErrorMessage(error));
   }
