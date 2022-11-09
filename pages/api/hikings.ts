@@ -23,6 +23,7 @@ export default async function handler(
         size,
       })}`
     );
+    console.log('before', response);
 
     if (!response.ok) throw new Error('invalid api');
 
@@ -44,6 +45,8 @@ export default async function handler(
         };
       })
     ).then((v) => v);
+
+    console.log('after', withBase64);
 
     return res.status(200).json({
       ...hikings,
