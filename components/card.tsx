@@ -27,10 +27,11 @@ const Card = ({
   // base64,
   onClick,
 }: Props) => {
+  const src = imageUrl ?? '/images/등산_기본이미지.png';
   return (
     <CardWrapper onClick={onClick}>
       <HikingImage
-        src={imageUrl}
+        src={src}
         alt="등산로"
         width={186}
         height={118}
