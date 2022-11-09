@@ -12,7 +12,7 @@ interface Props {
   level: Difficulty;
   km: number;
   like: number;
-  base64: string;
+  // base64: string;
   onClick?: () => void;
   imageUrl: string;
 }
@@ -24,7 +24,7 @@ const Card = ({
   km,
   like,
   imageUrl,
-  base64,
+  // base64,
   onClick,
 }: Props) => {
   return (
@@ -34,8 +34,8 @@ const Card = ({
         alt="등산로"
         width={186}
         height={118}
-        placeholder="blur"
-        blurDataURL={base64}
+        // placeholder="blur"
+        // blurDataURL={base64}
         objectFit="cover"
         layout="responsive"
         priority
