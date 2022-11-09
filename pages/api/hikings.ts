@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getPlaiceholder } from 'plaiceholder';
 
+// import { getPlaiceholder } from 'plaiceholder';
 import { ServerResponseResults } from '~/types/base';
 import { HikingTrailDto } from '~/types/hikingTrails';
 import * as misc from '~/utils/misc';
@@ -23,34 +23,30 @@ export default async function handler(
         size,
       })}`
     );
-    console.log('before', response);
 
     if (!response.ok) throw new Error('invalid api');
 
     const hikings: ServerResponseResults<HikingTrailDto> =
       await response.json();
 
-    const baseImg = '/images/등산_기본이미지.png';
+    // const baseImg = '/images/등산_기본이미지.png';
 
-    const withBase64 = await Promise.all(
-      hikings.contents.map(async (hiking) => {
-        const { base64 } = await getPlaiceholder(
-          hiking.imageUrl ? hiking.imageUrl : baseImg
-        );
+    // const withBase64 = await Promise.all(
+    //   hikings.contents.map(async (hiking) => {
+    //     const { base64 } = await getPlaiceholder(
+    //       hiking.imageUrl ? hiking.imageUrl : baseImg
+    //     );
 
-        return {
-          ...hiking,
-          base64,
-          imageUrl: hiking.imageUrl ? hiking.imageUrl : baseImg,
-        };
-      })
-    ).then((v) => v);
-
-    console.log('after', withBase64);
+    //     return {
+    //       ...hiking,
+    //       base64,
+    //       imageUrl: hiking.imageUrl ? hiking.imageUrl : baseImg,
+    //     };
+    //   })
+    // ).then((v) => v);
 
     return res.status(200).json({
-      ...hikings,
-      contents: withBase64,
+      hikings,
     });
   } catch (error) {
     throw new Error(misc.getErrorMessage(error));

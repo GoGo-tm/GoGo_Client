@@ -98,7 +98,7 @@ const Hiking: NextPageWithLayout<{}> = () => {
             level={v.difficulty}
             imageUrl={v.imageUrl}
             like={v.favoriteCount}
-            base64={v.base64}
+            // base64={v.base64}
             location={v.address}
             onClick={() =>
               router.push({

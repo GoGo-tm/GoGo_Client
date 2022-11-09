@@ -60,7 +60,7 @@ const Home: NextPageWithLayout<
                   km={content.length}
                   like={content.favoriteCount}
                   imageUrl={content.imageUrl}
-                  base64={content.base64}
+                  // base64={content.base64}
                   onClick={() =>
                     router.push({
                       pathname: `/hiking/${content.id}`,
