@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getPlaiceholder } from 'plaiceholder';
 
 import * as mapService from '~/utils/map';
 import * as misc from '~/utils/misc';
@@ -46,13 +45,8 @@ export default async function handler(
       .status(500)
       .json({ message: '날씨예보 로직에서 문제가 발생했습니다.' });
 
-  const { base64: landingBase64 } = await getPlaiceholder(weather.landingImg);
-  const { base64: weatherBase64 } = await getPlaiceholder(weather.weatherImg);
-
   const withBase64 = {
     ...weather,
-    landingBase64,
-    weatherBase64,
   };
 
   return res.status(200).json({
