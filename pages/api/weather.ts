@@ -18,7 +18,6 @@ export default async function handler(
   const { nx, ny } = mapService.mapToGrid(latitude, longitude);
   const url = misc.env('NEXT_PUBLIC_WEATHER_END_POINT');
   const apiKey = misc.env('NEXT_PUBLIC_WEATHER_API_KEY');
-  console.log('check env', url, apiKey);
 
   const _res = await fetch(
     `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
@@ -28,7 +27,7 @@ export default async function handler(
 
   if (!_res.ok)
     return res
-      .status(500)
+      .status(502)
       .json({ message: '날씨예보 Api 불러오기에 실패했습니다.' });
 
   const data = await _res.json();
@@ -44,7 +43,7 @@ export default async function handler(
 
   if (!weather)
     return res
-      .status(502)
+      .status(500)
       .json({ message: '날씨예보 로직에서 문제가 발생했습니다.' });
 
   const { base64: landingBase64 } = await getPlaiceholder(weather.landingImg);
