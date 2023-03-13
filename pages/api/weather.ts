@@ -18,6 +18,7 @@ export default async function handler(
   const { nx, ny } = mapService.mapToGrid(latitude, longitude);
   const url = misc.env('NEXT_PUBLIC_WEATHER_END_POINT');
   const apiKey = misc.env('NEXT_PUBLIC_WEATHER_API_KEY');
+  console.log('check env', url, apiKey);
 
   const _res = await fetch(
     `${url}?serviceKey=${apiKey}&numOfRows=10&pageNo=1&base_date=${baseDate}&base_time=${
