@@ -33,7 +33,7 @@ export default async function handler(
   const data = await _res.json();
 
   if (data.response.header.resultCode !== '00')
-    return res.status(500).json({
+    return res.status(501).json({
       message: data.response.header.resultMsg,
     });
 
@@ -43,7 +43,7 @@ export default async function handler(
 
   if (!weather)
     return res
-      .status(500)
+      .status(502)
       .json({ message: '날씨예보 로직에서 문제가 발생했습니다.' });
 
   const { base64: landingBase64 } = await getPlaiceholder(weather.landingImg);
