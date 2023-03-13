@@ -81,7 +81,7 @@ const Home: NextPageWithLayout<
       </Outline>
       <Divider />
       <Outline>
-        <Title image="/images/09_Mountain2.png">
+        <Title image="/images/10_Mountain3.png">
           등산이
           <Highlight> 처음</Highlight>이신가요?
         </Title>
