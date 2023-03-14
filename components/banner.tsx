@@ -24,7 +24,7 @@ const Banner = () => {
     staleTime: 5000,
     cacheTime: Infinity,
     suspense: true,
-  }) as { data: Weather };
+  }) as unknown as { data: Weather };
 
   return (
     <Base>
@@ -53,8 +53,6 @@ const Banner = () => {
           height={115}
           src={weatherData?.weatherImg}
           alt={weatherData?.weatherImg}
-          blurDataURL={weatherData.weatherBase64}
-          placeholder="blur"
         />
       </WeatherImagePositionBox>
       <PositionBox>
@@ -64,8 +62,6 @@ const Banner = () => {
           height={200}
           src={weatherData?.landingImg}
           alt={weatherData?.landingImg}
-          blurDataURL={weatherData.landingBase64}
-          placeholder="blur"
         />
       </PositionBox>
     </Base>

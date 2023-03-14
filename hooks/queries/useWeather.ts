@@ -5,9 +5,7 @@ import QueryKeys from '~/constants/queries';
 interface Weather {
   content: string;
   landingImg: string;
-  landingBase64: string;
   weatherImg: string;
-  weatherBase64: string;
   city: string;
 }
 

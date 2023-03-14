@@ -17,8 +17,8 @@ const Title = ({ image, base64, arrow, children }: Props) => {
       <Image
         src={image}
         alt={image}
-        width={24}
-        height={29}
+        width={28}
+        height={28}
         placeholder={base64 ? 'blur' : undefined}
         blurDataURL={base64 ? base64 : undefined}
       />
