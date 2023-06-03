@@ -67,14 +67,16 @@ export const signUp = async ({
 
 export const getUserInfo = async (accessToken: string) => {
   try {
-    const userInfo: UserDto = await axios
-      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/members/me`, {
+    const userInfo = await axios.get<UserDto>(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/members/me`,
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      .then((res) => res.data);
-    return userInfo;
+      }
+    );
+
+    return userInfo.data;
   } catch (e) {
     throw new Error(misc.getErrorMessage(e));
   }
