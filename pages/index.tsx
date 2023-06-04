@@ -1,7 +1,4 @@
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { GetServerSideProps } from 'next';
 import router from 'next/router';
-import type { InferGetServerSidePropsType } from 'next/types';
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
@@ -14,20 +11,11 @@ import Title, { Highlight } from '~/components/home/title';
 import { BannerLoading } from '~/components/loading';
 import Navbar from '~/components/navbar';
 import Search from '~/components/search';
-import QueryKeys from '~/constants/queries';
-import useHikingTrailsQuery from '~/hooks/queries/useHikingTrailsQuery';
+import usePopularHikingTrailsQuery from '~/hooks/queries/usePopularHikingTrailsQuery';
 import type { NextPageWithLayout } from '~/types/base';
-import * as misc from '~/utils/misc';
 
-const Home: NextPageWithLayout<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = () => {
-  const { data: hikingsData } = useHikingTrailsQuery(
-    misc.makeQueries({
-      order: 'POPULARITY',
-      size: 5,
-    })
-  );
+const Home: NextPageWithLayout<{}> = () => {
+  const { data } = usePopularHikingTrailsQuery();
 
   return (
     <Base>
@@ -51,7 +39,7 @@ const Home: NextPageWithLayout<
               rejectedFallback={<div>error..!</div>}
               pendingFallback={<div>loading..!</div>}
             >
-              {hikingsData?.contents.map((content) => (
+              {data?.contents?.map((content) => (
                 <Card
                   key={content.id}
                   title={content.name}
@@ -60,7 +48,6 @@ const Home: NextPageWithLayout<
                   km={content.length}
                   like={content.favoriteCount}
                   imageUrl={content.imageUrl}
-                  // base64={content.base64}
                   onClick={() =>
                     router.push({
                       pathname: `/hiking/${content.id}`,
@@ -88,7 +75,7 @@ const Home: NextPageWithLayout<
         <Guide />
       </Outline>
       <Divider />
-      {/* <Outline>
+      <Outline>
         <Title image="/images/14_Shoe.png" arrow>
           등산갈 때 뭐 챙기지?
         </Title>
@@ -98,7 +85,7 @@ const Home: NextPageWithLayout<
         <Title image="/images/13_Rocket.png" arrow>
           <Highlight>의지</Highlight>를 불태워줄 등산-log
         </Title>
-      </Outline> */}
+      </Outline>
     </Base>
   );
 };
@@ -112,25 +99,6 @@ Home.getLayout = function getLayout(page: ReactElement) {
       <Navbar />
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery([QueryKeys.HIKING_TRAILS_QUERY_KEY], () =>
-    fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/hikings${misc.makeQueries({
-        order: 'POPULARITY',
-        size: 5,
-      })}`
-    ).then((res) => res.json())
-  );
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 };
 
 const Base = styled.main`
