@@ -101,7 +101,9 @@ const Home: NextPageWithLayout<{}> = () => {
                 key={youtube.id}
                 imageUrl={getYoutubeThumbnailUrl(youtube.link)}
               >
-                <Link href={youtube.link}>{youtube.channelName}</Link>
+                <a href="https://www.youtube.com/" rel="noopener noreferrer">
+                  <Link href={youtube.link}>{youtube.channelName}</Link>
+                </a>
               </Card>
             ))}
           </CardWrapper>
@@ -119,7 +121,9 @@ const Home: NextPageWithLayout<{}> = () => {
                 key={youtube.id}
                 imageUrl={getYoutubeThumbnailUrl(youtube.link)}
               >
-                <Link href={youtube.link}>{youtube.channelName}</Link>
+                <a href="https://www.youtube.com/" rel="noopener noreferrer">
+                  <Link href={youtube.link}>{youtube.channelName}</Link>
+                </a>
               </Card>
             ))}
           </CardWrapper>
