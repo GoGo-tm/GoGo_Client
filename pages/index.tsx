@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import Link from 'next/link';
 import router from 'next/router';
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
@@ -100,7 +101,7 @@ const Home: NextPageWithLayout<{}> = () => {
                 key={youtube.id}
                 imageUrl={getYoutubeThumbnailUrl(youtube.link)}
               >
-                {youtube.channelName}
+                <Link href={youtube.link}>{youtube.channelName}</Link>
               </Card>
             ))}
           </CardWrapper>
@@ -118,7 +119,7 @@ const Home: NextPageWithLayout<{}> = () => {
                 key={youtube.id}
                 imageUrl={getYoutubeThumbnailUrl(youtube.link)}
               >
-                {youtube.channelName}
+                <Link href={youtube.link}>{youtube.channelName}</Link>
               </Card>
             ))}
           </CardWrapper>

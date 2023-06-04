@@ -6,7 +6,6 @@ import theme from '~/constants/theme';
 
 export interface CardProps {
   imageUrl?: string;
-  link?: string;
   onClick?: () => void;
 }
 
