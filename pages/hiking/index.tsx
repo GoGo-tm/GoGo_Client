@@ -4,10 +4,10 @@ import router from 'next/router';
 import { ReactElement, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Card from '~/components/card';
+import { HikingCard } from '~/components/card';
 import Layout from '~/components/layout';
 import type { NextPageWithLayout } from '~/types/base';
-import { HikingTrailDto } from '~/types/hikingTrails';
+import type { HikingTrailDto } from '~/types/hikingTrails';
 
 type Tag = '지역' | '난이도' | '구간거리' | '소요시간';
 type OrderTag = '인기순' | '최신순';
@@ -91,14 +91,13 @@ const Hiking: NextPageWithLayout<{}> = () => {
       </HikingSort>
       <CardWrapper>
         {cardList?.map((v) => (
-          <Card
+          <HikingCard
             key={v.id}
             title={v.name}
             km={v.length}
             level={v.difficulty}
             imageUrl={v.imageUrl}
             like={v.favoriteCount}
-            // base64={v.base64}
             location={v.address}
             onClick={() =>
               router.push({

@@ -57,3 +57,11 @@ export const getMylogById = async (
     throw new Error(misc.getErrorMessage(error));
   }
 };
+
+export const getYoutubeThumbnailUrl = (url?: string) => {
+  const videoId = url?.split('youtu.be/')[1];
+  if (!videoId) {
+    return undefined;
+  }
+  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+};

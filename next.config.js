@@ -24,6 +24,7 @@ const nextConfig = {
     domains: [
       'www.forest.go.kr',
       'gogo-s3-bucket.s3.ap-northeast-2.amazonaws.com',
+      'img.youtube.com',
     ],
   },
   async rewrites() {

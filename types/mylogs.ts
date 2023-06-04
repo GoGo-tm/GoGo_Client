@@ -23,4 +23,18 @@ interface HikingLogDetailDto {
   memo: string;
 }
 
-export type { HikingLogDetailDto, HikingLogDto };
+interface YouTubeVideo {
+  id: number;
+  link: string;
+  channelName: string;
+  description: string;
+  contact: string;
+  theme: string;
+}
+
+interface YouTubeDto {
+  youtubes: YouTubeVideo[];
+  hasNext: boolean;
+}
+
+export type { HikingLogDetailDto, HikingLogDto, YouTubeDto };
