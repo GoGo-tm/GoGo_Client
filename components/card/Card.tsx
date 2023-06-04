@@ -1,4 +1,3 @@
-import Image from 'next/legacy/image';
 import type { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
@@ -21,9 +20,6 @@ const Card = ({
         alt="등산로"
         width={186}
         height={118}
-        objectFit="cover"
-        layout="responsive"
-        priority
       />
       <ContentWrapper>{children}</ContentWrapper>
     </CardWrapper>
@@ -38,7 +34,7 @@ const CardWrapper = styled.div`
   padding-bottom: 0.625rem;
 `;
 
-const HikingImage = styled(Image)`
+const HikingImage = styled.img`
   border-radius: 0.625rem 0.625rem 0 0;
 `;
 
