@@ -1,10 +1,13 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import Link from 'next/link';
 import router from 'next/router';
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import Banner from '~/components/banner';
 import AsyncBoundary from '~/components/boundaries/asyncBoundary';
-import Card from '~/components/card';
+import { Card, HikingCard } from '~/components/card';
 import Divider from '~/components/divider';
 import Guide from '~/components/home/guide';
 import Title, { Highlight } from '~/components/home/title';
@@ -13,9 +16,21 @@ import Navbar from '~/components/navbar';
 import Search from '~/components/search';
 import usePopularHikingTrailsQuery from '~/hooks/queries/usePopularHikingTrailsQuery';
 import type { NextPageWithLayout } from '~/types/base';
+import type { YouTubeDto } from '~/types/mylogs';
+import * as misc from '~/utils/misc';
+import { getYoutubeThumbnailUrl } from '~/utils/mylog';
 
 const Home: NextPageWithLayout<{}> = () => {
   const { data } = usePopularHikingTrailsQuery();
+  const { data: youtubeData } = useQuery(
+    ['YOUTUBE'],
+    async () =>
+      await axios.get<YouTubeDto>(
+        `/server/api/youtubes${misc.makeQueries({
+          size: 5,
+        })}`
+      )
+  );
 
   return (
     <Base>
@@ -40,7 +55,7 @@ const Home: NextPageWithLayout<{}> = () => {
               pendingFallback={<div>loading..!</div>}
             >
               {data?.contents?.map((content) => (
-                <Card
+                <HikingCard
                   key={content.id}
                   title={content.name}
                   location={content.address}
@@ -79,12 +94,40 @@ const Home: NextPageWithLayout<{}> = () => {
         <Title image="/images/14_Shoe.png" arrow>
           등산갈 때 뭐 챙기지?
         </Title>
+        <CardOutline>
+          <CardWrapper>
+            {youtubeData?.data.youtubes.map((youtube) => (
+              <Card
+                key={youtube.id}
+                imageUrl={getYoutubeThumbnailUrl(youtube.link)}
+              >
+                <a href="https://www.youtube.com/" rel="noopener noreferrer">
+                  <Link href={youtube.link}>{youtube.channelName}</Link>
+                </a>
+              </Card>
+            ))}
+          </CardWrapper>
+        </CardOutline>
       </Outline>
       <Divider />
       <Outline>
         <Title image="/images/13_Rocket.png" arrow>
           <Highlight>의지</Highlight>를 불태워줄 등산-log
         </Title>
+        <CardOutline>
+          <CardWrapper>
+            {youtubeData?.data.youtubes.map((youtube) => (
+              <Card
+                key={youtube.id}
+                imageUrl={getYoutubeThumbnailUrl(youtube.link)}
+              >
+                <a href="https://www.youtube.com/" rel="noopener noreferrer">
+                  <Link href={youtube.link}>{youtube.channelName}</Link>
+                </a>
+              </Card>
+            ))}
+          </CardWrapper>
+        </CardOutline>
       </Outline>
     </Base>
   );
